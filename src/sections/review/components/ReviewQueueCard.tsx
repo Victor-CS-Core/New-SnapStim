@@ -106,7 +106,9 @@ export default function ReviewQueueCard({
             <div className="flex items-center gap-3 mt-2 text-xs text-stone-500">
               <span>{item.client_name}</span>
               <span>•</span>
-              <span>{formatDate(item.generation_metadata.generation_date)}</span>
+              <span>
+                {formatDate(item.generation_metadata.generation_date)}
+              </span>
               {item.image_url && (
                 <>
                   <span>•</span>

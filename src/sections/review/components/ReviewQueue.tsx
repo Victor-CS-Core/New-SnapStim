@@ -60,8 +60,12 @@ export default function ReviewQueue({
     });
   }, [items, filters]);
 
-  const pendingItems = filteredItems.filter((i) => i.review_status === "pending");
-  const selectedItems = filteredItems.filter((i) => selectedIds.has(i.stimulus_id));
+  const pendingItems = filteredItems.filter(
+    (i) => i.review_status === "pending",
+  );
+  const selectedItems = filteredItems.filter((i) =>
+    selectedIds.has(i.stimulus_id),
+  );
   const allSelected =
     pendingItems.length > 0 &&
     pendingItems.every((i) => selectedIds.has(i.stimulus_id));
@@ -100,7 +104,10 @@ export default function ReviewQueue({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <CardTitle className="text-lg">Review Queue</CardTitle>
-            <Badge variant="secondary" className="bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
+            <Badge
+              variant="secondary"
+              className="bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400"
+            >
               {pendingItems.length} pending
             </Badge>
           </div>
@@ -132,11 +139,7 @@ export default function ReviewQueue({
               <Check className="mr-1 h-4 w-4" />
               Approve Selected
             </Button>
-            <Button
-              size="sm"
-              variant="destructive"
-              onClick={handleBulkReject}
-            >
+            <Button size="sm" variant="destructive" onClick={handleBulkReject}>
               <X className="mr-1 h-4 w-4" />
               Reject Selected
             </Button>

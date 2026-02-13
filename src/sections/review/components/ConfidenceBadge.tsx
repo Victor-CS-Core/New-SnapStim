@@ -51,8 +51,8 @@ export function ConfidenceBar({ score }: ConfidenceBadgeProps) {
     level === "high"
       ? "bg-emerald-500"
       : level === "medium"
-      ? "bg-amber-500"
-      : "bg-red-500";
+        ? "bg-amber-500"
+        : "bg-red-500";
 
   return (
     <div className="flex items-center gap-2">

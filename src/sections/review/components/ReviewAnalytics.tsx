@@ -29,7 +29,14 @@ interface StatCardProps {
   urgent?: boolean;
 }
 
-function StatCard({ title, value, subtitle, icon, trend, urgent }: StatCardProps) {
+function StatCard({
+  title,
+  value,
+  subtitle,
+  icon,
+  trend,
+  urgent,
+}: StatCardProps) {
   return (
     <Card className={urgent ? "border-amber-500 dark:border-amber-400" : ""}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -39,17 +46,26 @@ function StatCard({ title, value, subtitle, icon, trend, urgent }: StatCardProps
         <div className={urgent ? "text-amber-500" : "text-primary"}>{icon}</div>
       </CardHeader>
       <CardContent>
-        <div className={`text-2xl font-bold ${urgent ? "text-amber-600 dark:text-amber-400" : "text-stone-900 dark:text-stone-100"}`}>
+        <div
+          className={`text-2xl font-bold ${urgent ? "text-amber-600 dark:text-amber-400" : "text-stone-900 dark:text-stone-100"}`}
+        >
           {value}
         </div>
         {subtitle && (
-          <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">{subtitle}</p>
+          <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
+            {subtitle}
+          </p>
         )}
         {trend && (
           <div className="flex items-center gap-1 mt-1">
-            <TrendingUp className={`h-3 w-3 ${trend.positive ? "text-emerald-500" : "text-red-500"}`} />
-            <span className={`text-xs ${trend.positive ? "text-emerald-600 dark:text-emerald-400" : "text-red-600 dark:text-red-400"}`}>
-              {trend.value > 0 ? "+" : ""}{trend.value}% {trend.label}
+            <TrendingUp
+              className={`h-3 w-3 ${trend.positive ? "text-emerald-500" : "text-red-500"}`}
+            />
+            <span
+              className={`text-xs ${trend.positive ? "text-emerald-600 dark:text-emerald-400" : "text-red-600 dark:text-red-400"}`}
+            >
+              {trend.value > 0 ? "+" : ""}
+              {trend.value}% {trend.label}
             </span>
           </div>
         )}
@@ -96,7 +112,12 @@ export default function ReviewAnalytics({
   analytics,
   recentActions,
 }: ReviewAnalyticsProps) {
-  const { summary, by_program_type, rejection_reasons, confidence_score_distribution } = analytics;
+  const {
+    summary,
+    by_program_type,
+    rejection_reasons,
+    confidence_score_distribution,
+  } = analytics;
 
   const pendingUrgent = summary.pending_review_count > 50;
 
@@ -105,7 +126,10 @@ export default function ReviewAnalytics({
     .filter(([_, count]) => count > 0)
     .sort(([, a], [, b]) => b - a);
 
-  const totalRejections = Object.values(rejection_reasons).reduce((a, b) => a + b, 0);
+  const totalRejections = Object.values(rejection_reasons).reduce(
+    (a, b) => a + b,
+    0,
+  );
 
   return (
     <div className="space-y-6">
@@ -121,7 +145,13 @@ export default function ReviewAnalytics({
           title="Pending Review"
           value={summary.pending_review_count}
           subtitle={`${summary.batches_pending} batches waiting`}
-          icon={pendingUrgent ? <AlertTriangle className="h-5 w-5" /> : <Clock className="h-5 w-5" />}
+          icon={
+            pendingUrgent ? (
+              <AlertTriangle className="h-5 w-5" />
+            ) : (
+              <Clock className="h-5 w-5" />
+            )
+          }
           urgent={pendingUrgent}
         />
         <StatCard
@@ -133,7 +163,9 @@ export default function ReviewAnalytics({
         />
         <StatCard
           title="Avg Review Time"
-          value={formatDuration(Math.round(summary.average_review_time_seconds))}
+          value={formatDuration(
+            Math.round(summary.average_review_time_seconds),
+          )}
           subtitle="Per stimulus"
           icon={<Clock className="h-5 w-5" />}
         />
@@ -198,7 +230,10 @@ export default function ReviewAnalytics({
               {activeRejectionReasons.length > 0 ? (
                 <div className="space-y-3">
                   {activeRejectionReasons.map(([reason, count]) => (
-                    <div key={reason} className="flex items-center justify-between">
+                    <div
+                      key={reason}
+                      className="flex items-center justify-between"
+                    >
                       <span className="text-sm text-stone-700 dark:text-stone-300">
                         {rejectionReasonLabels[reason as RejectionReason]}
                       </span>
@@ -206,10 +241,14 @@ export default function ReviewAnalytics({
                         <div className="w-20 h-2 bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden">
                           <div
                             className="h-full bg-red-500 rounded-full"
-                            style={{ width: `${(count / Math.max(totalRejections, 1)) * 100}%` }}
+                            style={{
+                              width: `${(count / Math.max(totalRejections, 1)) * 100}%`,
+                            }}
                           />
                         </div>
-                        <span className="text-sm font-medium w-8 text-right">{count}</span>
+                        <span className="text-sm font-medium w-8 text-right">
+                          {count}
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -236,19 +275,25 @@ export default function ReviewAnalytics({
                   <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
                     {confidence_score_distribution.high}
                   </div>
-                  <div className="text-xs text-emerald-700 dark:text-emerald-300">High</div>
+                  <div className="text-xs text-emerald-700 dark:text-emerald-300">
+                    High
+                  </div>
                 </div>
                 <div className="flex-1 text-center p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20">
                   <div className="text-2xl font-bold text-amber-600 dark:text-amber-400">
                     {confidence_score_distribution.medium}
                   </div>
-                  <div className="text-xs text-amber-700 dark:text-amber-300">Medium</div>
+                  <div className="text-xs text-amber-700 dark:text-amber-300">
+                    Medium
+                  </div>
                 </div>
                 <div className="flex-1 text-center p-3 rounded-lg bg-red-50 dark:bg-red-900/20">
                   <div className="text-2xl font-bold text-red-600 dark:text-red-400">
                     {confidence_score_distribution.low}
                   </div>
-                  <div className="text-xs text-red-700 dark:text-red-300">Low</div>
+                  <div className="text-xs text-red-700 dark:text-red-300">
+                    Low
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -267,11 +312,21 @@ export default function ReviewAnalytics({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-stone-200 dark:border-stone-700">
-                    <th className="text-left py-2 px-3 font-medium text-stone-500">Time</th>
-                    <th className="text-left py-2 px-3 font-medium text-stone-500">Reviewer</th>
-                    <th className="text-left py-2 px-3 font-medium text-stone-500">Stimulus</th>
-                    <th className="text-left py-2 px-3 font-medium text-stone-500">Decision</th>
-                    <th className="text-right py-2 px-3 font-medium text-stone-500">Duration</th>
+                    <th className="text-left py-2 px-3 font-medium text-stone-500">
+                      Time
+                    </th>
+                    <th className="text-left py-2 px-3 font-medium text-stone-500">
+                      Reviewer
+                    </th>
+                    <th className="text-left py-2 px-3 font-medium text-stone-500">
+                      Stimulus
+                    </th>
+                    <th className="text-left py-2 px-3 font-medium text-stone-500">
+                      Decision
+                    </th>
+                    <th className="text-right py-2 px-3 font-medium text-stone-500">
+                      Duration
+                    </th>
                   </tr>
                 </thead>
                 <tbody>

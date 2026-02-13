@@ -24,7 +24,7 @@ interface BatchReviewModalProps {
   onReject: (
     item: ReviewQueueItem,
     reason: RejectionReason,
-    notes?: string
+    notes?: string,
   ) => void;
 }
 
@@ -47,11 +47,13 @@ export default function BatchReviewModal({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [reviewedIds, setReviewedIds] = useState<Set<string>>(new Set());
   const [showRejectForm, setShowRejectForm] = useState(false);
-  const [rejectionReason, setRejectionReason] = useState<RejectionReason | "">("");
+  const [rejectionReason, setRejectionReason] = useState<RejectionReason | "">(
+    "",
+  );
 
   const pendingItems = useMemo(
     () => items.filter((i) => i.review_status === "pending"),
-    [items]
+    [items],
   );
 
   const currentItem = pendingItems[currentIndex];
@@ -94,7 +96,14 @@ export default function BatchReviewModal({
         goToNext();
       }
     }
-  }, [currentItem, currentIndex, pendingItems.length, goToNext, onReject, rejectionReason]);
+  }, [
+    currentItem,
+    currentIndex,
+    pendingItems.length,
+    goToNext,
+    onReject,
+    rejectionReason,
+  ]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -162,9 +171,7 @@ export default function BatchReviewModal({
           <Badge variant="secondary">
             {currentIndex + 1} of {totalCount}
           </Badge>
-          <span className="text-stone-400">
-            {reviewedCount} reviewed
-          </span>
+          <span className="text-stone-400">{reviewedCount} reviewed</span>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 text-stone-400 text-sm">
@@ -177,7 +184,12 @@ export default function BatchReviewModal({
             <span>|</span>
             <span>ESC Exit</span>
           </div>
-          <Button variant="ghost" size="icon" className="text-white" onClick={onClose}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-white"
+            onClick={onClose}
+          >
             <X className="h-5 w-5" />
           </Button>
         </div>
@@ -210,8 +222,12 @@ export default function BatchReviewModal({
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-lg">{currentItem.program_name}</CardTitle>
-                  <p className="text-sm text-stone-500">{currentItem.client_name}</p>
+                  <CardTitle className="text-lg">
+                    {currentItem.program_name}
+                  </CardTitle>
+                  <p className="text-sm text-stone-500">
+                    {currentItem.client_name}
+                  </p>
                 </div>
                 <ReviewStatusBadge status={currentItem.review_status} />
               </div>
@@ -228,7 +244,9 @@ export default function BatchReviewModal({
                 </div>
               ) : (
                 <div className="bg-stone-100 dark:bg-stone-800 rounded-lg p-8 text-center h-32 flex items-center justify-center">
-                  <span className="text-3xl font-semibold text-stone-400">Aa</span>
+                  <span className="text-3xl font-semibold text-stone-400">
+                    Aa
+                  </span>
                 </div>
               )}
 
@@ -242,7 +260,9 @@ export default function BatchReviewModal({
               {/* Confidence */}
               <div>
                 <span className="text-sm text-stone-500">Confidence</span>
-                <ConfidenceBar score={currentItem.generation_metadata.confidence_score} />
+                <ConfidenceBar
+                  score={currentItem.generation_metadata.confidence_score}
+                />
               </div>
 
               {/* Rejection Form */}
@@ -252,7 +272,9 @@ export default function BatchReviewModal({
                     {rejectionReasons.map((r) => (
                       <Button
                         key={r.value}
-                        variant={rejectionReason === r.value ? "default" : "outline"}
+                        variant={
+                          rejectionReason === r.value ? "default" : "outline"
+                        }
                         size="sm"
                         onClick={() => setRejectionReason(r.value)}
                       >
@@ -268,7 +290,10 @@ export default function BatchReviewModal({
                     >
                       Confirm Reject
                     </Button>
-                    <Button variant="outline" onClick={() => setShowRejectForm(false)}>
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowRejectForm(false)}
+                    >
                       Cancel
                     </Button>
                   </div>
@@ -336,8 +361,8 @@ export default function BatchReviewModal({
                 index === currentIndex
                   ? "border-primary ring-2 ring-primary/50"
                   : reviewedIds.has(item.stimulus_id)
-                  ? "border-emerald-500 opacity-50"
-                  : "border-transparent opacity-70 hover:opacity-100"
+                    ? "border-emerald-500 opacity-50"
+                    : "border-transparent opacity-70 hover:opacity-100"
               }`}
             >
               {item.image_url ? (

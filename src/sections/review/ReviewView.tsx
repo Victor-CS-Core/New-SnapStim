@@ -17,7 +17,9 @@ type ViewMode = "queue" | "analytics";
 
 export default function ReviewView() {
   const [viewMode, setViewMode] = useState<ViewMode>("queue");
-  const [selectedItem, setSelectedItem] = useState<ReviewQueueItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<ReviewQueueItem | null>(
+    null,
+  );
   const [batchReviewMode, setBatchReviewMode] = useState(false);
 
   // Load data from JSON
@@ -26,7 +28,7 @@ export default function ReviewView() {
   const analytics = reviewData.review_analytics as ReviewAnalyticsType;
 
   const pendingCount = queueItems.filter(
-    (i) => i.review_status === "pending"
+    (i) => i.review_status === "pending",
   ).length;
 
   // Handlers for review actions
@@ -44,7 +46,7 @@ export default function ReviewView() {
     item: ReviewQueueItem,
     reason?: RejectionReason,
     notes?: string,
-    regenerate?: boolean
+    regenerate?: boolean,
   ) => {
     // In a real app, this would update the backend
     console.log("Rejected:", item.stimulus_id, { reason, notes, regenerate });
@@ -54,7 +56,7 @@ export default function ReviewView() {
   const handleBulkApprove = (items: ReviewQueueItem[]) => {
     console.log(
       "Bulk approved:",
-      items.map((i) => i.stimulus_id)
+      items.map((i) => i.stimulus_id),
     );
   };
 
@@ -62,7 +64,7 @@ export default function ReviewView() {
     // In a real app, this would open a bulk rejection dialog
     console.log(
       "Bulk rejected:",
-      items.map((i) => i.stimulus_id)
+      items.map((i) => i.stimulus_id),
     );
   };
 
@@ -80,10 +82,7 @@ export default function ReviewView() {
         </div>
         <div className="flex gap-2">
           {viewMode === "queue" && pendingCount > 0 && (
-            <Button
-              variant="outline"
-              onClick={() => setBatchReviewMode(true)}
-            >
+            <Button variant="outline" onClick={() => setBatchReviewMode(true)}>
               <Layers className="mr-2 h-4 w-4" />
               Batch Review ({pendingCount})
             </Button>

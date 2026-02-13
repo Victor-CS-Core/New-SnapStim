@@ -26,7 +26,11 @@ interface StimulusDetailModalProps {
   item: ReviewQueueItem;
   onClose: () => void;
   onApprove: () => void;
-  onReject: (reason: RejectionReason, notes?: string, regenerate?: boolean) => void;
+  onReject: (
+    reason: RejectionReason,
+    notes?: string,
+    regenerate?: boolean,
+  ) => void;
   onSkip?: () => void;
 }
 
@@ -67,7 +71,9 @@ export default function StimulusDetailModal({
   onSkip,
 }: StimulusDetailModalProps) {
   const [showRejectForm, setShowRejectForm] = useState(false);
-  const [rejectionReason, setRejectionReason] = useState<RejectionReason | "">("");
+  const [rejectionReason, setRejectionReason] = useState<RejectionReason | "">(
+    "",
+  );
   const [rejectionNotes, setRejectionNotes] = useState("");
   const [regenerate, setRegenerate] = useState(true);
   const [zoom, setZoom] = useState(100);
@@ -98,7 +104,9 @@ export default function StimulusDetailModal({
               <span>{item.client_name}</span>
               <span>•</span>
               <Clock className="h-3 w-3" />
-              <span>{formatDate(item.generation_metadata.generation_date)}</span>
+              <span>
+                {formatDate(item.generation_metadata.generation_date)}
+              </span>
             </div>
           </div>
           <Button variant="ghost" size="icon" onClick={onClose}>
@@ -119,7 +127,10 @@ export default function StimulusDetailModal({
               {hasRegenerations && (
                 <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 rounded-lg text-sm">
                   <RefreshCw className="h-4 w-4" />
-                  Regenerated {item.regeneration_history.regeneration_count} time(s)
+                  Regenerated {
+                    item.regeneration_history.regeneration_count
+                  }{" "}
+                  time(s)
                 </div>
               )}
             </div>
@@ -171,8 +182,12 @@ export default function StimulusDetailModal({
                 </div>
               ) : (
                 <div className="bg-stone-100 dark:bg-stone-800 rounded-lg p-8 text-center">
-                  <span className="text-4xl font-semibold text-stone-400">Aa</span>
-                  <p className="text-sm text-stone-500 mt-2">Text-only stimulus</p>
+                  <span className="text-4xl font-semibold text-stone-400">
+                    Aa
+                  </span>
+                  <p className="text-sm text-stone-500 mt-2">
+                    Text-only stimulus
+                  </p>
                 </div>
               )}
 
@@ -190,11 +205,13 @@ export default function StimulusDetailModal({
                       Acceptable answers:
                     </span>
                     <div className="flex gap-2 flex-wrap mt-1">
-                      {item.generation_metadata.acceptable_answers.map((answer) => (
-                        <Badge key={answer} variant="outline">
-                          {answer}
-                        </Badge>
-                      ))}
+                      {item.generation_metadata.acceptable_answers.map(
+                        (answer) => (
+                          <Badge key={answer} variant="outline">
+                            {answer}
+                          </Badge>
+                        ),
+                      )}
                     </div>
                   </div>
                 )}
@@ -206,7 +223,9 @@ export default function StimulusDetailModal({
                   AI Confidence
                 </span>
                 <div className="mt-2">
-                  <ConfidenceBar score={item.generation_metadata.confidence_score} />
+                  <ConfidenceBar
+                    score={item.generation_metadata.confidence_score}
+                  />
                 </div>
               </div>
             </div>
@@ -244,7 +263,10 @@ export default function StimulusDetailModal({
                     <div className="flex justify-between">
                       <span className="text-stone-500">Clarity</span>
                       <span className="text-stone-700 dark:text-stone-300">
-                        {Math.round(item.generation_metadata.clarity_score * 100)}%
+                        {Math.round(
+                          item.generation_metadata.clarity_score * 100,
+                        )}
+                        %
                       </span>
                     </div>
                   )}
@@ -270,11 +292,16 @@ export default function StimulusDetailModal({
                   <h4 className="text-sm font-semibold text-amber-800 dark:text-amber-300">
                     Regeneration History
                   </h4>
-                  {item.regeneration_history.improvement_notes.map((note, i) => (
-                    <p key={i} className="text-sm text-amber-700 dark:text-amber-400">
-                      • {note}
-                    </p>
-                  ))}
+                  {item.regeneration_history.improvement_notes.map(
+                    (note, i) => (
+                      <p
+                        key={i}
+                        className="text-sm text-amber-700 dark:text-amber-400"
+                      >
+                        • {note}
+                      </p>
+                    ),
+                  )}
                 </div>
               )}
             </div>
@@ -326,7 +353,10 @@ export default function StimulusDetailModal({
                   onChange={(e) => setRegenerate(e.target.checked)}
                   className="h-4 w-4 rounded border-stone-300 text-primary focus:ring-primary"
                 />
-                <label htmlFor="regenerate" className="text-sm text-stone-700 dark:text-stone-300">
+                <label
+                  htmlFor="regenerate"
+                  className="text-sm text-stone-700 dark:text-stone-300"
+                >
                   Request regeneration with improved parameters
                 </label>
               </div>
@@ -339,7 +369,10 @@ export default function StimulusDetailModal({
                   <X className="mr-2 h-4 w-4" />
                   Confirm Rejection
                 </Button>
-                <Button variant="outline" onClick={() => setShowRejectForm(false)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowRejectForm(false)}
+                >
                   Cancel
                 </Button>
               </div>

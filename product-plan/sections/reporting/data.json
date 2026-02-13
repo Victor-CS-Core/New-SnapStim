@@ -1,0 +1,516 @@
+{
+  "comments": [
+    {
+      "comment_id": "comment-001",
+      "author_id": "user-001",
+      "author_name": "Dr. Sarah Mitchell",
+      "author_role": "BCBA",
+      "client_id": "client-001",
+      "program_id": "prog-001",
+      "session_id": null,
+      "parent_comment_id": null,
+      "content": "Emma is making excellent progress on fruit identification! Her accuracy has improved from 60% to 85% over the past two weeks. I recommend continuing with the current stimulus set and introducing generalization trials in natural settings (grocery store, kitchen).",
+      "visibility": "public",
+      "tags": ["recommendation"],
+      "attachments": [],
+      "created_at": "2025-01-15T14:30:00Z",
+      "updated_at": null,
+      "edited": false,
+      "read_by": ["user-001", "user-002", "user-006"]
+    },
+    {
+      "comment_id": "comment-002",
+      "author_id": "user-006",
+      "author_name": "Jennifer Thompson",
+      "author_role": "Caregiver",
+      "client_id": "client-001",
+      "program_id": "prog-001",
+      "session_id": null,
+      "parent_comment_id": "comment-001",
+      "content": "Thank you Dr. Mitchell! We've been practicing at home with real fruits. Emma loves identifying them before snack time. Should we continue this at home?",
+      "visibility": "public",
+      "tags": ["question"],
+      "attachments": [],
+      "created_at": "2025-01-15T18:45:00Z",
+      "updated_at": null,
+      "edited": false,
+      "read_by": ["user-001", "user-006"]
+    },
+    {
+      "comment_id": "comment-003",
+      "author_id": "user-001",
+      "author_name": "Dr. Sarah Mitchell",
+      "author_role": "BCBA",
+      "client_id": "client-001",
+      "program_id": "prog-001",
+      "session_id": null,
+      "parent_comment_id": "comment-002",
+      "content": "Yes, absolutely! That's perfect generalization practice. Try to use different varieties of the same fruit (red apple vs green apple) to build her discrimination skills. Let me know how it goes!",
+      "visibility": "public",
+      "tags": ["resolved"],
+      "attachments": [],
+      "created_at": "2025-01-15T20:15:00Z",
+      "updated_at": null,
+      "edited": false,
+      "read_by": ["user-001", "user-006"]
+    },
+    {
+      "comment_id": "comment-004",
+      "author_id": "user-002",
+      "author_name": "Marcus Johnson",
+      "author_role": "RBT",
+      "client_id": "client-002",
+      "program_id": "prog-005",
+      "session_id": "sess-002",
+      "parent_comment_id": null,
+      "content": "Liam struggled with yellow discrimination today. He consistently selected red when asked for yellow. I provided a gestural prompt and he was successful. Wondering if we should add more exemplars of yellow items?",
+      "visibility": "clinical_team",
+      "tags": ["question"],
+      "attachments": [],
+      "created_at": "2025-01-15T15:20:00Z",
+      "updated_at": null,
+      "edited": false,
+      "read_by": ["user-001", "user-002"]
+    },
+    {
+      "comment_id": "comment-005",
+      "author_id": "user-001",
+      "author_name": "Dr. Sarah Mitchell",
+      "author_role": "BCBA",
+      "client_id": "client-002",
+      "program_id": "prog-005",
+      "session_id": "sess-002",
+      "parent_comment_id": "comment-004",
+      "content": "Good observation. Yes, let's add 3 more yellow items (banana, sun, crayon). Also try pairing yellow with red side-by-side to make the contrast clearer. We can reduce prompts gradually as he starts discriminating independently.",
+      "visibility": "clinical_team",
+      "tags": ["recommendation", "resolved"],
+      "attachments": [],
+      "created_at": "2025-01-15T16:45:00Z",
+      "updated_at": null,
+      "edited": false,
+      "read_by": ["user-001", "user-002"]
+    },
+    {
+      "comment_id": "comment-006",
+      "author_id": "user-004",
+      "author_name": "Lisa Chen",
+      "author_role": "RBT",
+      "client_id": "client-003",
+      "program_id": "prog-008",
+      "session_id": "sess-003",
+      "parent_comment_id": null,
+      "content": "**MASTERY ACHIEVED!** 🎉 Sophia successfully demonstrated all four emotions (happy, sad, angry, surprised) with 100% accuracy across 3 consecutive sessions. Ready to move to maintenance phase. This is a huge milestone!",
+      "visibility": "public",
+      "tags": ["urgent"],
+      "attachments": [],
+      "created_at": "2025-01-15T11:00:00Z",
+      "updated_at": null,
+      "edited": false,
+      "read_by": ["user-001", "user-004", "user-007"]
+    },
+    {
+      "comment_id": "comment-007",
+      "author_id": "user-007",
+      "author_name": "Michael Chen",
+      "author_role": "Caregiver",
+      "client_id": "client-003",
+      "program_id": "prog-008",
+      "session_id": null,
+      "parent_comment_id": "comment-006",
+      "content": "This is amazing news! We've noticed Sophia identifying emotions in books and TV shows at home too. Thank you for all your hard work with her!",
+      "visibility": "public",
+      "tags": [],
+      "attachments": [],
+      "created_at": "2025-01-15T19:30:00Z",
+      "updated_at": null,
+      "edited": false,
+      "read_by": ["user-004", "user-007"]
+    },
+    {
+      "comment_id": "comment-008",
+      "author_id": "user-003",
+      "author_name": "Rachel Williams",
+      "author_role": "RBT",
+      "client_id": "client-004",
+      "program_id": "prog-012",
+      "session_id": null,
+      "parent_comment_id": null,
+      "content": "Noah is showing good progress on size concepts. We're at 80% accuracy overall. Planning to introduce 'medium' as a third option once he masters big/small discrimination. Target date: 2 weeks from now.",
+      "visibility": "clinical_team",
+      "tags": ["recommendation"],
+      "attachments": [],
+      "created_at": "2025-01-14T13:00:00Z",
+      "updated_at": null,
+      "edited": false,
+      "read_by": ["user-001", "user-003"]
+    },
+    {
+      "comment_id": "comment-009",
+      "author_id": "user-001",
+      "author_name": "Dr. Sarah Mitchell",
+      "author_role": "BCBA",
+      "client_id": "client-005",
+      "program_id": "prog-015",
+      "session_id": null,
+      "parent_comment_id": null,
+      "content": "**SUPERVISOR REVIEW NEEDED:** Olivia has mastered all motor imitation skills in the current program. I recommend transitioning to vocal imitation next. Please review and approve the proposed program transition. @Dr. Roberts",
+      "visibility": "supervisor_only",
+      "tags": ["urgent", "review_needed"],
+      "attachments": [],
+      "created_at": "2025-01-13T16:00:00Z",
+      "updated_at": null,
+      "edited": false,
+      "read_by": ["user-001"]
+    },
+    {
+      "comment_id": "comment-010",
+      "author_id": "user-002",
+      "author_name": "Marcus Johnson",
+      "author_role": "RBT",
+      "client_id": "client-001",
+      "program_id": "prog-002",
+      "session_id": "sess-004",
+      "parent_comment_id": null,
+      "content": "Emma's attention during body part identification sessions has been excellent. She's responding quickly (avg 2 seconds) and with high accuracy. Currently on a 5-trial correct streak!",
+      "visibility": "clinical_team",
+      "tags": [],
+      "attachments": [],
+      "created_at": "2025-01-16T14:00:00Z",
+      "updated_at": null,
+      "edited": false,
+      "read_by": ["user-002"]
+    }
+  ],
+  "reportTemplates": [
+    {
+      "template_id": "template-001",
+      "template_name": "Weekly Progress Summary",
+      "template_type": "weekly",
+      "sections": [
+        "client_demographics",
+        "session_attendance",
+        "program_progress_summary",
+        "accuracy_graphs",
+        "therapist_observations",
+        "recommendations"
+      ],
+      "format": "pdf",
+      "created_by": "user-001",
+      "is_default": true,
+      "customizable": true
+    },
+    {
+      "template_id": "template-002",
+      "template_name": "Monthly Progress Report",
+      "template_type": "monthly",
+      "sections": [
+        "client_demographics",
+        "executive_summary",
+        "session_attendance",
+        "program_breakdown",
+        "mastery_achievements",
+        "accuracy_graphs",
+        "response_time_analysis",
+        "detailed_session_notes",
+        "therapist_observations",
+        "goals_for_next_month",
+        "recommendations"
+      ],
+      "format": "pdf",
+      "created_by": "user-001",
+      "is_default": true,
+      "customizable": true
+    },
+    {
+      "template_id": "template-003",
+      "template_name": "Insurance Authorization Report",
+      "template_type": "insurance",
+      "sections": [
+        "client_demographics",
+        "diagnosis_codes",
+        "treatment_summary",
+        "session_attendance",
+        "measurable_progress",
+        "program_breakdown",
+        "mastery_documentation",
+        "bcba_signature",
+        "clinical_justification"
+      ],
+      "format": "pdf",
+      "created_by": "user-001",
+      "is_default": true,
+      "customizable": false
+    },
+    {
+      "template_id": "template-004",
+      "template_name": "School IEP Progress Report",
+      "template_type": "school",
+      "sections": [
+        "student_information",
+        "iep_goals_alignment",
+        "skill_acquisition_summary",
+        "generalization_evidence",
+        "behavioral_observations",
+        "recommendations_for_school",
+        "collaboration_notes"
+      ],
+      "format": "word",
+      "created_by": "user-001",
+      "is_default": true,
+      "customizable": true
+    },
+    {
+      "template_id": "template-005",
+      "template_name": "Quarterly Clinical Review",
+      "template_type": "quarterly",
+      "sections": [
+        "client_demographics",
+        "executive_summary",
+        "quarter_overview",
+        "program_mastery_summary",
+        "new_programs_introduced",
+        "skill_generalization",
+        "behavioral_trends",
+        "family_involvement",
+        "treatment_plan_adjustments",
+        "goals_for_next_quarter"
+      ],
+      "format": "pdf",
+      "created_by": "user-001",
+      "is_default": true,
+      "customizable": true
+    },
+    {
+      "template_id": "template-006",
+      "template_name": "Raw Session Data Export",
+      "template_type": "custom",
+      "sections": [
+        "session_metadata",
+        "trial_data",
+        "stimulus_performance",
+        "response_times"
+      ],
+      "format": "excel",
+      "created_by": "user-001",
+      "is_default": false,
+      "customizable": false
+    }
+  ],
+  "exportJobs": [
+    {
+      "export_id": "export-001",
+      "template_id": "template-002",
+      "client_id": "client-001",
+      "program_ids": ["prog-001", "prog-002"],
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-01-31"
+      },
+      "format": "pdf",
+      "status": "completed",
+      "download_url": "https://exports.snapstim.com/export-001.pdf",
+      "created_at": "2025-02-01T09:00:00Z",
+      "expires_at": "2025-03-03T09:00:00Z",
+      "file_size_bytes": 2456789
+    },
+    {
+      "export_id": "export-002",
+      "template_id": "template-001",
+      "client_id": "client-002",
+      "program_ids": ["prog-005"],
+      "date_range": {
+        "start": "2025-01-08",
+        "end": "2025-01-15"
+      },
+      "format": "pdf",
+      "status": "completed",
+      "download_url": "https://exports.snapstim.com/export-002.pdf",
+      "created_at": "2025-01-16T10:30:00Z",
+      "expires_at": "2025-02-15T10:30:00Z",
+      "file_size_bytes": 1234567
+    },
+    {
+      "export_id": "export-003",
+      "template_id": "template-006",
+      "client_id": "client-003",
+      "program_ids": ["prog-008"],
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-01-15"
+      },
+      "format": "excel",
+      "status": "completed",
+      "download_url": "https://exports.snapstim.com/export-003.xlsx",
+      "created_at": "2025-01-16T14:00:00Z",
+      "expires_at": "2025-02-15T14:00:00Z",
+      "file_size_bytes": 567890
+    },
+    {
+      "export_id": "export-004",
+      "template_id": "template-003",
+      "client_id": "client-001",
+      "program_ids": ["prog-001", "prog-002"],
+      "date_range": {
+        "start": "2024-10-01",
+        "end": "2024-12-31"
+      },
+      "format": "pdf",
+      "status": "completed",
+      "download_url": "https://exports.snapstim.com/export-004.pdf",
+      "created_at": "2025-01-05T11:00:00Z",
+      "expires_at": "2025-02-04T11:00:00Z",
+      "file_size_bytes": 3456789
+    },
+    {
+      "export_id": "export-005",
+      "template_id": "template-002",
+      "client_id": "client-004",
+      "program_ids": ["prog-012"],
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-01-31"
+      },
+      "format": "pdf",
+      "status": "processing",
+      "download_url": null,
+      "created_at": "2025-02-13T08:00:00Z",
+      "expires_at": "2025-03-15T08:00:00Z",
+      "file_size_bytes": 0
+    }
+  ],
+  "chartConfigurations": [
+    {
+      "chart_id": "chart-001",
+      "chart_type": "line",
+      "title": "Accuracy Trends - Last 30 Days",
+      "data_source": "sessions",
+      "filters": {
+        "client_id": "client-001",
+        "program_ids": ["prog-001", "prog-002"]
+      },
+      "date_range": {
+        "start": "2025-01-14",
+        "end": "2025-02-13"
+      },
+      "programs": ["prog-001", "prog-002"],
+      "aggregation": "daily"
+    },
+    {
+      "chart_id": "chart-002",
+      "chart_type": "bar",
+      "title": "Session Volume by Week",
+      "data_source": "sessions",
+      "filters": {
+        "client_id": "client-001",
+        "program_ids": []
+      },
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-02-13"
+      },
+      "programs": [],
+      "aggregation": "weekly"
+    },
+    {
+      "chart_id": "chart-003",
+      "chart_type": "stacked_bar",
+      "title": "Response Type Distribution",
+      "data_source": "sessions",
+      "filters": {
+        "client_id": "client-002",
+        "program_ids": ["prog-005"]
+      },
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-02-13"
+      },
+      "programs": ["prog-005"],
+      "aggregation": "weekly"
+    },
+    {
+      "chart_id": "chart-004",
+      "chart_type": "bar",
+      "title": "Mastery Progress - All Programs",
+      "data_source": "programs",
+      "filters": {
+        "client_id": "client-003"
+      },
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-02-13"
+      },
+      "programs": ["prog-008"],
+      "aggregation": "monthly"
+    }
+  ],
+  "dashboardMetrics": {
+    "total_sessions_this_month": 47,
+    "average_accuracy_all_programs": 82.5,
+    "programs_at_mastery": 3,
+    "active_programs": 12,
+    "total_comments_unread": 5,
+    "reports_generated_this_month": 8,
+    "scheduled_exports_active": 3
+  },
+  "notificationSettings": [
+    {
+      "user_id": "user-001",
+      "email_notifications": true,
+      "urgent_comments": true,
+      "mentions": true,
+      "daily_digest": false,
+      "report_generation_complete": true,
+      "scheduled_export_complete": true
+    },
+    {
+      "user_id": "user-006",
+      "email_notifications": true,
+      "urgent_comments": false,
+      "mentions": true,
+      "daily_digest": true,
+      "report_generation_complete": false,
+      "scheduled_export_complete": false
+    }
+  ],
+  "scheduledExports": [
+    {
+      "schedule_id": "schedule-001",
+      "template_id": "template-001",
+      "client_id": "client-001",
+      "program_ids": [],
+      "frequency": "weekly",
+      "day_of_week": "friday",
+      "time": "17:00",
+      "recipients": ["jennifer.thompson@email.com"],
+      "format": "pdf",
+      "active": true,
+      "next_run": "2025-02-14T17:00:00Z"
+    },
+    {
+      "schedule_id": "schedule-002",
+      "template_id": "template-002",
+      "client_id": "client-002",
+      "program_ids": [],
+      "frequency": "monthly",
+      "day_of_month": 1,
+      "time": "09:00",
+      "recipients": ["supervisor@clinic.com"],
+      "format": "pdf",
+      "active": true,
+      "next_run": "2025-03-01T09:00:00Z"
+    },
+    {
+      "schedule_id": "schedule-003",
+      "template_id": "template-006",
+      "client_id": "client-003",
+      "program_ids": ["prog-008"],
+      "frequency": "weekly",
+      "day_of_week": "monday",
+      "time": "08:00",
+      "recipients": ["data-analysis@clinic.com"],
+      "format": "excel",
+      "active": true,
+      "next_run": "2025-02-17T08:00:00Z"
+    }
+  ]
+}

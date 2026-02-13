@@ -1,0 +1,789 @@
+{
+  "programs": [
+    {
+      "program_id": "prg_1",
+      "program_name": "Requesting Items",
+      "client_id": "cli_1",
+      "program_type": "expressive_labeling",
+      "category": "Communication",
+      "description": "Teach client to verbally request preferred items using clear 2-3 word phrases",
+      "mode": "teaching",
+      "status": "active",
+      "mastery_threshold": 80,
+      "consecutive_sessions_for_mastery": 3,
+      "teaching_instructions": "Present item within view but out of reach. Prompt: 'What do you want?' Wait 3 seconds for independent response. If no response, provide verbal model. Reinforce with access to item for 30 seconds.",
+      "rerun_policy": {
+        "error_correction": true,
+        "immediate_rerun_on_error": true,
+        "mastery_maintenance": false,
+        "trial_count": 10
+      },
+      "created_by": "usr_1",
+      "created_date": "2024-09-15T10:30:00Z",
+      "last_modified_date": "2025-01-10T14:22:00Z",
+      "last_run_date": "2026-02-12T09:15:00Z",
+      "performance": {
+        "total_trials": 234,
+        "correct_trials": 167,
+        "accuracy_percent": 71,
+        "trend": "improving",
+        "consecutive_mastery_sessions": 0,
+        "sessions_to_date": 24
+      },
+      "ai_metadata": {
+        "generation_date": "2024-09-15T10:35:00Z",
+        "generation_model": "gpt-4-vision",
+        "stimuli_generated": 15,
+        "stimuli_approved": 12,
+        "stimuli_rejected": 3
+      }
+    },
+    {
+      "program_id": "prg_2",
+      "program_name": "Tacting Colors",
+      "client_id": "cli_1",
+      "program_type": "expressive_labeling",
+      "category": "Receptive Language",
+      "description": "Teach client to label 8 primary and secondary colors when presented with color cards",
+      "mode": "teaching",
+      "status": "active",
+      "mastery_threshold": 90,
+      "consecutive_sessions_for_mastery": 3,
+      "teaching_instructions": "Present color card and ask 'What color?' Wait 5 seconds. Reinforce correct responses with praise and token. Use errorless teaching for first 3 trials.",
+      "rerun_policy": {
+        "error_correction": true,
+        "immediate_rerun_on_error": true,
+        "mastery_maintenance": true,
+        "trial_count": 12
+      },
+      "created_by": "usr_1",
+      "created_date": "2024-10-01T11:00:00Z",
+      "last_modified_date": "2024-10-01T11:00:00Z",
+      "last_run_date": "2026-02-13T10:30:00Z",
+      "performance": {
+        "total_trials": 156,
+        "correct_trials": 141,
+        "accuracy_percent": 90,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 2,
+        "sessions_to_date": 13
+      },
+      "ai_metadata": {
+        "generation_date": "2024-10-01T11:05:00Z",
+        "generation_model": "gpt-4-vision",
+        "stimuli_generated": 8,
+        "stimuli_approved": 8,
+        "stimuli_rejected": 0
+      }
+    },
+    {
+      "program_id": "prg_3",
+      "program_name": "Intraverbal Associations - Food",
+      "client_id": "cli_1",
+      "program_type": "intraverbal",
+      "category": "Language",
+      "description": "Teach client to complete common phrases related to food and eating",
+      "mode": "generalization",
+      "status": "active",
+      "mastery_threshold": 85,
+      "consecutive_sessions_for_mastery": 3,
+      "teaching_instructions": "Present verbal prompt (e.g., 'You drink ___'). Wait 5 seconds for response. Accept functionally equivalent answers. Reinforce with social praise.",
+      "rerun_policy": {
+        "error_correction": false,
+        "immediate_rerun_on_error": false,
+        "mastery_maintenance": true,
+        "trial_count": 15
+      },
+      "created_by": "usr_1",
+      "created_date": "2024-11-12T09:20:00Z",
+      "last_modified_date": "2024-11-12T09:20:00Z",
+      "last_run_date": "2026-02-11T15:45:00Z",
+      "performance": {
+        "total_trials": 89,
+        "correct_trials": 71,
+        "accuracy_percent": 80,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 0,
+        "sessions_to_date": 6
+      },
+      "ai_metadata": {
+        "generation_date": "2024-11-12T09:25:00Z",
+        "generation_model": "gpt-4",
+        "stimuli_generated": 20,
+        "stimuli_approved": 18,
+        "stimuli_rejected": 2
+      }
+    },
+    {
+      "program_id": "prg_4",
+      "program_name": "Receptive ID - Body Parts",
+      "client_id": "cli_1",
+      "program_type": "receptive_identification",
+      "category": "Receptive Language",
+      "description": "Teach client to touch named body parts on themselves when given verbal instruction",
+      "mode": "teaching",
+      "status": "paused",
+      "mastery_threshold": 80,
+      "consecutive_sessions_for_mastery": 3,
+      "teaching_instructions": "Say 'Touch your [body part]'. Wait 3 seconds. Use gentle physical prompt if needed. Fade prompts systematically.",
+      "rerun_policy": {
+        "error_correction": true,
+        "immediate_rerun_on_error": true,
+        "mastery_maintenance": false,
+        "trial_count": 10
+      },
+      "created_by": "usr_1",
+      "created_date": "2024-09-20T14:15:00Z",
+      "last_modified_date": "2025-12-05T10:30:00Z",
+      "last_run_date": "2025-12-01T11:20:00Z",
+      "performance": {
+        "total_trials": 178,
+        "correct_trials": 98,
+        "accuracy_percent": 55,
+        "trend": "declining",
+        "consecutive_mastery_sessions": 0,
+        "sessions_to_date": 18
+      },
+      "ai_metadata": {
+        "generation_date": "2024-09-20T14:20:00Z",
+        "generation_model": "gpt-4-vision",
+        "stimuli_generated": 12,
+        "stimuli_approved": 10,
+        "stimuli_rejected": 2
+      }
+    },
+    {
+      "program_id": "prg_5",
+      "program_name": "Following 2-Step Instructions",
+      "client_id": "cli_2",
+      "program_type": "listener_responding",
+      "category": "Compliance",
+      "description": "Teach client to follow 2-step unrelated instructions without additional prompting",
+      "mode": "teaching",
+      "status": "active",
+      "mastery_threshold": 80,
+      "consecutive_sessions_for_mastery": 3,
+      "teaching_instructions": "State instruction clearly once (e.g., 'Touch your head and clap hands'). Wait 5 seconds. Use gestural prompts if needed for first step only.",
+      "rerun_policy": {
+        "error_correction": true,
+        "immediate_rerun_on_error": false,
+        "mastery_maintenance": false,
+        "trial_count": 8
+      },
+      "created_by": "usr_1",
+      "created_date": "2025-01-08T10:00:00Z",
+      "last_modified_date": "2025-01-08T10:00:00Z",
+      "last_run_date": "2026-02-12T13:30:00Z",
+      "performance": {
+        "total_trials": 112,
+        "correct_trials": 76,
+        "accuracy_percent": 68,
+        "trend": "improving",
+        "consecutive_mastery_sessions": 0,
+        "sessions_to_date": 14
+      },
+      "ai_metadata": {
+        "generation_date": "2025-01-08T10:05:00Z",
+        "generation_model": "gpt-4",
+        "stimuli_generated": 25,
+        "stimuli_approved": 22,
+        "stimuli_rejected": 3
+      }
+    },
+    {
+      "program_id": "prg_6",
+      "program_name": "Tacting Common Objects",
+      "client_id": "cli_2",
+      "program_type": "expressive_labeling",
+      "category": "Communication",
+      "description": "Teach client to label 20 common household objects when shown pictures or real items",
+      "mode": "teaching",
+      "status": "active",
+      "mastery_threshold": 85,
+      "consecutive_sessions_for_mastery": 3,
+      "teaching_instructions": "Present object/picture and ask 'What is this?' Wait 5 seconds. Provide verbal model if no response. Reinforce approximations initially.",
+      "rerun_policy": {
+        "error_correction": true,
+        "immediate_rerun_on_error": true,
+        "mastery_maintenance": false,
+        "trial_count": 15
+      },
+      "created_by": "usr_1",
+      "created_date": "2024-11-20T09:30:00Z",
+      "last_modified_date": "2024-11-20T09:30:00Z",
+      "last_run_date": "2026-02-13T09:00:00Z",
+      "performance": {
+        "total_trials": 267,
+        "correct_trials": 187,
+        "accuracy_percent": 70,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 0,
+        "sessions_to_date": 18
+      },
+      "ai_metadata": {
+        "generation_date": "2024-11-20T09:35:00Z",
+        "generation_model": "gpt-4-vision",
+        "stimuli_generated": 20,
+        "stimuli_approved": 20,
+        "stimuli_rejected": 0
+      }
+    },
+    {
+      "program_id": "prg_7",
+      "program_name": "Receptive ID - Animals",
+      "client_id": "cli_3",
+      "program_type": "receptive_identification",
+      "category": "Receptive Language",
+      "description": "Teach client to point to named animals from a field of 3-4 pictures",
+      "mode": "teaching",
+      "status": "active",
+      "mastery_threshold": 90,
+      "consecutive_sessions_for_mastery": 3,
+      "teaching_instructions": "Place 3-4 animal pictures in front of client. Say 'Touch [animal]'. Wait 3 seconds. Use errorless teaching with fading.",
+      "rerun_policy": {
+        "error_correction": true,
+        "immediate_rerun_on_error": true,
+        "mastery_maintenance": true,
+        "trial_count": 12
+      },
+      "created_by": "usr_1",
+      "created_date": "2025-02-01T11:15:00Z",
+      "last_modified_date": "2025-02-01T11:15:00Z",
+      "last_run_date": "2026-02-10T14:20:00Z",
+      "performance": {
+        "total_trials": 84,
+        "correct_trials": 76,
+        "accuracy_percent": 90,
+        "trend": "improving",
+        "consecutive_mastery_sessions": 2,
+        "sessions_to_date": 7
+      },
+      "ai_metadata": {
+        "generation_date": "2025-02-01T11:20:00Z",
+        "generation_model": "gpt-4-vision",
+        "stimuli_generated": 15,
+        "stimuli_approved": 15,
+        "stimuli_rejected": 0
+      }
+    },
+    {
+      "program_id": "prg_8",
+      "program_name": "Preposition Understanding",
+      "client_id": "cli_4",
+      "program_type": "listener_responding",
+      "category": "Receptive Language",
+      "description": "Teach client to place objects in specified locations using prepositions (in, on, under, next to)",
+      "mode": "teaching",
+      "status": "active",
+      "mastery_threshold": 80,
+      "consecutive_sessions_for_mastery": 3,
+      "teaching_instructions": "Give instruction 'Put the [object] [preposition] the [location]'. Wait 5 seconds. Model correct placement if needed.",
+      "rerun_policy": {
+        "error_correction": true,
+        "immediate_rerun_on_error": true,
+        "mastery_maintenance": false,
+        "trial_count": 10
+      },
+      "created_by": "usr_1",
+      "created_date": "2025-03-15T10:45:00Z",
+      "last_modified_date": "2025-03-15T10:45:00Z",
+      "last_run_date": "2026-02-09T15:10:00Z",
+      "performance": {
+        "total_trials": 56,
+        "correct_trials": 39,
+        "accuracy_percent": 70,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 0,
+        "sessions_to_date": 6
+      },
+      "ai_metadata": {
+        "generation_date": "2025-03-15T10:50:00Z",
+        "generation_model": "gpt-4",
+        "stimuli_generated": 16,
+        "stimuli_approved": 14,
+        "stimuli_rejected": 2
+      }
+    },
+    {
+      "program_id": "prg_9",
+      "program_name": "Tacting Emotions",
+      "client_id": "cli_5",
+      "program_type": "expressive_labeling",
+      "category": "Social Skills",
+      "description": "Teach client to label 6 basic emotions when shown pictures of faces",
+      "mode": "generalization",
+      "status": "mastered",
+      "mastery_threshold": 90,
+      "consecutive_sessions_for_mastery": 3,
+      "teaching_instructions": "Show picture of face expressing emotion. Ask 'How does this person feel?' Wait 5 seconds. Accept synonyms (e.g., 'mad' for 'angry').",
+      "rerun_policy": {
+        "error_correction": false,
+        "immediate_rerun_on_error": false,
+        "mastery_maintenance": true,
+        "trial_count": 12
+      },
+      "created_by": "usr_1",
+      "created_date": "2024-08-10T09:00:00Z",
+      "last_modified_date": "2025-11-22T14:15:00Z",
+      "last_run_date": "2025-12-15T11:30:00Z",
+      "performance": {
+        "total_trials": 198,
+        "correct_trials": 186,
+        "accuracy_percent": 94,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 5,
+        "sessions_to_date": 17
+      },
+      "ai_metadata": {
+        "generation_date": "2024-08-10T09:05:00Z",
+        "generation_model": "gpt-4-vision",
+        "stimuli_generated": 18,
+        "stimuli_approved": 18,
+        "stimuli_rejected": 0
+      }
+    },
+    {
+      "program_id": "prg_10",
+      "program_name": "Intraverbal WH Questions",
+      "client_id": "cli_3",
+      "program_type": "intraverbal",
+      "category": "Language",
+      "description": "Teach client to answer simple WH questions about common knowledge (what, where, when, who)",
+      "mode": "teaching",
+      "status": "active",
+      "mastery_threshold": 85,
+      "consecutive_sessions_for_mastery": 3,
+      "teaching_instructions": "Ask WH question (e.g., 'What do you wear on your feet?'). Wait 5 seconds. Provide choices if needed initially. Fade to independent responding.",
+      "rerun_policy": {
+        "error_correction": true,
+        "immediate_rerun_on_error": false,
+        "mastery_maintenance": false,
+        "trial_count": 12
+      },
+      "created_by": "usr_1",
+      "created_date": "2025-01-20T13:30:00Z",
+      "last_modified_date": "2025-01-20T13:30:00Z",
+      "last_run_date": "2026-02-11T10:15:00Z",
+      "performance": {
+        "total_trials": 132,
+        "correct_trials": 103,
+        "accuracy_percent": 78,
+        "trend": "improving",
+        "consecutive_mastery_sessions": 0,
+        "sessions_to_date": 11
+      },
+      "ai_metadata": {
+        "generation_date": "2025-01-20T13:35:00Z",
+        "generation_model": "gpt-4",
+        "stimuli_generated": 30,
+        "stimuli_approved": 28,
+        "stimuli_rejected": 2
+      }
+    }
+  ],
+  "stimuli": [
+    {
+      "stimulus_id": "stim_1",
+      "program_id": "prg_1",
+      "stimulus_text": "juice",
+      "image_url": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "common drink for young children",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.95
+      },
+      "created_date": "2024-09-15T10:35:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-09-15T11:00:00Z",
+      "trial_data": {
+        "times_presented": 24,
+        "correct_responses": 19,
+        "accuracy_percent": 79
+      }
+    },
+    {
+      "stimulus_id": "stim_2",
+      "program_id": "prg_1",
+      "stimulus_text": "cookie",
+      "image_url": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "common snack food",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.98
+      },
+      "created_date": "2024-09-15T10:35:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-09-15T11:00:00Z",
+      "trial_data": {
+        "times_presented": 22,
+        "correct_responses": 18,
+        "accuracy_percent": 82
+      }
+    },
+    {
+      "stimulus_id": "stim_3",
+      "program_id": "prg_1",
+      "stimulus_text": "toy car",
+      "image_url": "https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "popular toy for children",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.92
+      },
+      "created_date": "2024-09-15T10:35:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-09-15T11:00:00Z",
+      "trial_data": {
+        "times_presented": 20,
+        "correct_responses": 12,
+        "accuracy_percent": 60
+      }
+    },
+    {
+      "stimulus_id": "stim_4",
+      "program_id": "prg_1",
+      "stimulus_text": "iPad",
+      "image_url": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "electronic device children use",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.96
+      },
+      "created_date": "2024-09-15T10:35:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-09-15T11:00:00Z",
+      "trial_data": {
+        "times_presented": 18,
+        "correct_responses": 16,
+        "accuracy_percent": 89
+      }
+    },
+    {
+      "stimulus_id": "stim_5",
+      "program_id": "prg_1",
+      "stimulus_text": "ball",
+      "image_url": "https://images.unsplash.com/photo-1575361204480-aadea25e6e68?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "common toy ball",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.94
+      },
+      "created_date": "2024-09-15T10:35:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-09-15T11:00:00Z",
+      "trial_data": {
+        "times_presented": 23,
+        "correct_responses": 14,
+        "accuracy_percent": 61
+      }
+    },
+    {
+      "stimulus_id": "stim_6",
+      "program_id": "prg_2",
+      "stimulus_text": "red",
+      "image_url": "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "solid red color card",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.99
+      },
+      "created_date": "2024-10-01T11:05:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-10-01T11:15:00Z",
+      "trial_data": {
+        "times_presented": 20,
+        "correct_responses": 19,
+        "accuracy_percent": 95
+      }
+    },
+    {
+      "stimulus_id": "stim_7",
+      "program_id": "prg_2",
+      "stimulus_text": "blue",
+      "image_url": "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "solid blue color card",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.99
+      },
+      "created_date": "2024-10-01T11:05:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-10-01T11:15:00Z",
+      "trial_data": {
+        "times_presented": 19,
+        "correct_responses": 18,
+        "accuracy_percent": 95
+      }
+    },
+    {
+      "stimulus_id": "stim_8",
+      "program_id": "prg_2",
+      "stimulus_text": "yellow",
+      "image_url": "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "solid yellow color card",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.99
+      },
+      "created_date": "2024-10-01T11:05:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-10-01T11:15:00Z",
+      "trial_data": {
+        "times_presented": 18,
+        "correct_responses": 17,
+        "accuracy_percent": 94
+      }
+    },
+    {
+      "stimulus_id": "stim_9",
+      "program_id": "prg_2",
+      "stimulus_text": "green",
+      "image_url": "https://images.unsplash.com/photo-1621508638194-f1a7e6b4c111?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "solid green color card",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.99
+      },
+      "created_date": "2024-10-01T11:05:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-10-01T11:15:00Z",
+      "trial_data": {
+        "times_presented": 21,
+        "correct_responses": 19,
+        "accuracy_percent": 90
+      }
+    },
+    {
+      "stimulus_id": "stim_10",
+      "program_id": "prg_3",
+      "stimulus_text": "You drink ___",
+      "image_url": null,
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "intraverbal fill-in about beverages",
+        "model": "gpt-4",
+        "confidence_score": 0.97,
+        "acceptable_answers": ["water", "juice", "milk", "soda"]
+      },
+      "created_date": "2024-11-12T09:25:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-11-12T09:40:00Z",
+      "trial_data": {
+        "times_presented": 12,
+        "correct_responses": 10,
+        "accuracy_percent": 83
+      }
+    },
+    {
+      "stimulus_id": "stim_11",
+      "program_id": "prg_3",
+      "stimulus_text": "You eat with a ___",
+      "image_url": null,
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "intraverbal fill-in about utensils",
+        "model": "gpt-4",
+        "confidence_score": 0.98,
+        "acceptable_answers": ["fork", "spoon", "knife"]
+      },
+      "created_date": "2024-11-12T09:25:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-11-12T09:40:00Z",
+      "trial_data": {
+        "times_presented": 14,
+        "correct_responses": 11,
+        "accuracy_percent": 79
+      }
+    },
+    {
+      "stimulus_id": "stim_12",
+      "program_id": "prg_5",
+      "stimulus_text": "Touch your nose and clap",
+      "image_url": null,
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "2-step instruction combining body part and action",
+        "model": "gpt-4",
+        "confidence_score": 0.95
+      },
+      "created_date": "2025-01-08T10:05:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2025-01-08T10:20:00Z",
+      "trial_data": {
+        "times_presented": 15,
+        "correct_responses": 9,
+        "accuracy_percent": 60
+      }
+    },
+    {
+      "stimulus_id": "stim_13",
+      "program_id": "prg_5",
+      "stimulus_text": "Stand up and touch the table",
+      "image_url": null,
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "2-step instruction with movement and object interaction",
+        "model": "gpt-4",
+        "confidence_score": 0.93
+      },
+      "created_date": "2025-01-08T10:05:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2025-01-08T10:20:00Z",
+      "trial_data": {
+        "times_presented": 16,
+        "correct_responses": 12,
+        "accuracy_percent": 75
+      }
+    },
+    {
+      "stimulus_id": "stim_14",
+      "program_id": "prg_7",
+      "stimulus_text": "dog",
+      "image_url": "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "friendly dog photo for children",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.97
+      },
+      "created_date": "2025-02-01T11:20:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2025-02-01T11:35:00Z",
+      "trial_data": {
+        "times_presented": 12,
+        "correct_responses": 11,
+        "accuracy_percent": 92
+      }
+    },
+    {
+      "stimulus_id": "stim_15",
+      "program_id": "prg_7",
+      "stimulus_text": "cat",
+      "image_url": "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "friendly cat photo for children",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.98
+      },
+      "created_date": "2025-02-01T11:20:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2025-02-01T11:35:00Z",
+      "trial_data": {
+        "times_presented": 11,
+        "correct_responses": 10,
+        "accuracy_percent": 91
+      }
+    },
+    {
+      "stimulus_id": "stim_16",
+      "program_id": "prg_9",
+      "stimulus_text": "happy",
+      "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "person showing happy emotion clearly",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.96
+      },
+      "created_date": "2024-08-10T09:05:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-08-10T09:20:00Z",
+      "trial_data": {
+        "times_presented": 33,
+        "correct_responses": 31,
+        "accuracy_percent": 94
+      }
+    },
+    {
+      "stimulus_id": "stim_17",
+      "program_id": "prg_9",
+      "stimulus_text": "sad",
+      "image_url": "https://images.unsplash.com/photo-1530268729831-4b0b9e170218?w=400",
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "person showing sad emotion clearly",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.95
+      },
+      "created_date": "2024-08-10T09:05:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2024-08-10T09:20:00Z",
+      "trial_data": {
+        "times_presented": 32,
+        "correct_responses": 30,
+        "accuracy_percent": 94
+      }
+    },
+    {
+      "stimulus_id": "stim_18",
+      "program_id": "prg_6",
+      "stimulus_text": "cup",
+      "image_url": "https://images.unsplash.com/photo-1517256673644-36ad11246d21?w=400",
+      "review_status": "pending",
+      "generation_metadata": {
+        "prompt": "common drinking cup",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.91
+      },
+      "created_date": "2026-02-10T14:30:00Z",
+      "reviewed_by": null,
+      "reviewed_date": null,
+      "trial_data": {
+        "times_presented": 0,
+        "correct_responses": 0,
+        "accuracy_percent": 0
+      }
+    },
+    {
+      "stimulus_id": "stim_19",
+      "program_id": "prg_6",
+      "stimulus_text": "spoon",
+      "image_url": "https://images.unsplash.com/photo-1564759224907-65b945c5e191?w=400",
+      "review_status": "pending",
+      "generation_metadata": {
+        "prompt": "metal spoon on white background",
+        "model": "gpt-4-vision",
+        "confidence_score": 0.93
+      },
+      "created_date": "2026-02-10T14:30:00Z",
+      "reviewed_by": null,
+      "reviewed_date": null,
+      "trial_data": {
+        "times_presented": 0,
+        "correct_responses": 0,
+        "accuracy_percent": 0
+      }
+    },
+    {
+      "stimulus_id": "stim_20",
+      "program_id": "prg_10",
+      "stimulus_text": "What do you wear on your feet?",
+      "image_url": null,
+      "review_status": "approved",
+      "generation_metadata": {
+        "prompt": "WH question about clothing",
+        "model": "gpt-4",
+        "confidence_score": 0.97,
+        "acceptable_answers": ["shoes", "socks", "sandals", "boots"]
+      },
+      "created_date": "2025-01-20T13:35:00Z",
+      "reviewed_by": "usr_1",
+      "reviewed_date": "2025-01-20T13:50:00Z",
+      "trial_data": {
+        "times_presented": 14,
+        "correct_responses": 11,
+        "accuracy_percent": 79
+      }
+    }
+  ]
+}

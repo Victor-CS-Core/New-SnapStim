@@ -1,0 +1,108 @@
+{
+  "users": [
+    {
+      "id": "usr_1",
+      "name": "Dr. Sarah Chen",
+      "email": "sarah.chen@snapstim.example",
+      "role": "BCBA",
+      "status": "Active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+      "phone": "+1 (555) 123-4567",
+      "createdAt": "2025-01-15T09:00:00Z",
+      "lastActiveAt": "2026-02-13T14:30:00Z",
+      "assignedClients": ["cli_1", "cli_2", "cli_3", "cli_4", "cli_5"],
+      "assignedPrograms": []
+    },
+    {
+      "id": "usr_2",
+      "name": "Mike Johnson",
+      "email": "mike.johnson@snapstim.example",
+      "role": "RBT",
+      "status": "Active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Mike",
+      "phone": "+1 (555) 234-5678",
+      "createdAt": "2025-03-10T10:30:00Z",
+      "lastActiveAt": "2026-02-13T11:45:00Z",
+      "assignedClients": ["cli_1", "cli_2"],
+      "assignedPrograms": ["prg_1", "prg_2", "prg_3", "prg_4"]
+    },
+    {
+      "id": "usr_3",
+      "name": "Emma Davis",
+      "email": "emma.davis@example.com",
+      "role": "Caregiver",
+      "status": "Active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Emma",
+      "phone": "+1 (555) 345-6789",
+      "createdAt": "2025-06-20T14:00:00Z",
+      "lastActiveAt": "2026-02-12T19:30:00Z",
+      "assignedClients": ["cli_1"],
+      "assignedPrograms": ["prg_1", "prg_2"]
+    },
+    {
+      "id": "usr_4",
+      "name": "Dr. James Wilson",
+      "email": "james.wilson@snapstim.example",
+      "role": "BCBA",
+      "status": "Active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=James",
+      "phone": "+1 (555) 456-7890",
+      "createdAt": "2024-11-05T08:00:00Z",
+      "lastActiveAt": "2026-02-13T08:15:00Z",
+      "assignedClients": ["cli_3", "cli_4", "cli_5"],
+      "assignedPrograms": []
+    },
+    {
+      "id": "usr_5",
+      "name": "Lisa Martinez",
+      "email": "lisa.martinez@snapstim.example",
+      "role": "RBT",
+      "status": "Active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Lisa",
+      "phone": "+1 (555) 567-8901",
+      "createdAt": "2025-08-12T11:00:00Z",
+      "lastActiveAt": "2026-02-13T13:00:00Z",
+      "assignedClients": ["cli_3", "cli_4", "cli_5"],
+      "assignedPrograms": ["prg_5", "prg_6", "prg_7"]
+    },
+    {
+      "id": "usr_6",
+      "name": "Robert Taylor",
+      "email": "robert.taylor@example.com",
+      "role": "Caregiver",
+      "status": "Active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Robert",
+      "phone": "+1 (555) 678-9012",
+      "createdAt": "2025-09-18T15:30:00Z",
+      "lastActiveAt": "2026-02-10T18:45:00Z",
+      "assignedClients": ["cli_2"],
+      "assignedPrograms": ["prg_3"]
+    },
+    {
+      "id": "usr_7",
+      "name": "Amanda Lee",
+      "email": "amanda.lee@snapstim.example",
+      "role": "RBT",
+      "status": "Inactive",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Amanda",
+      "phone": "+1 (555) 789-0123",
+      "createdAt": "2025-02-28T09:00:00Z",
+      "lastActiveAt": "2025-12-15T16:30:00Z",
+      "assignedClients": ["cli_1"],
+      "assignedPrograms": ["prg_1"]
+    },
+    {
+      "id": "usr_8",
+      "name": "Kevin Brown",
+      "email": "kevin.brown@snapstim.example",
+      "role": "RBT",
+      "status": "Pending",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Kevin",
+      "phone": "+1 (555) 890-1234",
+      "createdAt": "2026-02-10T10:00:00Z",
+      "lastActiveAt": null,
+      "assignedClients": ["cli_4"],
+      "assignedPrograms": ["prg_6"]
+    }
+  ]
+}

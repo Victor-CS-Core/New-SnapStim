@@ -1,0 +1,422 @@
+{
+  "review_queue": [
+    {
+      "stimulus_id": "stim_18",
+      "program_id": "prg_6",
+      "program_name": "Tacting Common Objects",
+      "program_type": "expressive_labeling",
+      "client_name": "Marcus Thompson",
+      "stimulus_text": "cup",
+      "image_url": "https://images.unsplash.com/photo-1517256673644-36ad11246d21?w=400",
+      "review_status": "pending",
+      "generation_metadata": {
+        "model": "gpt-4-vision",
+        "prompt": "common drinking cup",
+        "confidence_score": 0.91,
+        "generation_date": "2026-02-10T14:30:00Z",
+        "batch_id": "batch_012",
+        "image_resolution": "1024x1024",
+        "clarity_score": 0.88
+      },
+      "review_data": null,
+      "regeneration_history": {
+        "regeneration_count": 0,
+        "previous_versions": [],
+        "improvement_notes": []
+      }
+    },
+    {
+      "stimulus_id": "stim_19",
+      "program_id": "prg_6",
+      "program_name": "Tacting Common Objects",
+      "program_type": "expressive_labeling",
+      "client_name": "Marcus Thompson",
+      "stimulus_text": "spoon",
+      "image_url": "https://images.unsplash.com/photo-1564759224907-65b945c5e191?w=400",
+      "review_status": "pending",
+      "generation_metadata": {
+        "model": "gpt-4-vision",
+        "prompt": "metal spoon on white background",
+        "confidence_score": 0.93,
+        "generation_date": "2026-02-10T14:30:00Z",
+        "batch_id": "batch_012",
+        "image_resolution": "1024x1024",
+        "clarity_score": 0.91
+      },
+      "review_data": null,
+      "regeneration_history": {
+        "regeneration_count": 0,
+        "previous_versions": [],
+        "improvement_notes": []
+      }
+    },
+    {
+      "stimulus_id": "stim_21",
+      "program_id": "prg_11",
+      "program_name": "Receptive ID - Furniture",
+      "program_type": "receptive_identification",
+      "client_name": "Sofia Martinez",
+      "stimulus_text": "chair",
+      "image_url": "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400",
+      "review_status": "pending",
+      "generation_metadata": {
+        "model": "gpt-4-vision",
+        "prompt": "simple wooden chair for children",
+        "confidence_score": 0.87,
+        "generation_date": "2026-02-11T09:15:00Z",
+        "batch_id": "batch_013",
+        "image_resolution": "1024x1024",
+        "clarity_score": 0.85
+      },
+      "review_data": null,
+      "regeneration_history": {
+        "regeneration_count": 0,
+        "previous_versions": [],
+        "improvement_notes": []
+      }
+    },
+    {
+      "stimulus_id": "stim_22",
+      "program_id": "prg_11",
+      "program_name": "Receptive ID - Furniture",
+      "program_type": "receptive_identification",
+      "client_name": "Sofia Martinez",
+      "stimulus_text": "table",
+      "image_url": "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=400",
+      "review_status": "pending",
+      "generation_metadata": {
+        "model": "gpt-4-vision",
+        "prompt": "simple dining table",
+        "confidence_score": 0.89,
+        "generation_date": "2026-02-11T09:15:00Z",
+        "batch_id": "batch_013",
+        "image_resolution": "1024x1024",
+        "clarity_score": 0.87
+      },
+      "review_data": null,
+      "regeneration_history": {
+        "regeneration_count": 0,
+        "previous_versions": [],
+        "improvement_notes": []
+      }
+    },
+    {
+      "stimulus_id": "stim_23",
+      "program_id": "prg_11",
+      "program_name": "Receptive ID - Furniture",
+      "program_type": "receptive_identification",
+      "client_name": "Sofia Martinez",
+      "stimulus_text": "bed",
+      "image_url": "https://images.unsplash.com/photo-1505693314120-0d443867891c?w=400",
+      "review_status": "pending",
+      "generation_metadata": {
+        "model": "gpt-4-vision",
+        "prompt": "simple bed with pillow",
+        "confidence_score": 0.65,
+        "generation_date": "2026-02-11T09:15:00Z",
+        "batch_id": "batch_013",
+        "image_resolution": "1024x1024",
+        "clarity_score": 0.62
+      },
+      "review_data": null,
+      "regeneration_history": {
+        "regeneration_count": 0,
+        "previous_versions": [],
+        "improvement_notes": []
+      }
+    },
+    {
+      "stimulus_id": "stim_24",
+      "program_id": "prg_12",
+      "program_name": "Intraverbal Actions",
+      "program_type": "intraverbal",
+      "client_name": "Emma Rodriguez",
+      "stimulus_text": "What do you do when you're hungry?",
+      "image_url": null,
+      "review_status": "pending",
+      "generation_metadata": {
+        "model": "gpt-4",
+        "prompt": "intraverbal question about daily activities",
+        "confidence_score": 0.95,
+        "generation_date": "2026-02-12T11:20:00Z",
+        "batch_id": "batch_014",
+        "acceptable_answers": ["eat", "get food", "ask for food", "cook"]
+      },
+      "review_data": null,
+      "regeneration_history": {
+        "regeneration_count": 0,
+        "previous_versions": [],
+        "improvement_notes": []
+      }
+    },
+    {
+      "stimulus_id": "stim_25",
+      "program_id": "prg_12",
+      "program_name": "Intraverbal Actions",
+      "program_type": "intraverbal",
+      "client_name": "Emma Rodriguez",
+      "stimulus_text": "What do you do when you're tired?",
+      "image_url": null,
+      "review_status": "pending",
+      "generation_metadata": {
+        "model": "gpt-4",
+        "prompt": "intraverbal question about daily activities",
+        "confidence_score": 0.94,
+        "generation_date": "2026-02-12T11:20:00Z",
+        "batch_id": "batch_014",
+        "acceptable_answers": ["sleep", "rest", "take a nap", "go to bed"]
+      },
+      "review_data": null,
+      "regeneration_history": {
+        "regeneration_count": 0,
+        "previous_versions": [],
+        "improvement_notes": []
+      }
+    },
+    {
+      "stimulus_id": "stim_26",
+      "program_id": "prg_13",
+      "program_name": "Tacting Vehicles",
+      "program_type": "expressive_labeling",
+      "client_name": "Liam Chen",
+      "stimulus_text": "car",
+      "image_url": "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400",
+      "review_status": "pending",
+      "generation_metadata": {
+        "model": "gpt-4-vision",
+        "prompt": "red car side view for children",
+        "confidence_score": 0.78,
+        "generation_date": "2026-02-13T08:45:00Z",
+        "batch_id": "batch_015",
+        "image_resolution": "1024x1024",
+        "clarity_score": 0.75
+      },
+      "review_data": null,
+      "regeneration_history": {
+        "regeneration_count": 1,
+        "previous_versions": ["stim_26_v1"],
+        "improvement_notes": ["Previous version too complex, simplified for child"]
+      }
+    }
+  ],
+  "review_actions": [
+    {
+      "action_id": "act_001",
+      "stimulus_id": "stim_1",
+      "reviewer_id": "usr_1",
+      "reviewer_name": "Dr. Sarah Chen",
+      "action_type": "approve",
+      "timestamp": "2024-09-15T11:00:00Z",
+      "rejection_reason": null,
+      "rejection_notes": null,
+      "time_spent_seconds": 15
+    },
+    {
+      "action_id": "act_002",
+      "stimulus_id": "stim_2",
+      "reviewer_id": "usr_1",
+      "reviewer_name": "Dr. Sarah Chen",
+      "action_type": "approve",
+      "timestamp": "2024-09-15T11:01:00Z",
+      "rejection_reason": null,
+      "rejection_notes": null,
+      "time_spent_seconds": 12
+    },
+    {
+      "action_id": "act_003",
+      "stimulus_id": "stim_3",
+      "reviewer_id": "usr_1",
+      "reviewer_name": "Dr. Sarah Chen",
+      "action_type": "approve",
+      "timestamp": "2024-09-15T11:02:00Z",
+      "rejection_reason": null,
+      "rejection_notes": null,
+      "time_spent_seconds": 18
+    },
+    {
+      "action_id": "act_004",
+      "stimulus_id": "stim_4",
+      "reviewer_id": "usr_1",
+      "reviewer_name": "Dr. Sarah Chen",
+      "action_type": "approve",
+      "timestamp": "2024-09-15T11:03:00Z",
+      "rejection_reason": null,
+      "rejection_notes": null,
+      "time_spent_seconds": 10
+    },
+    {
+      "action_id": "act_005",
+      "stimulus_id": "stim_5",
+      "reviewer_id": "usr_1",
+      "reviewer_name": "Dr. Sarah Chen",
+      "action_type": "approve",
+      "timestamp": "2024-09-15T11:04:00Z",
+      "rejection_reason": null,
+      "rejection_notes": null,
+      "time_spent_seconds": 14
+    },
+    {
+      "action_id": "act_006",
+      "stimulus_id": "stim_26_v1",
+      "reviewer_id": "usr_1",
+      "reviewer_name": "Dr. Sarah Chen",
+      "action_type": "reject",
+      "timestamp": "2026-02-13T09:05:00Z",
+      "rejection_reason": "too_complex",
+      "rejection_notes": "Image shows sports car with too many details. Need simple, clear vehicle for young learner.",
+      "time_spent_seconds": 45,
+      "regeneration_requested": true
+    },
+    {
+      "action_id": "act_007",
+      "stimulus_id": "stim_6",
+      "reviewer_id": "usr_1",
+      "reviewer_name": "Dr. Sarah Chen",
+      "action_type": "approve",
+      "timestamp": "2024-10-01T11:15:00Z",
+      "rejection_reason": null,
+      "rejection_notes": null,
+      "time_spent_seconds": 8
+    },
+    {
+      "action_id": "act_008",
+      "stimulus_id": "stim_7",
+      "reviewer_id": "usr_1",
+      "reviewer_name": "Dr. Sarah Chen",
+      "action_type": "approve",
+      "timestamp": "2024-10-01T11:16:00Z",
+      "rejection_reason": null,
+      "rejection_notes": null,
+      "time_spent_seconds": 9
+    },
+    {
+      "action_id": "act_009",
+      "stimulus_id": "stim_8",
+      "reviewer_id": "usr_1",
+      "reviewer_name": "Dr. Sarah Chen",
+      "action_type": "approve",
+      "timestamp": "2024-10-01T11:17:00Z",
+      "rejection_reason": null,
+      "rejection_notes": null,
+      "time_spent_seconds": 7
+    },
+    {
+      "action_id": "act_010",
+      "stimulus_id": "stim_9",
+      "reviewer_id": "usr_1",
+      "reviewer_name": "Dr. Sarah Chen",
+      "action_type": "approve",
+      "timestamp": "2024-10-01T11:18:00Z",
+      "rejection_reason": null,
+      "rejection_notes": null,
+      "time_spent_seconds": 11
+    }
+  ],
+  "review_analytics": {
+    "summary": {
+      "total_stimuli_generated": 26,
+      "pending_review_count": 8,
+      "approved_count": 17,
+      "rejected_count": 1,
+      "approval_rate": 94.4,
+      "average_review_time_seconds": 14.9,
+      "total_batches": 15,
+      "batches_pending": 3
+    },
+    "by_program_type": {
+      "expressive_labeling": {
+        "total": 12,
+        "approved": 10,
+        "rejected": 0,
+        "pending": 2,
+        "approval_rate": 100.0
+      },
+      "receptive_identification": {
+        "total": 8,
+        "approved": 4,
+        "rejected": 0,
+        "pending": 4,
+        "approval_rate": 100.0
+      },
+      "intraverbal": {
+        "total": 5,
+        "approved": 3,
+        "rejected": 0,
+        "pending": 2,
+        "approval_rate": 100.0
+      },
+      "listener_responding": {
+        "total": 1,
+        "approved": 0,
+        "rejected": 1,
+        "pending": 0,
+        "approval_rate": 0.0
+      }
+    },
+    "rejection_reasons": {
+      "too_complex": 1,
+      "image_quality": 0,
+      "incorrect_content": 0,
+      "not_age_appropriate": 0,
+      "too_simple": 0,
+      "copyright_concerns": 0,
+      "other": 0
+    },
+    "confidence_score_distribution": {
+      "high": 18,
+      "medium": 7,
+      "low": 1
+    },
+    "review_velocity": {
+      "last_7_days": 5,
+      "last_30_days": 26,
+      "average_per_day": 0.87
+    }
+  },
+  "batches": [
+    {
+      "batch_id": "batch_012",
+      "program_id": "prg_6",
+      "program_name": "Tacting Common Objects",
+      "generation_date": "2026-02-10T14:30:00Z",
+      "total_stimuli": 2,
+      "pending": 2,
+      "approved": 0,
+      "rejected": 0,
+      "priority": "medium"
+    },
+    {
+      "batch_id": "batch_013",
+      "program_id": "prg_11",
+      "program_name": "Receptive ID - Furniture",
+      "generation_date": "2026-02-11T09:15:00Z",
+      "total_stimuli": 3,
+      "pending": 3,
+      "approved": 0,
+      "rejected": 0,
+      "priority": "high"
+    },
+    {
+      "batch_id": "batch_014",
+      "program_id": "prg_12",
+      "program_name": "Intraverbal Actions",
+      "generation_date": "2026-02-12T11:20:00Z",
+      "total_stimuli": 2,
+      "pending": 2,
+      "approved": 0,
+      "rejected": 0,
+      "priority": "low"
+    },
+    {
+      "batch_id": "batch_015",
+      "program_id": "prg_13",
+      "program_name": "Tacting Vehicles",
+      "generation_date": "2026-02-13T08:45:00Z",
+      "total_stimuli": 1,
+      "pending": 1,
+      "approved": 0,
+      "rejected": 0,
+      "priority": "medium"
+    }
+  ]
+}

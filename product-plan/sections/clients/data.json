@@ -1,0 +1,562 @@
+{
+  "clients": [
+    {
+      "client_id": "cli_1",
+      "first_name": "Emma",
+      "last_name": "Rodriguez",
+      "date_of_birth": "2019-03-15",
+      "age": 6,
+      "status": "active",
+      "tags": ["early-learner", "verbal", "high-engagement"],
+      "primary_therapist": "usr_1",
+      "start_date": "2024-09-01",
+      "avatar_url": "https://api.dicebear.com/7.x/avataaars/svg?seed=Emma",
+      "aggregates": {
+        "active_program_count": 4,
+        "sessions_this_week": 8,
+        "average_accuracy": 78,
+        "overall_mastery_rate": 65,
+        "last_session_date": "2026-02-13T10:30:00Z"
+      },
+      "ai_insights": {
+        "recommended_next_action": "Run Tacting Colors program - showing strongest improvement trend",
+        "priority_program_id": "prg_2",
+        "risk_score": 15,
+        "intervention_suggested": false,
+        "explanation_text": "Client shows consistent progress across all programs. Tacting Colors is ready for mastery assessment."
+      }
+    },
+    {
+      "client_id": "cli_2",
+      "first_name": "Liam",
+      "last_name": "Chen",
+      "date_of_birth": "2020-07-22",
+      "age": 5,
+      "status": "active",
+      "tags": ["attention-needed", "non-verbal", "tactile-learner"],
+      "primary_therapist": "usr_1",
+      "start_date": "2025-01-15",
+      "avatar_url": "https://api.dicebear.com/7.x/avataaars/svg?seed=Liam",
+      "aggregates": {
+        "active_program_count": 3,
+        "sessions_this_week": 3,
+        "average_accuracy": 52,
+        "overall_mastery_rate": 35,
+        "last_session_date": "2026-02-11T14:15:00Z"
+      },
+      "ai_insights": {
+        "recommended_next_action": "Review Listener Responding program - declining performance requires intervention",
+        "priority_program_id": "prg_5",
+        "risk_score": 68,
+        "intervention_suggested": true,
+        "explanation_text": "Performance declining on 2 programs. Recommend reviewing prompting hierarchy and reinforcement schedule."
+      }
+    },
+    {
+      "client_id": "cli_3",
+      "first_name": "Sophia",
+      "last_name": "Patel",
+      "date_of_birth": "2018-11-08",
+      "age": 7,
+      "status": "active",
+      "tags": ["advanced", "verbal", "social-goals"],
+      "primary_therapist": "usr_4",
+      "start_date": "2024-03-10",
+      "avatar_url": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia",
+      "aggregates": {
+        "active_program_count": 5,
+        "sessions_this_week": 10,
+        "average_accuracy": 89,
+        "overall_mastery_rate": 82,
+        "last_session_date": "2026-02-13T16:00:00Z"
+      },
+      "ai_insights": {
+        "recommended_next_action": "Consider advancing to generalization phase for mastered programs",
+        "priority_program_id": "prg_8",
+        "risk_score": 8,
+        "intervention_suggested": false,
+        "explanation_text": "Client consistently exceeding mastery criteria. Ready for more complex social communication targets."
+      }
+    },
+    {
+      "client_id": "cli_4",
+      "first_name": "Noah",
+      "last_name": "Williams",
+      "date_of_birth": "2021-02-14",
+      "age": 4,
+      "status": "active",
+      "tags": ["early-learner", "motor-delays", "visual-learner"],
+      "primary_therapist": "usr_4",
+      "start_date": "2025-08-01",
+      "avatar_url": "https://api.dicebear.com/7.x/avataaars/svg?seed=Noah",
+      "aggregates": {
+        "active_program_count": 2,
+        "sessions_this_week": 5,
+        "average_accuracy": 71,
+        "overall_mastery_rate": 55,
+        "last_session_date": "2026-02-13T13:30:00Z"
+      },
+      "ai_insights": {
+        "recommended_next_action": "Continue current programs - steady progress observed",
+        "priority_program_id": "prg_11",
+        "risk_score": 22,
+        "intervention_suggested": false,
+        "explanation_text": "Solid foundation building. Maintain current session frequency and prompting strategy."
+      }
+    },
+    {
+      "client_id": "cli_5",
+      "first_name": "Olivia",
+      "last_name": "Thompson",
+      "date_of_birth": "2019-09-30",
+      "age": 6,
+      "status": "inactive",
+      "tags": ["on-hold", "family-leave"],
+      "primary_therapist": "usr_4",
+      "start_date": "2024-06-15",
+      "avatar_url": "https://api.dicebear.com/7.x/avataaars/svg?seed=Olivia",
+      "aggregates": {
+        "active_program_count": 0,
+        "sessions_this_week": 0,
+        "average_accuracy": 0,
+        "overall_mastery_rate": 0,
+        "last_session_date": "2025-12-18T09:00:00Z"
+      },
+      "ai_insights": {
+        "recommended_next_action": "No current programs active - status set to inactive",
+        "priority_program_id": null,
+        "risk_score": 0,
+        "intervention_suggested": false,
+        "explanation_text": "Client on temporary hold. Historical data preserved for reactivation."
+      }
+    }
+  ],
+  "programs": [
+    {
+      "program_id": "prg_1",
+      "client_id": "cli_1",
+      "program_name": "Listener Responding - Objects",
+      "program_type": "Listener Responding",
+      "category": "Receptive Language",
+      "status": "active",
+      "auto_assigned": true,
+      "assigned_date": "2024-09-15",
+      "current_phase": "Teaching Phase 2",
+      "mastery_threshold": 80,
+      "last_run_date": "2026-02-12T14:00:00Z",
+      "performance": {
+        "total_trials": 156,
+        "correct_trials": 125,
+        "accuracy_percent": 80,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 2,
+        "needs_review": false
+      }
+    },
+    {
+      "program_id": "prg_2",
+      "client_id": "cli_1",
+      "program_name": "Tacting - Colors",
+      "program_type": "Tacting",
+      "category": "Expressive Language",
+      "status": "active",
+      "auto_assigned": false,
+      "assigned_date": "2024-10-01",
+      "current_phase": "Teaching Phase 3",
+      "mastery_threshold": 85,
+      "last_run_date": "2026-02-13T10:30:00Z",
+      "performance": {
+        "total_trials": 203,
+        "correct_trials": 178,
+        "accuracy_percent": 88,
+        "trend": "improving",
+        "consecutive_mastery_sessions": 4,
+        "needs_review": false
+      }
+    },
+    {
+      "program_id": "prg_3",
+      "client_id": "cli_1",
+      "program_name": "Intraverbal - WH Questions",
+      "program_type": "Intraverbal",
+      "category": "Social Communication",
+      "status": "active",
+      "auto_assigned": false,
+      "assigned_date": "2025-01-10",
+      "current_phase": "Teaching Phase 1",
+      "mastery_threshold": 80,
+      "last_run_date": "2026-02-11T11:00:00Z",
+      "performance": {
+        "total_trials": 87,
+        "correct_trials": 58,
+        "accuracy_percent": 67,
+        "trend": "improving",
+        "consecutive_mastery_sessions": 0,
+        "needs_review": false
+      }
+    },
+    {
+      "program_id": "prg_4",
+      "client_id": "cli_1",
+      "program_name": "LRFFC - Actions",
+      "program_type": "LRFFC",
+      "category": "Receptive Language",
+      "status": "paused",
+      "auto_assigned": true,
+      "assigned_date": "2025-05-01",
+      "current_phase": "Teaching Phase 1",
+      "mastery_threshold": 80,
+      "last_run_date": "2026-01-28T09:30:00Z",
+      "performance": {
+        "total_trials": 45,
+        "correct_trials": 31,
+        "accuracy_percent": 69,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 0,
+        "needs_review": true
+      }
+    },
+    {
+      "program_id": "prg_5",
+      "client_id": "cli_2",
+      "program_name": "Listener Responding - Body Parts",
+      "program_type": "Listener Responding",
+      "category": "Receptive Language",
+      "status": "active",
+      "auto_assigned": true,
+      "assigned_date": "2025-01-20",
+      "current_phase": "Teaching Phase 2",
+      "mastery_threshold": 75,
+      "last_run_date": "2026-02-11T14:15:00Z",
+      "performance": {
+        "total_trials": 112,
+        "correct_trials": 56,
+        "accuracy_percent": 50,
+        "trend": "declining",
+        "consecutive_mastery_sessions": 0,
+        "needs_review": true
+      }
+    },
+    {
+      "program_id": "prg_6",
+      "client_id": "cli_2",
+      "program_name": "Tacting - Animals",
+      "program_type": "Tacting",
+      "category": "Expressive Language",
+      "status": "active",
+      "auto_assigned": false,
+      "assigned_date": "2025-03-15",
+      "current_phase": "Teaching Phase 1",
+      "mastery_threshold": 75,
+      "last_run_date": "2026-02-10T10:00:00Z",
+      "performance": {
+        "total_trials": 74,
+        "correct_trials": 38,
+        "accuracy_percent": 51,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 0,
+        "needs_review": false
+      }
+    },
+    {
+      "program_id": "prg_7",
+      "client_id": "cli_2",
+      "program_name": "Listener Responding - Objects",
+      "program_type": "Listener Responding",
+      "category": "Receptive Language",
+      "status": "active",
+      "auto_assigned": true,
+      "assigned_date": "2025-02-01",
+      "current_phase": "Teaching Phase 1",
+      "mastery_threshold": 75,
+      "last_run_date": "2026-02-09T15:30:00Z",
+      "performance": {
+        "total_trials": 93,
+        "correct_trials": 52,
+        "accuracy_percent": 56,
+        "trend": "declining",
+        "consecutive_mastery_sessions": 0,
+        "needs_review": true
+      }
+    },
+    {
+      "program_id": "prg_8",
+      "client_id": "cli_3",
+      "program_name": "Intraverbal - Conversational Exchanges",
+      "program_type": "Intraverbal",
+      "category": "Social Communication",
+      "status": "active",
+      "auto_assigned": false,
+      "assigned_date": "2024-11-01",
+      "current_phase": "Generalization Phase",
+      "mastery_threshold": 85,
+      "last_run_date": "2026-02-13T16:00:00Z",
+      "performance": {
+        "total_trials": 245,
+        "correct_trials": 226,
+        "accuracy_percent": 92,
+        "trend": "improving",
+        "consecutive_mastery_sessions": 6,
+        "needs_review": false
+      }
+    },
+    {
+      "program_id": "prg_9",
+      "client_id": "cli_3",
+      "program_name": "Tacting - Emotions",
+      "program_type": "Tacting",
+      "category": "Expressive Language",
+      "status": "mastered",
+      "auto_assigned": false,
+      "assigned_date": "2024-08-15",
+      "current_phase": "Mastered",
+      "mastery_threshold": 85,
+      "last_run_date": "2026-01-20T11:00:00Z",
+      "performance": {
+        "total_trials": 178,
+        "correct_trials": 167,
+        "accuracy_percent": 94,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 8,
+        "needs_review": false
+      }
+    },
+    {
+      "program_id": "prg_10",
+      "client_id": "cli_3",
+      "program_name": "LRFFC - Functions",
+      "program_type": "LRFFC",
+      "category": "Receptive Language",
+      "status": "active",
+      "auto_assigned": false,
+      "assigned_date": "2025-09-01",
+      "current_phase": "Teaching Phase 2",
+      "mastery_threshold": 85,
+      "last_run_date": "2026-02-13T09:30:00Z",
+      "performance": {
+        "total_trials": 134,
+        "correct_trials": 115,
+        "accuracy_percent": 86,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 3,
+        "needs_review": false
+      }
+    },
+    {
+      "program_id": "prg_11",
+      "client_id": "cli_4",
+      "program_name": "Listener Responding - Simple Commands",
+      "program_type": "Listener Responding",
+      "category": "Receptive Language",
+      "status": "active",
+      "auto_assigned": true,
+      "assigned_date": "2025-08-10",
+      "current_phase": "Teaching Phase 1",
+      "mastery_threshold": 75,
+      "last_run_date": "2026-02-13T13:30:00Z",
+      "performance": {
+        "total_trials": 89,
+        "correct_trials": 63,
+        "accuracy_percent": 71,
+        "trend": "improving",
+        "consecutive_mastery_sessions": 1,
+        "needs_review": false
+      }
+    },
+    {
+      "program_id": "prg_12",
+      "client_id": "cli_4",
+      "program_name": "Tacting - Common Objects",
+      "program_type": "Tacting",
+      "category": "Expressive Language",
+      "status": "active",
+      "auto_assigned": false,
+      "assigned_date": "2025-10-01",
+      "current_phase": "Teaching Phase 1",
+      "mastery_threshold": 75,
+      "last_run_date": "2026-02-12T10:00:00Z",
+      "performance": {
+        "total_trials": 67,
+        "correct_trials": 48,
+        "accuracy_percent": 72,
+        "trend": "stable",
+        "consecutive_mastery_sessions": 0,
+        "needs_review": false
+      }
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "alt_1",
+      "client_id": "cli_2",
+      "alert_type": "performance_drop",
+      "severity": "critical",
+      "related_program_id": "prg_5",
+      "triggered_date": "2026-02-11T14:30:00Z",
+      "resolved": false,
+      "message": "Listener Responding - Body Parts showing declining performance (50% accuracy, down from 65%)"
+    },
+    {
+      "alert_id": "alt_2",
+      "client_id": "cli_2",
+      "alert_type": "performance_drop",
+      "severity": "warning",
+      "related_program_id": "prg_7",
+      "triggered_date": "2026-02-10T15:45:00Z",
+      "resolved": false,
+      "message": "Listener Responding - Objects accuracy below threshold (56%)"
+    },
+    {
+      "alert_id": "alt_3",
+      "client_id": "cli_1",
+      "alert_type": "mastery_ready",
+      "severity": "info",
+      "related_program_id": "prg_2",
+      "triggered_date": "2026-02-13T10:35:00Z",
+      "resolved": false,
+      "message": "Tacting - Colors ready for mastery assessment (4 consecutive sessions above 85%)"
+    },
+    {
+      "alert_id": "alt_4",
+      "client_id": "cli_1",
+      "alert_type": "review_due",
+      "severity": "warning",
+      "related_program_id": "prg_4",
+      "triggered_date": "2026-02-08T09:00:00Z",
+      "resolved": false,
+      "message": "LRFFC - Actions paused for 16 days - review needed to determine next steps"
+    },
+    {
+      "alert_id": "alt_5",
+      "client_id": "cli_3",
+      "alert_type": "mastery_ready",
+      "severity": "info",
+      "related_program_id": "prg_8",
+      "triggered_date": "2026-02-12T16:10:00Z",
+      "resolved": false,
+      "message": "Intraverbal - Conversational Exchanges exceeding criteria (92% accuracy, 6 consecutive mastery sessions)"
+    },
+    {
+      "alert_id": "alt_6",
+      "client_id": "cli_2",
+      "alert_type": "inactivity",
+      "severity": "warning",
+      "related_program_id": null,
+      "triggered_date": "2026-02-13T08:00:00Z",
+      "resolved": false,
+      "message": "Only 3 sessions completed this week - below recommended frequency of 5-7 sessions"
+    }
+  ],
+  "recent_sessions": [
+    {
+      "session_id": "ses_1",
+      "program_id": "prg_2",
+      "client_id": "cli_1",
+      "session_date": "2026-02-13T10:30:00Z",
+      "duration_minutes": 25,
+      "accuracy_percent": 90,
+      "outcome": "success",
+      "recorded_by": "usr_2",
+      "notes_summary": "Excellent session, independently tacted all 8 colors with no prompts"
+    },
+    {
+      "session_id": "ses_2",
+      "program_id": "prg_1",
+      "client_id": "cli_1",
+      "session_date": "2026-02-12T14:00:00Z",
+      "duration_minutes": 20,
+      "accuracy_percent": 80,
+      "outcome": "success",
+      "recorded_by": "usr_2",
+      "notes_summary": "Met criteria, needed gestural prompts for 3 targets"
+    },
+    {
+      "session_id": "ses_3",
+      "program_id": "prg_3",
+      "client_id": "cli_1",
+      "session_date": "2026-02-11T11:00:00Z",
+      "duration_minutes": 22,
+      "accuracy_percent": 67,
+      "outcome": "partial",
+      "recorded_by": "usr_2",
+      "notes_summary": "Progressing slowly, requires verbal models for What/Who questions"
+    },
+    {
+      "session_id": "ses_4",
+      "program_id": "prg_5",
+      "client_id": "cli_2",
+      "session_date": "2026-02-11T14:15:00Z",
+      "duration_minutes": 18,
+      "accuracy_percent": 50,
+      "outcome": "partial",
+      "recorded_by": "usr_5",
+      "notes_summary": "Struggled with receptive ID of arms and legs, increasing prompts"
+    },
+    {
+      "session_id": "ses_5",
+      "program_id": "prg_6",
+      "client_id": "cli_2",
+      "session_date": "2026-02-10T10:00:00Z",
+      "duration_minutes": 20,
+      "accuracy_percent": 55,
+      "outcome": "partial",
+      "recorded_by": "usr_5",
+      "notes_summary": "Variable performance, better with farm animals than zoo animals"
+    },
+    {
+      "session_id": "ses_6",
+      "program_id": "prg_8",
+      "client_id": "cli_3",
+      "session_date": "2026-02-13T16:00:00Z",
+      "duration_minutes": 30,
+      "accuracy_percent": 92,
+      "outcome": "success",
+      "recorded_by": "usr_5",
+      "notes_summary": "Outstanding conversational exchanges, naturalistic context maintained"
+    },
+    {
+      "session_id": "ses_7",
+      "program_id": "prg_10",
+      "client_id": "cli_3",
+      "session_date": "2026-02-13T09:30:00Z",
+      "duration_minutes": 23,
+      "accuracy_percent": 87,
+      "outcome": "success",
+      "recorded_by": "usr_5",
+      "notes_summary": "Solid session, correctly identified functions of 13/15 items"
+    },
+    {
+      "session_id": "ses_8",
+      "program_id": "prg_11",
+      "client_id": "cli_4",
+      "session_date": "2026-02-13T13:30:00Z",
+      "duration_minutes": 15,
+      "accuracy_percent": 73,
+      "outcome": "success",
+      "recorded_by": "usr_5",
+      "notes_summary": "Good attention, followed 11/15 commands independently"
+    },
+    {
+      "session_id": "ses_9",
+      "program_id": "prg_12",
+      "client_id": "cli_4",
+      "session_date": "2026-02-12T10:00:00Z",
+      "duration_minutes": 18,
+      "accuracy_percent": 70,
+      "outcome": "success",
+      "recorded_by": "usr_5",
+      "notes_summary": "Steady progress, tacted 7/10 common objects with minimal prompting"
+    },
+    {
+      "session_id": "ses_10",
+      "program_id": "prg_7",
+      "client_id": "cli_2",
+      "session_date": "2026-02-09T15:30:00Z",
+      "duration_minutes": 17,
+      "accuracy_percent": 53,
+      "outcome": "partial",
+      "recorded_by": "usr_2",
+      "notes_summary": "Difficulty discriminating similar objects, may need errorless teaching"
+    }
+  ]
+}

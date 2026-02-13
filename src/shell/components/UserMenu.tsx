@@ -16,6 +16,7 @@ type Role = "BCBA" | "RBT" | "Caregiver";
 interface UserMenuProps {
   userName?: string;
   role?: Role;
+  collapsed?: boolean;
 }
 
 const roleBadgeColors = {
@@ -28,6 +29,7 @@ const roleBadgeColors = {
 export default function UserMenu({
   userName = "John Doe",
   role = "BCBA",
+  collapsed = false,
 }: UserMenuProps) {
   const [isDark, setIsDark] = useState(() => {
     const stored = localStorage.getItem("theme");
@@ -56,20 +58,22 @@ export default function UserMenu({
     .toUpperCase();
 
   return (
-    <div className="p-4 border-t border-stone-200 dark:border-stone-800">
+    <div className="p-2 lg:p-4 group-hover/sidebar:p-4 border-t border-stone-200 dark:border-stone-800">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="w-full justify-start gap-3 h-auto py-3 px-2"
+            className={`w-full h-auto py-3 px-2 ${collapsed ? "justify-center lg:justify-start group-hover/sidebar:justify-start" : "justify-start"} gap-3`}
           >
-            <Avatar className="h-8 w-8">
+            <Avatar className="h-8 w-8 shrink-0">
               <AvatarImage src="" />
               <AvatarFallback className="bg-primary/20 text-primary">
                 {initials}
               </AvatarFallback>
             </Avatar>
-            <div className="flex flex-col items-start text-left">
+            <div
+              className={`flex flex-col items-start text-left ${collapsed ? "hidden lg:flex group-hover/sidebar:flex" : ""}`}
+            >
               <span className="text-sm font-semibold">{userName}</span>
               <span
                 className={`text-[10px] px-1.5 py-0.5 rounded-full ${roleBadgeColors[role]}`}

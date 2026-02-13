@@ -3,6 +3,7 @@ import { AppShell } from "./shell/components";
 import { AccountsView } from "./sections/accounts";
 import { ClientsView } from "./sections/clients";
 import { ProgramsView } from "./sections/programs";
+import { ReviewView } from "./sections/review";
 
 function DashboardView() {
   return (
@@ -91,7 +92,7 @@ function App() {
       case "/programs":
         return <ProgramsView />;
       case "/review":
-        return <PlaceholderView title="Review" />;
+        return <ReviewView />;
       case "/sessions":
         return <PlaceholderView title="Sessions" />;
       case "/reporting":

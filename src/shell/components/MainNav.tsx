@@ -6,7 +6,6 @@ import {
   Activity,
   ChartColumn,
 } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +17,8 @@ interface NavItem {
 
 interface MainNavProps {
   collapsed?: boolean;
+  currentPath?: string;
+  onNavigate?: (path: string) => void;
 }
 
 const navItems: NavItem[] = [
@@ -29,14 +30,16 @@ const navItems: NavItem[] = [
   { name: "Reporting", icon: ChartColumn, path: "/reporting" },
 ];
 
-export default function MainNav({ collapsed = false }: MainNavProps) {
-  const [activePath, setActivePath] = useState("/");
-
+export default function MainNav({
+  collapsed = false,
+  currentPath = "/",
+  onNavigate,
+}: MainNavProps) {
   return (
     <nav className="flex flex-col gap-1 p-2">
       {navItems.map((item) => {
         const Icon = item.icon;
-        const isActive = activePath === item.path;
+        const isActive = currentPath === item.path;
 
         return (
           <Button
@@ -49,7 +52,7 @@ export default function MainNav({ collapsed = false }: MainNavProps) {
                 : "justify-start",
               isActive && "bg-primary/10 text-primary hover:bg-primary/20",
             )}
-            onClick={() => setActivePath(item.path)}
+            onClick={() => onNavigate?.(item.path)}
             title={collapsed ? item.name : undefined}
           >
             <Icon className="w-4 h-4 shrink-0" />

@@ -11,9 +11,15 @@ import UserMenu from "./UserMenu";
 
 interface AppShellProps {
   children?: React.ReactNode;
+  currentPath?: string;
+  onNavigate?: (path: string) => void;
 }
 
-export default function AppShell({ children }: AppShellProps) {
+export default function AppShell({
+  children,
+  currentPath,
+  onNavigate,
+}: AppShellProps) {
   return (
     <div className="flex h-screen bg-stone-50 dark:bg-stone-900">
       {/* Mobile Sidebar */}
@@ -34,7 +40,7 @@ export default function AppShell({ children }: AppShellProps) {
             <h1 className="text-2xl font-bold text-primary">SnapStim</h1>
           </div>
           <div className="flex-1 overflow-y-auto py-4">
-            <MainNav />
+            <MainNav currentPath={currentPath} onNavigate={onNavigate} />
           </div>
           <UserMenu />
         </SheetContent>
@@ -51,7 +57,11 @@ export default function AppShell({ children }: AppShellProps) {
           </h1>
         </div>
         <div className="flex-1 overflow-y-auto py-4">
-          <MainNav collapsed />
+          <MainNav
+            collapsed
+            currentPath={currentPath}
+            onNavigate={onNavigate}
+          />
         </div>
         <UserMenu collapsed />
       </aside>

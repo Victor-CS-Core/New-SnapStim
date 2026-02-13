@@ -47,7 +47,9 @@ export default function ClientDashboard({
 }: ClientDashboardProps) {
   const unresolvedAlerts = alerts.filter((a) => !a.resolved);
   const activePrograms = programs.filter((p) => p.status === "active");
-  const criticalAlerts = unresolvedAlerts.filter((a) => a.severity === "critical");
+  const criticalAlerts = unresolvedAlerts.filter(
+    (a) => a.severity === "critical",
+  );
 
   return (
     <div className="space-y-6">
@@ -146,8 +148,8 @@ export default function ClientDashboard({
                 client.aggregates.average_accuracy >= 80
                   ? "text-emerald-600 dark:text-emerald-400"
                   : client.aggregates.average_accuracy >= 60
-                  ? "text-amber-600 dark:text-amber-400"
-                  : "text-red-600 dark:text-red-400"
+                    ? "text-amber-600 dark:text-amber-400"
+                    : "text-red-600 dark:text-red-400"
               }`}
             >
               {client.aggregates.average_accuracy}%
@@ -186,8 +188,8 @@ export default function ClientDashboard({
                 client.aggregates.overall_mastery_rate >= 70
                   ? "text-emerald-600 dark:text-emerald-400"
                   : client.aggregates.overall_mastery_rate >= 50
-                  ? "text-amber-600 dark:text-amber-400"
-                  : "text-red-600 dark:text-red-400"
+                    ? "text-amber-600 dark:text-amber-400"
+                    : "text-red-600 dark:text-red-400"
               }`}
             >
               {client.aggregates.overall_mastery_rate}%

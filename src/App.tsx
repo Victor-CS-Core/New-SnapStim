@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AppShell } from "./shell/components";
 import { AccountsView } from "./sections/accounts";
 import { ClientsView } from "./sections/clients";
+import { ProgramsView } from "./sections/programs";
 
 function DashboardView() {
   return (
@@ -88,7 +89,7 @@ function App() {
       case "/clients":
         return <ClientsView />;
       case "/programs":
-        return <PlaceholderView title="Programs" />;
+        return <ProgramsView />;
       case "/review":
         return <PlaceholderView title="Review" />;
       case "/sessions":

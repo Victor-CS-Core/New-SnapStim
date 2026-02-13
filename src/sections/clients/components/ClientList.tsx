@@ -13,7 +13,8 @@ interface ClientListProps {
 }
 
 const statusColors: Record<string, string> = {
-  active: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400",
+  active:
+    "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400",
   inactive: "bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-400",
   discharged: "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-400",
 };
@@ -67,7 +68,10 @@ export default function ClientList({
             >
               <div className="flex items-center gap-3">
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src={client.avatar_url} alt={`${client.first_name} ${client.last_name}`} />
+                  <AvatarImage
+                    src={client.avatar_url}
+                    alt={`${client.first_name} ${client.last_name}`}
+                  />
                   <AvatarFallback className="bg-primary/10 text-primary">
                     {getInitials(client.first_name, client.last_name)}
                   </AvatarFallback>
@@ -77,18 +81,26 @@ export default function ClientList({
                     <span className="font-medium text-stone-900 dark:text-stone-100 truncate">
                       {client.first_name} {client.last_name}
                     </span>
-                    <Badge variant="secondary" className={statusColors[client.status]}>
+                    <Badge
+                      variant="secondary"
+                      className={statusColors[client.status]}
+                    >
                       {client.status}
                     </Badge>
                   </div>
                   <div className="text-xs text-stone-500 dark:text-stone-400 flex items-center gap-2">
                     <span>{client.age} years old</span>
                     <span>•</span>
-                    <span>{client.aggregates.active_program_count} programs</span>
+                    <span>
+                      {client.aggregates.active_program_count} programs
+                    </span>
                   </div>
                 </div>
                 {client.ai_insights.intervention_suggested && (
-                  <div className="h-2 w-2 rounded-full bg-red-500 shrink-0" title="Intervention suggested" />
+                  <div
+                    className="h-2 w-2 rounded-full bg-red-500 shrink-0"
+                    title="Intervention suggested"
+                  />
                 )}
               </div>
             </Card>

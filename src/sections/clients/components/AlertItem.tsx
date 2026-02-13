@@ -33,7 +33,7 @@ function formatDate(dateString: string): string {
 
 export default function AlertItem({ alert }: AlertItemProps) {
   const Icon = alertTypeIcons[alert.alert_type] || AlertTriangle;
-  
+
   const borderColor = {
     info: "border-l-blue-500",
     warning: "border-l-amber-500",
@@ -50,8 +50,8 @@ export default function AlertItem({ alert }: AlertItemProps) {
             alert.severity === "critical"
               ? "bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-400"
               : alert.severity === "warning"
-              ? "bg-amber-100 text-amber-600 dark:bg-amber-950 dark:text-amber-400"
-              : "bg-blue-100 text-blue-600 dark:bg-blue-950 dark:text-blue-400"
+                ? "bg-amber-100 text-amber-600 dark:bg-amber-950 dark:text-amber-400"
+                : "bg-blue-100 text-blue-600 dark:bg-blue-950 dark:text-blue-400"
           }`}
         >
           <Icon className="h-4 w-4" />

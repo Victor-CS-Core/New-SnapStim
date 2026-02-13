@@ -49,19 +49,19 @@ export default function ProgramCard({
     program.status === "mastered"
       ? "border-green-500"
       : program.status === "paused"
-      ? "border-amber-500"
-      : program.performance.trend === "declining"
-      ? "border-red-400"
-      : program.performance.needs_review
-      ? "border-amber-400"
-      : "border-emerald-500";
+        ? "border-amber-500"
+        : program.performance.trend === "declining"
+          ? "border-red-400"
+          : program.performance.needs_review
+            ? "border-amber-400"
+            : "border-emerald-500";
 
   const accuracyColor =
     program.performance.accuracy_percent >= program.mastery_threshold
       ? "text-emerald-600 dark:text-emerald-400"
       : program.performance.accuracy_percent >= program.mastery_threshold - 10
-      ? "text-amber-600 dark:text-amber-400"
-      : "text-red-600 dark:text-red-400";
+        ? "text-amber-600 dark:text-amber-400"
+        : "text-red-600 dark:text-red-400";
 
   return (
     <Card
@@ -134,15 +134,17 @@ export default function ProgramCard({
           <div className="h-2 bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden">
             <div
               className={`h-full rounded-full transition-all ${
-                program.performance.accuracy_percent >= program.mastery_threshold
+                program.performance.accuracy_percent >=
+                program.mastery_threshold
                   ? "bg-emerald-500"
                   : "bg-amber-500"
               }`}
               style={{
                 width: `${Math.min(
                   100,
-                  (program.performance.accuracy_percent / program.mastery_threshold) *
-                    100
+                  (program.performance.accuracy_percent /
+                    program.mastery_threshold) *
+                    100,
                 )}%`,
               }}
             />

@@ -17,7 +17,7 @@ const allAlerts = clientsData.alerts as Alert[];
 
 export default function ClientsView() {
   const [selectedClientId, setSelectedClientId] = useState<string | null>(
-    clients.length > 0 ? clients[0].client_id : null
+    clients.length > 0 ? clients[0].client_id : null,
   );
 
   const selectedClient = useMemo(() => {
@@ -39,10 +39,11 @@ export default function ClientsView() {
     () => ({
       total: clients.length,
       active: clients.filter((c) => c.status === "active").length,
-      needsAttention: clients.filter((c) => c.ai_insights.intervention_suggested)
-        .length,
+      needsAttention: clients.filter(
+        (c) => c.ai_insights.intervention_suggested,
+      ).length,
     }),
-    []
+    [],
   );
 
   return (

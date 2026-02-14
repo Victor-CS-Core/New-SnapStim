@@ -5,6 +5,7 @@ import {
   Eye,
   Activity,
   ChartColumn,
+  LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -22,6 +23,7 @@ interface MainNavProps {
 }
 
 const navItems: NavItem[] = [
+  { name: "Dashboard", icon: LayoutDashboard, path: "/" },
   { name: "Accounts", icon: Users, path: "/accounts" },
   { name: "Clients", icon: User, path: "/clients" },
   { name: "Programs", icon: FolderOpen, path: "/programs" },

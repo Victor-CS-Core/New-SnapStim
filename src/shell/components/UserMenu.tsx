@@ -93,15 +93,36 @@ export default function UserMenu({
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              // TODO: Navigate to profile page/modal
+              // Recommended: Show user profile with editable fields:
+              // - Name, email, avatar
+              // - Credentials and certifications
+              // - Notification preferences
+              console.log("Profile clicked");
+            }}
+          >
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              // TODO: Navigate to billing page
+              // Show subscription details, payment methods, invoices
+              console.log("Billing clicked");
+            }}
+          >
             <CreditCard className="mr-2 h-4 w-4" />
             <span>Billing</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              // TODO: Navigate to settings page
+              // Application preferences, security settings, integrations
+              console.log("Settings clicked");
+            }}
+          >
             <Settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
           </DropdownMenuItem>
@@ -120,7 +141,18 @@ export default function UserMenu({
             <span>{isDark ? "Light Mode" : "Dark Mode"}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400">
+          <DropdownMenuItem
+            className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
+            onClick={() => {
+              // TODO: Implement logout flow
+              // Steps:
+              // 1. Clear authentication tokens
+              // 2. Clear local storage/session data
+              // 3. Redirect to login page
+              // 4. Optional: Call API logout endpoint
+              console.log("Logout clicked");
+            }}
+          >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>
           </DropdownMenuItem>

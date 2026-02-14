@@ -3,7 +3,10 @@ import SessionSelection from "./components/SessionSelection";
 import SessionRunner from "./components/SessionRunner";
 import SessionRecap from "./components/SessionRecap";
 import SessionHistory from "./components/SessionHistory";
+import sessionsData from "../../../product-plan/sections/sessions/data.json";
 import type { Session } from "../../../product-plan/sections/sessions/types";
+
+const historicalSessions = sessionsData.sessions as Session[];
 
 type ViewState = "selection" | "runner" | "recap" | "history";
 
@@ -54,9 +57,17 @@ export default function SessionsView() {
       case "history":
         return (
           <SessionHistory
-            onViewRecap={(_sessionId: string) => {
-              // In a real app, load session by ID
-              setCurrentView("recap");
+            onViewRecap={(sessionId: string) => {
+              // Load session by ID from historical data
+              const session = historicalSessions.find(
+                (s) => s.session_id === sessionId
+              );
+              if (session) {
+                setActiveSession(session);
+                setCurrentView("recap");
+              } else {
+                console.error(`Session ${sessionId} not found`);
+              }
             }}
             onBack={() => setCurrentView("selection")}
           />

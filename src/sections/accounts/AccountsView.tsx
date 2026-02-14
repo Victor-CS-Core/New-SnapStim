@@ -75,7 +75,16 @@ export default function AccountsView() {
             Manage users and their permissions
           </p>
         </div>
-        <Button>
+        <Button
+          onClick={() => {
+            // TODO: Implement user creation
+            // Recommended: Show a modal form with fields for:
+            // - Name, email, role (BCBA/RBT/Caregiver)
+            // - Permissions and access levels
+            // - Send invitation email
+            console.log("Add User clicked - implement creation flow");
+          }}
+        >
           <Plus className="mr-2 h-4 w-4" />
           Add User
         </Button>
@@ -133,8 +142,23 @@ export default function AccountsView() {
           <UserList
             users={filteredUsers}
             onUserClick={(id) => setSelectedUserId(id)}
-            onEditUser={(id) => console.log("Edit user:", id)}
-            onDeactivateUser={(id) => console.log("Deactivate user:", id)}
+            onEditUser={(id) => {
+              // TODO: Implement user editing
+              // Options:
+              // 1. Show inline edit in UserDetail modal
+              // 2. Show separate edit form modal
+              // Editable fields: name, email, role, permissions, status
+              console.log("Edit user:", id);
+            }}
+            onDeactivateUser={(id) => {
+              // TODO: Implement user deactivation
+              // Steps:
+              // 1. Show confirmation dialog
+              // 2. Call API to deactivate user
+              // 3. Update local state to reflect status change
+              // 4. Consider reassigning their clients/programs
+              console.log("Deactivate user:", id);
+            }}
           />
         </CardContent>
       </Card>
@@ -144,7 +168,11 @@ export default function AccountsView() {
         <UserDetail
           user={selectedUser}
           onClose={() => setSelectedUserId(null)}
-          onEdit={() => console.log("Edit user:", selectedUser.id)}
+          onEdit={() => {
+            // TODO: Switch to edit mode or show edit form
+            // Could reuse the same UserDetail component in edit mode
+            console.log("Edit user:", selectedUser.id);
+          }}
         />
       )}
     </div>

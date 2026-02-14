@@ -72,10 +72,12 @@ function DashboardView() {
 }
 
 function App() {
-  const [currentPath, setCurrentPath] = useState("/accounts");
+  const [currentPath, setCurrentPath] = useState("/");
 
   const renderView = () => {
     switch (currentPath) {
+      case "/":
+        return <DashboardView />;
       case "/accounts":
         return <AccountsView />;
       case "/clients":

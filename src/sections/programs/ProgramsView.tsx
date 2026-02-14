@@ -153,7 +153,16 @@ export default function ProgramsView() {
             Manage skill acquisition programs and track progress
           </p>
         </div>
-        <Button>
+        <Button
+          onClick={() => {
+            // TODO: Implement program creation
+            // Options:
+            // 1. Show a modal form for creating a new program
+            // 2. Navigate to a dedicated create page
+            // 3. Use a sheet/drawer component for the form
+            console.log("New Program clicked - implement creation flow");
+          }}
+        >
           <Plus className="mr-2 h-4 w-4" />
           New Program
         </Button>
@@ -212,11 +221,25 @@ export default function ProgramsView() {
           program={selectedProgram}
           onClose={handleCloseDetail}
           onStartSession={() => {
-            // TODO: Navigate to sessions with this program
+            // TODO: Implement cross-section navigation to Sessions
+            // Requirements:
+            // 1. Need access to onNavigate from App.tsx (via props or context)
+            // 2. Pass program context to SessionsView
+            // 3. Pre-fill SessionSelection with this program
+            // Recommended approach:
+            //   - Create React Context for navigation + shared state
+            //   - OR use React Router with state/params
+            // Example: onNavigate?.("/sessions", { programId: selectedProgram.program_id })
+            console.log("Start Session for program:", selectedProgram.program_id);
             handleCloseDetail();
           }}
           onEdit={() => {
-            // TODO: Open edit form
+            // TODO: Implement program editing
+            // Options:
+            // 1. Show inline edit mode in ProgramDetail
+            // 2. Open separate edit modal/form
+            // 3. Navigate to dedicated edit page
+            console.log("Edit program:", selectedProgram.program_id);
             handleCloseDetail();
           }}
         />

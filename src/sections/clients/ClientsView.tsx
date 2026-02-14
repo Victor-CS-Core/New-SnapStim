@@ -58,7 +58,16 @@ export default function ClientsView() {
             Manage client profiles and programs
           </p>
         </div>
-        <Button>
+        <Button
+          onClick={() => {
+            // TODO: Implement client creation
+            // Recommended: Show a modal form with fields for:
+            // - Client name, age, diagnosis
+            // - Guardian information
+            // - Initial program assignments
+            console.log("Add Client clicked - implement creation flow");
+          }}
+        >
           <Plus className="mr-2 h-4 w-4" />
           Add Client
         </Button>
@@ -130,10 +139,29 @@ export default function ClientsView() {
               client={selectedClient}
               programs={clientPrograms}
               alerts={clientAlerts}
-              onStartSession={(id) => console.log("Start session:", id)}
-              onAddProgram={() => console.log("Add program")}
-              onViewReports={() => console.log("View reports")}
-              onEditProfile={() => console.log("Edit profile")}
+              onStartSession={(programId) => {
+                // TODO: Implement cross-section navigation to Sessions
+                // Requirements: Pass both client and program context
+                // Example: onNavigate?.("/sessions", { clientId: selectedClient.client_id, programId })
+                console.log("Start session:", programId, "for client:", selectedClient.client_id);
+              }}
+              onAddProgram={() => {
+                // TODO: Navigate to Programs or show program assignment modal
+                // Options:
+                // 1. Navigate to /programs with client context for filtering
+                // 2. Show modal to select/create program for this client
+                console.log("Add program for client:", selectedClient.client_id);
+              }}
+              onViewReports={() => {
+                // TODO: Navigate to Reporting filtered by this client
+                // Example: onNavigate?.("/reporting", { clientId: selectedClient.client_id })
+                console.log("View reports for client:", selectedClient.client_id);
+              }}
+              onEditProfile={() => {
+                // TODO: Open client profile edit form
+                // Recommended: Show modal with editable client details
+                console.log("Edit profile for client:", selectedClient.client_id);
+              }}
             />
           ) : (
             <Card className="p-12 text-center">

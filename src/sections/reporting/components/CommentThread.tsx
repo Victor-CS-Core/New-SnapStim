@@ -135,6 +135,7 @@ export default function CommentThread({
               onChange={(e) => setReplyContent(e.target.value)}
               placeholder="Write your reply..."
               className="w-full min-h-[100px] p-3 border border-stone-300 dark:border-stone-600 rounded-md bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              aria-label="Reply to comment"
             />
             <div className="flex gap-2">
               <Button onClick={handleSubmitReply} size="sm">

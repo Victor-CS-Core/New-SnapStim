@@ -52,20 +52,22 @@ export default function ReportConfigPanel({
           </h3>
           <div className="space-y-2">
             <div>
-              <label className="text-xs text-stone-500 dark:text-stone-400">
+              <label htmlFor="report-start-date" className="text-xs text-stone-500 dark:text-stone-400">
                 Start Date
               </label>
               <Input
+                id="report-start-date"
                 type="date"
                 value={config.date_range?.start || ""}
                 onChange={(e) => updateDateRange("start", e.target.value)}
               />
             </div>
             <div>
-              <label className="text-xs text-stone-500 dark:text-stone-400">
+              <label htmlFor="report-end-date" className="text-xs text-stone-500 dark:text-stone-400">
                 End Date
               </label>
               <Input
+                id="report-end-date"
                 type="date"
                 value={config.date_range?.end || ""}
                 onChange={(e) => updateDateRange("end", e.target.value)}
@@ -88,6 +90,7 @@ export default function ReportConfigPanel({
                     ? "border-emerald-600 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400"
                     : "border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300"
                 }`}
+                aria-label={`Export as ${format.toUpperCase()}`}
               >
                 {format.toUpperCase()}
               </button>

@@ -8,6 +8,7 @@ import {
   FolderOpen,
   Clock,
 } from "lucide-react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -44,9 +45,30 @@ function getInitials(name: string): string {
 }
 
 export default function UserDetail({ user, onClose, onEdit }: UserDetailProps) {
+  // Keyboard navigation: Escape to close
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-lg max-h-[90vh] overflow-y-auto">
+    <div 
+      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="user-detail-title"
+    >
+      <Card 
+        className="w-full max-w-lg max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         <CardHeader className="flex flex-row items-start justify-between pb-2">
           <div className="flex items-center gap-4">
             <Avatar className="h-16 w-16">
@@ -63,14 +85,14 @@ export default function UserDetail({ user, onClose, onEdit }: UserDetailProps) {
               </div>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={onClose}>
+          <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close user details panel">
             <X className="h-4 w-4" />
           </Button>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Contact Info */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+            <h4 id="user-detail-title" className="text-sm font-semibold text-stone-700 dark:text-stone-300">
               Contact Information
             </h4>
             <div className="space-y-2">

@@ -171,6 +171,7 @@ export default function SessionRecap({ session, onExit }: SessionRecapProps) {
                 placeholder="Add observations, learner motivation, environmental factors, or recommendations..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
+                aria-label="Session notes"
               />
             </CardContent>
           </Card>

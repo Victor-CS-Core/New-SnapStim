@@ -66,7 +66,7 @@ export default function UserMenu({
             className={`w-full h-auto py-3 px-2 ${collapsed ? "justify-center lg:justify-start group-hover/sidebar:justify-start" : "justify-start"} gap-3`}
           >
             <Avatar className="h-8 w-8 shrink-0">
-              <AvatarImage src="" />
+              <AvatarImage src="" alt={userName} />
               <AvatarFallback className="bg-primary/20 text-primary">
                 {initials}
               </AvatarFallback>

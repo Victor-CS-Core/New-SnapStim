@@ -88,6 +88,7 @@ export default function ReviewFilters({
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
+            aria-label="Search stimuli"
           />
         </div>
 

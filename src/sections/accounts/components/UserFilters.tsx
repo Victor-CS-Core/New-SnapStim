@@ -36,6 +36,7 @@ export default function UserFilters({
             onFilterChange({ ...filters, search: e.target.value })
           }
           className="pl-10"
+          aria-label="Search users by name or email"
         />
       </div>
 

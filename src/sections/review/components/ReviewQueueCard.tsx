@@ -58,6 +58,7 @@ export default function ReviewQueueCard({
                 checked={selected}
                 onChange={(e) => onSelect(e.target.checked)}
                 className="h-4 w-4 rounded border-stone-300 text-primary focus:ring-primary"
+                aria-label={`Select stimulus ${item.stimulus_text}`}
               />
             </div>
           )}

@@ -9,6 +9,7 @@ import {
   CheckCircle,
   BookOpen,
 } from "lucide-react";
+import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -50,13 +51,34 @@ export default function ProgramDetail({
     program.performance.consecutive_mastery_sessions /
     program.consecutive_sessions_for_mastery;
 
+  // Keyboard navigation: Escape to close
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 overflow-y-auto">
-      <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+    <div 
+      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 overflow-y-auto"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="program-detail-title"
+    >
+      <Card 
+        className="w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         <CardHeader className="flex flex-row items-start justify-between pb-2">
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <CardTitle className="text-xl">{program.program_name}</CardTitle>
+              <CardTitle id="program-detail-title" className="text-xl">{program.program_name}</CardTitle>
               <ProgramStatusBadge status={program.status} />
             </div>
             <div className="flex items-center gap-2 mt-2">
@@ -67,7 +89,7 @@ export default function ProgramDetail({
               </Badge>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={onClose}>
+          <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close program details panel">
             <X className="h-4 w-4" />
           </Button>
         </CardHeader>

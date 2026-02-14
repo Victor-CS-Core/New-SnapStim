@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   X,
   Check,
@@ -87,13 +87,38 @@ export default function StimulusDetailModal({
   const hasLowConfidence = item.generation_metadata.confidence_score < 0.5;
   const hasRegenerations = item.regeneration_history.regeneration_count > 0;
 
+  // Keyboard navigation: Escape to close
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (showRejectForm) {
+          setShowRejectForm(false);
+        } else {
+          onClose();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showRejectForm, onClose]);
+
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 overflow-y-auto">
-      <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+    <div 
+      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 overflow-y-auto"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="stimulus-modal-title"
+    >
+      <Card 
+        className="w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         <CardHeader className="flex flex-row items-start justify-between pb-2">
           <div className="flex-1">
             <div className="flex items-center gap-3 flex-wrap">
-              <CardTitle className="text-xl">{item.program_name}</CardTitle>
+              <CardTitle id="stimulus-modal-title" className="text-xl">{item.program_name}</CardTitle>
               <ReviewStatusBadge status={item.review_status} />
             </div>
             <div className="flex items-center gap-2 mt-2 text-sm text-stone-500 dark:text-stone-400">
@@ -109,7 +134,7 @@ export default function StimulusDetailModal({
               </span>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={onClose}>
+          <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close stimulus review modal">
             <X className="h-4 w-4" />
           </Button>
         </CardHeader>

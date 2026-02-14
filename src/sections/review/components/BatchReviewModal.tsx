@@ -141,8 +141,16 @@ export default function BatchReviewModal({
 
   if (!currentItem) {
     return (
-      <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-lg">
+      <div 
+        className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+        onClick={onClose}
+        role="dialog"
+        aria-modal="true"
+      >
+        <Card 
+          className="w-full max-w-lg"
+          onClick={(e) => e.stopPropagation()}
+        >
           <CardContent className="py-12 text-center">
             <div className="rounded-full bg-emerald-100 dark:bg-emerald-900/30 p-4 inline-block mb-4">
               <Check className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
@@ -163,11 +171,16 @@ export default function BatchReviewModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/90 flex flex-col">
+    <div 
+      className="fixed inset-0 z-50 bg-black/90 flex flex-col"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="batch-review-title"
+    >
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 bg-stone-900">
         <div className="flex items-center gap-4">
-          <h2 className="text-lg font-semibold text-white">Batch Review</h2>
+          <h2 id="batch-review-title" className="text-lg font-semibold text-white">Batch Review</h2>
           <Badge variant="secondary">
             {currentIndex + 1} of {totalCount}
           </Badge>
@@ -189,6 +202,7 @@ export default function BatchReviewModal({
             size="icon"
             className="text-white"
             onClick={onClose}
+            aria-label="Close batch review"
           >
             <X className="h-5 w-5" />
           </Button>
@@ -364,6 +378,8 @@ export default function BatchReviewModal({
                     ? "border-emerald-500 opacity-50"
                     : "border-transparent opacity-70 hover:opacity-100"
               }`}
+              aria-label={`Review stimulus ${index + 1}: ${item.stimulus_text}`}
+              aria-current={index === currentIndex ? "true" : "false"}
             >
               {item.image_url ? (
                 <img

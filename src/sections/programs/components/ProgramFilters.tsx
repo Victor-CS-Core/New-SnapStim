@@ -57,6 +57,7 @@ export default function ProgramFiltersComponent({
             onFilterChange({ ...filters, search: e.target.value })
           }
           className="pl-10"
+          aria-label="Search programs"
         />
       </div>
 

@@ -125,6 +125,7 @@ export default function ReviewQueue({
               checked={allSelected}
               onChange={handleSelectAll}
               className="h-4 w-4 rounded border-stone-300 text-primary focus:ring-primary"
+              aria-label="Select all items"
             />
             <span className="text-sm text-stone-600 dark:text-stone-400">
               {selectedIds.size} selected
@@ -154,6 +155,7 @@ export default function ReviewQueue({
               checked={false}
               onChange={handleSelectAll}
               className="h-4 w-4 rounded border-stone-300 text-primary focus:ring-primary"
+              aria-label="Select all pending items"
             />
             <span className="text-sm text-stone-500 dark:text-stone-400">Select all pending</span>
           </div>

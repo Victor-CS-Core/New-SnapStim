@@ -96,7 +96,7 @@ export default function StimulusDetailModal({
               <CardTitle className="text-xl">{item.program_name}</CardTitle>
               <ReviewStatusBadge status={item.review_status} />
             </div>
-            <div className="flex items-center gap-2 mt-2 text-sm text-stone-500">
+            <div className="flex items-center gap-2 mt-2 text-sm text-stone-500 dark:text-stone-400">
               <Badge variant="outline">
                 {programTypeLabels[item.program_type]}
               </Badge>
@@ -185,7 +185,7 @@ export default function StimulusDetailModal({
                   <span className="text-4xl font-semibold text-stone-400">
                     Aa
                   </span>
-                  <p className="text-sm text-stone-500 mt-2">
+                  <p className="text-sm text-stone-500 dark:text-stone-400 mt-2">
                     Text-only stimulus
                   </p>
                 </div>
@@ -201,7 +201,7 @@ export default function StimulusDetailModal({
                 </p>
                 {item.generation_metadata.acceptable_answers && (
                   <div className="mt-3">
-                    <span className="text-sm text-stone-500">
+                    <span className="text-sm text-stone-500 dark:text-stone-400">
                       Acceptable answers:
                     </span>
                     <div className="flex gap-2 flex-wrap mt-1">
@@ -240,20 +240,20 @@ export default function StimulusDetailModal({
                 </h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-stone-500">Model</span>
+                    <span className="text-stone-500 dark:text-stone-400">Model</span>
                     <span className="font-medium text-stone-700 dark:text-stone-300">
                       {item.generation_metadata.model}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-stone-500">Batch</span>
+                    <span className="text-stone-500 dark:text-stone-400">Batch</span>
                     <span className="font-mono text-xs text-stone-700 dark:text-stone-300">
                       {item.generation_metadata.batch_id}
                     </span>
                   </div>
                   {item.generation_metadata.image_resolution && (
                     <div className="flex justify-between">
-                      <span className="text-stone-500">Resolution</span>
+                      <span className="text-stone-500 dark:text-stone-400">Resolution</span>
                       <span className="text-stone-700 dark:text-stone-300">
                         {item.generation_metadata.image_resolution}
                       </span>
@@ -261,7 +261,7 @@ export default function StimulusDetailModal({
                   )}
                   {item.generation_metadata.clarity_score && (
                     <div className="flex justify-between">
-                      <span className="text-stone-500">Clarity</span>
+                      <span className="text-stone-500 dark:text-stone-400">Clarity</span>
                       <span className="text-stone-700 dark:text-stone-300">
                         {Math.round(
                           item.generation_metadata.clarity_score * 100,
@@ -273,7 +273,7 @@ export default function StimulusDetailModal({
                 </div>
                 <Separator />
                 <div>
-                  <span className="text-xs text-stone-500">Prompt</span>
+                  <span className="text-xs text-stone-500 dark:text-stone-400">Prompt</span>
                   <p className="text-sm text-stone-600 dark:text-stone-400 mt-1">
                     "{item.generation_metadata.prompt}"
                   </p>

@@ -155,7 +155,7 @@ export default function ReviewQueue({
               onChange={handleSelectAll}
               className="h-4 w-4 rounded border-stone-300 text-primary focus:ring-primary"
             />
-            <span className="text-sm text-stone-500">Select all pending</span>
+            <span className="text-sm text-stone-500 dark:text-stone-400">Select all pending</span>
           </div>
         )}
 

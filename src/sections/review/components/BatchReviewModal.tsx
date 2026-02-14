@@ -150,7 +150,7 @@ export default function BatchReviewModal({
             <h3 className="text-xl font-semibold text-stone-900 dark:text-stone-100">
               Batch Review Complete!
             </h3>
-            <p className="text-stone-500 mt-2">
+            <p className="text-stone-500 dark:text-stone-400 mt-2">
               You've reviewed {reviewedCount} stimuli.
             </p>
             <Button className="mt-6" onClick={onClose}>
@@ -225,7 +225,7 @@ export default function BatchReviewModal({
                   <CardTitle className="text-lg">
                     {currentItem.program_name}
                   </CardTitle>
-                  <p className="text-sm text-stone-500">
+                  <p className="text-sm text-stone-500 dark:text-stone-400">
                     {currentItem.client_name}
                   </p>
                 </div>
@@ -259,7 +259,7 @@ export default function BatchReviewModal({
 
               {/* Confidence */}
               <div>
-                <span className="text-sm text-stone-500">Confidence</span>
+                <span className="text-sm text-stone-500 dark:text-stone-400">Confidence</span>
                 <ConfidenceBar
                   score={currentItem.generation_metadata.confidence_score}
                 />

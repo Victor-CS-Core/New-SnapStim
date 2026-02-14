@@ -272,7 +272,7 @@ export default function SessionRunner({
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-stone-600 dark:text-stone-400">No Response</span>
-                  <span className="font-bold text-stone-600">{stats.noResponse}</span>
+                  <span className="font-bold text-stone-600 dark:text-stone-400">{stats.noResponse}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-stone-600 dark:text-stone-400">Prompted</span>

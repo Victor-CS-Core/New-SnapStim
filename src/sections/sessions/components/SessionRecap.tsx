@@ -123,7 +123,7 @@ export default function SessionRecap({ session, onExit }: SessionRecapProps) {
                     </div>
                   </div>
                   <div className="text-center p-4 bg-stone-50 dark:bg-stone-900 rounded-lg">
-                    <div className="text-3xl font-bold text-stone-600">
+                    <div className="text-3xl font-bold text-stone-600 dark:text-stone-400">
                       {stats.noResponse}
                     </div>
                     <div className="text-sm text-stone-600 dark:text-stone-400 mt-1">

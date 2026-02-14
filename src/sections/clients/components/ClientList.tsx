@@ -53,7 +53,7 @@ export default function ClientList({
         {filteredClients.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <UserIcon className="h-8 w-8 text-stone-400 mb-2" />
-            <p className="text-sm text-stone-500">No clients found</p>
+            <p className="text-sm text-stone-500 dark:text-stone-400">No clients found</p>
           </div>
         ) : (
           filteredClients.map((client) => (

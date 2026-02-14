@@ -82,7 +82,7 @@ export default function ProgramDetail({
             <div className="p-3 rounded-lg bg-stone-50 dark:bg-stone-800">
               <div className="flex items-center gap-2 mb-1">
                 <Target className="h-4 w-4 text-primary" />
-                <span className="text-xs text-stone-500 uppercase">
+                <span className="text-xs text-stone-500 dark:text-stone-400 uppercase">
                   Accuracy
                 </span>
               </div>
@@ -101,7 +101,7 @@ export default function ProgramDetail({
             <div className="p-3 rounded-lg bg-stone-50 dark:bg-stone-800">
               <div className="flex items-center gap-2 mb-1">
                 <BookOpen className="h-4 w-4 text-primary" />
-                <span className="text-xs text-stone-500 uppercase">Trials</span>
+                <span className="text-xs text-stone-500 dark:text-stone-400 uppercase">Trials</span>
               </div>
               <div className="text-2xl font-bold text-stone-900 dark:text-stone-100">
                 {program.performance.total_trials}
@@ -111,7 +111,7 @@ export default function ProgramDetail({
             <div className="p-3 rounded-lg bg-stone-50 dark:bg-stone-800">
               <div className="flex items-center gap-2 mb-1">
                 <Calendar className="h-4 w-4 text-primary" />
-                <span className="text-xs text-stone-500 uppercase">
+                <span className="text-xs text-stone-500 dark:text-stone-400 uppercase">
                   Sessions
                 </span>
               </div>
@@ -123,7 +123,7 @@ export default function ProgramDetail({
             <div className="p-3 rounded-lg bg-stone-50 dark:bg-stone-800">
               <div className="flex items-center gap-2 mb-1">
                 <Clock className="h-4 w-4 text-primary" />
-                <span className="text-xs text-stone-500 uppercase">Trend</span>
+                <span className="text-xs text-stone-500 dark:text-stone-400 uppercase">Trend</span>
               </div>
               <TrendIndicator trend={program.performance.trend} />
             </div>
@@ -136,7 +136,7 @@ export default function ProgramDetail({
                 <span className="text-stone-600 dark:text-stone-400">
                   Accuracy Progress
                 </span>
-                <span className="text-stone-500">
+                <span className="text-stone-500 dark:text-stone-400">
                   {program.performance.accuracy_percent}% /{" "}
                   {program.mastery_threshold}%
                 </span>
@@ -156,7 +156,7 @@ export default function ProgramDetail({
                 <span className="text-stone-600 dark:text-stone-400">
                   Mastery Sessions
                 </span>
-                <span className="text-stone-500">
+                <span className="text-stone-500 dark:text-stone-400">
                   {program.performance.consecutive_mastery_sessions} /{" "}
                   {program.consecutive_sessions_for_mastery}
                 </span>
@@ -185,19 +185,19 @@ export default function ProgramDetail({
                 <div className="text-lg font-bold text-stone-900 dark:text-stone-100">
                   {program.ai_metadata.stimuli_generated}
                 </div>
-                <div className="text-xs text-stone-500">Generated</div>
+                <div className="text-xs text-stone-500 dark:text-stone-400">Generated</div>
               </div>
               <div className="p-3 rounded-lg bg-stone-50 dark:bg-stone-800">
                 <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
                   {program.ai_metadata.stimuli_approved}
                 </div>
-                <div className="text-xs text-stone-500">Approved</div>
+                <div className="text-xs text-stone-500 dark:text-stone-400">Approved</div>
               </div>
               <div className="p-3 rounded-lg bg-stone-50 dark:bg-stone-800">
                 <div className="text-lg font-bold text-red-600 dark:text-red-400">
                   {program.ai_metadata.stimuli_rejected}
                 </div>
-                <div className="text-xs text-stone-500">Rejected</div>
+                <div className="text-xs text-stone-500 dark:text-stone-400">Rejected</div>
               </div>
             </div>
           </div>

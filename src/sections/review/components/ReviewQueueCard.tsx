@@ -95,7 +95,7 @@ export default function ReviewQueueCard({
                   <Badge variant="outline" className="text-xs">
                     {programTypeLabels[item.program_type] || item.program_type}
                   </Badge>
-                  <span className="text-xs text-stone-500">
+                  <span className="text-xs text-stone-500 dark:text-stone-400">
                     {item.program_name}
                   </span>
                 </div>
@@ -103,7 +103,7 @@ export default function ReviewQueueCard({
               <ReviewStatusBadge status={item.review_status} />
             </div>
 
-            <div className="flex items-center gap-3 mt-2 text-xs text-stone-500">
+            <div className="flex items-center gap-3 mt-2 text-xs text-stone-500 dark:text-stone-400">
               <span>{item.client_name}</span>
               <span>•</span>
               <span>
@@ -131,7 +131,7 @@ export default function ReviewQueueCard({
 
             <div className="flex items-center justify-between mt-3">
               <div className="flex items-center gap-2">
-                <span className="text-xs text-stone-500">Confidence:</span>
+                <span className="text-xs text-stone-500 dark:text-stone-400">Confidence:</span>
                 <ConfidenceBadge
                   score={item.generation_metadata.confidence_score}
                 />

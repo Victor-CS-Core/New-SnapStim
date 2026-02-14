@@ -123,7 +123,7 @@ export default function AccountsView() {
               <Users className="h-5 w-5 text-primary" />
               <CardTitle>User Directory</CardTitle>
             </div>
-            <div className="text-sm text-stone-500">
+            <div className="text-sm text-stone-500 dark:text-stone-400">
               {filteredUsers.length} of {users.length} users
             </div>
           </div>

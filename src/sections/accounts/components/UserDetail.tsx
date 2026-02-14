@@ -101,7 +101,7 @@ export default function UserDetail({ user, onClose, onEdit }: UserDetailProps) {
             <div className="space-y-2">
               <div className="flex items-center gap-3 text-sm">
                 <Calendar className="h-4 w-4 text-stone-400" />
-                <span className="text-stone-500 dark:text-stone-500">
+                <span className="text-stone-500 dark:text-stone-400">
                   Member since
                 </span>
                 <span className="text-stone-600 dark:text-stone-400">
@@ -110,7 +110,7 @@ export default function UserDetail({ user, onClose, onEdit }: UserDetailProps) {
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Clock className="h-4 w-4 text-stone-400" />
-                <span className="text-stone-500 dark:text-stone-500">
+                <span className="text-stone-500 dark:text-stone-400">
                   Last active
                 </span>
                 <span className="text-stone-600 dark:text-stone-400">
@@ -134,7 +134,7 @@ export default function UserDetail({ user, onClose, onEdit }: UserDetailProps) {
                   <div className="text-lg font-semibold text-stone-900 dark:text-stone-100">
                     {user.assignedClients.length}
                   </div>
-                  <div className="text-xs text-stone-500">Clients</div>
+                  <div className="text-xs text-stone-500 dark:text-stone-400">Clients</div>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-lg bg-stone-50 dark:bg-stone-800">
@@ -143,7 +143,7 @@ export default function UserDetail({ user, onClose, onEdit }: UserDetailProps) {
                   <div className="text-lg font-semibold text-stone-900 dark:text-stone-100">
                     {user.assignedPrograms?.length || 0}
                   </div>
-                  <div className="text-xs text-stone-500">Programs</div>
+                  <div className="text-xs text-stone-500 dark:text-stone-400">Programs</div>
                 </div>
               </div>
             </div>

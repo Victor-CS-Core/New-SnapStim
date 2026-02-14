@@ -187,7 +187,7 @@ export default function ReviewAnalytics({
                   <span className="font-medium text-stone-700 dark:text-stone-300">
                     {programTypeLabels[type] || type}
                   </span>
-                  <span className="text-stone-500">
+                  <span className="text-stone-500 dark:text-stone-400">
                     {stats.approved}/{stats.total} ({stats.approval_rate}%)
                   </span>
                 </div>
@@ -197,7 +197,7 @@ export default function ReviewAnalytics({
                     style={{ width: `${stats.approval_rate}%` }}
                   />
                 </div>
-                <div className="flex gap-2 text-xs text-stone-500">
+                <div className="flex gap-2 text-xs text-stone-500 dark:text-stone-400">
                   <span className="flex items-center gap-1">
                     <div className="w-2 h-2 rounded-full bg-emerald-500" />
                     {stats.approved} approved
@@ -254,7 +254,7 @@ export default function ReviewAnalytics({
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-stone-500 text-center py-4">
+                <p className="text-sm text-stone-500 dark:text-stone-400 text-center py-4">
                   No rejections recorded yet
                 </p>
               )}
@@ -312,19 +312,19 @@ export default function ReviewAnalytics({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-stone-200 dark:border-stone-700">
-                    <th className="text-left py-2 px-3 font-medium text-stone-500">
+                    <th className="text-left py-2 px-3 font-medium text-stone-500 dark:text-stone-400">
                       Time
                     </th>
-                    <th className="text-left py-2 px-3 font-medium text-stone-500">
+                    <th className="text-left py-2 px-3 font-medium text-stone-500 dark:text-stone-400">
                       Reviewer
                     </th>
-                    <th className="text-left py-2 px-3 font-medium text-stone-500">
+                    <th className="text-left py-2 px-3 font-medium text-stone-500 dark:text-stone-400">
                       Stimulus
                     </th>
-                    <th className="text-left py-2 px-3 font-medium text-stone-500">
+                    <th className="text-left py-2 px-3 font-medium text-stone-500 dark:text-stone-400">
                       Decision
                     </th>
-                    <th className="text-right py-2 px-3 font-medium text-stone-500">
+                    <th className="text-right py-2 px-3 font-medium text-stone-500 dark:text-stone-400">
                       Duration
                     </th>
                   </tr>
@@ -335,13 +335,13 @@ export default function ReviewAnalytics({
                       key={action.action_id}
                       className="border-b border-stone-100 dark:border-stone-800"
                     >
-                      <td className="py-2 px-3 text-stone-500">
+                      <td className="py-2 px-3 text-stone-500 dark:text-stone-400">
                         {formatDate(action.timestamp)}
                       </td>
                       <td className="py-2 px-3 text-stone-700 dark:text-stone-300">
                         {action.reviewer_name}
                       </td>
-                      <td className="py-2 px-3 font-mono text-xs text-stone-500">
+                      <td className="py-2 px-3 font-mono text-xs text-stone-500 dark:text-stone-400">
                         {action.stimulus_id}
                       </td>
                       <td className="py-2 px-3">
@@ -361,7 +361,7 @@ export default function ReviewAnalytics({
                           {action.action_type}
                         </Badge>
                       </td>
-                      <td className="py-2 px-3 text-right text-stone-500">
+                      <td className="py-2 px-3 text-right text-stone-500 dark:text-stone-400">
                         {formatDuration(action.time_spent_seconds)}
                       </td>
                     </tr>
@@ -370,7 +370,7 @@ export default function ReviewAnalytics({
               </table>
             </div>
           ) : (
-            <p className="text-sm text-stone-500 text-center py-8">
+            <p className="text-sm text-stone-500 dark:text-stone-400 text-center py-8">
               No review activity recorded yet
             </p>
           )}

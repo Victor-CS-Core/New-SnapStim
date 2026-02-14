@@ -4,6 +4,8 @@ import { AccountsView } from "./sections/accounts";
 import { ClientsView } from "./sections/clients";
 import { ProgramsView } from "./sections/programs";
 import { ReviewView } from "./sections/review";
+import { SessionsView } from "./sections/sessions";
+import { ReportingView } from "./sections/reporting";
 
 function DashboardView() {
   return (
@@ -69,17 +71,6 @@ function DashboardView() {
   );
 }
 
-function PlaceholderView({ title }: { title: string }) {
-  return (
-    <div className="flex flex-col items-center justify-center py-20">
-      <h1 className="text-2xl font-bold text-stone-900 dark:text-stone-100">
-        {title}
-      </h1>
-      <p className="mt-2 text-stone-500">This section is coming soon.</p>
-    </div>
-  );
-}
-
 function App() {
   const [currentPath, setCurrentPath] = useState("/accounts");
 
@@ -94,9 +85,9 @@ function App() {
       case "/review":
         return <ReviewView />;
       case "/sessions":
-        return <PlaceholderView title="Sessions" />;
+        return <SessionsView />;
       case "/reporting":
-        return <PlaceholderView title="Reporting" />;
+        return <ReportingView />;
       default:
         return <DashboardView />;
     }

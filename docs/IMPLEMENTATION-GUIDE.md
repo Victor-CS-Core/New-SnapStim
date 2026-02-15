@@ -915,7 +915,7 @@ stimuli/{userId}/{programId}/{stimulusId}.json
 
 **Duration:** February 15, 2026  
 **Status:** ✅ Complete  
-**Commit:** (to be added after commit)
+**Commit:** 74d5b22
 
 ### What Was Built
 

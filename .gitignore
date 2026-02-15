@@ -17,9 +17,16 @@ dist-ssr
 .env.local
 .env.*.local
 
+# Agent skills (keep in repo for collaboration)
+# Uncomment if you want to exclude:
+# .agents/
+# .agent/
+# .claude/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 .DS_Store
 *.suo

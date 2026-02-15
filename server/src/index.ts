@@ -11,6 +11,7 @@ import { exportSession, fetchSessionImages, fetchSessionMeta, fetchSessionStimul
 import * as stimuli from './routes/stimuli';
 import { deleteStimulus, getStimulus, listStimuli, saveStimulus, submitReview } from "./routes/stimuliRoutes";
 import * as teachingInstructions from './routes/teachingInstructions';
+import { deleteUser, getUser, inviteUser, listUsers, saveUser, updateUser } from "./routes/userRoutes";
 import registerSaveSessionRoute from "./saveSession";
 
 
@@ -68,6 +69,14 @@ app.put("/api/program/update", updateProgram);
 app.get("/api/program/list", listPrograms);
 app.get("/api/program/:userId/:clientId/:programId", getProgram);
 app.delete("/api/program/delete", deleteProgram);
+
+// User management routes
+app.post("/api/user/save", saveUser);
+app.put("/api/user/update", updateUser);
+app.get("/api/users/list", listUsers);
+app.get("/api/user/:userId", getUser);
+app.delete("/api/user/delete", deleteUser);
+app.post("/api/user/invite", inviteUser);
 
 
 app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {

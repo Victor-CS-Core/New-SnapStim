@@ -14,13 +14,11 @@ import UserDetail from "./components/UserDetail";
 import EditUserModal from "./components/EditUserModal";
 import type { EditUserFormData } from "./components/EditUserModal";
 import ConfirmDialog from "@/components/ui/confirm-dialog";
-import accountsData from "../../../product-plan/sections/accounts/data.json";
+import { useUsers, useUpdateUser, useDeleteUser } from "@/hooks/useAccounts";
 import type {
   User,
   UserFilters as UserFiltersType,
 } from "../../../product-plan/sections/accounts/types";
-
-const users = accountsData.users as User[];
 
 export default function AccountsView() {
   const [filters, setFilters] = useState<UserFiltersType>({});
@@ -29,6 +27,11 @@ export default function AccountsView() {
   const [deactivatingUserId, setDeactivatingUserId] = useState<string | null>(
     null,
   );
+
+  // Load users from backend via React Query hook
+  const { data: users = [], isLoading } = useUsers();
+  const updateUser = useUpdateUser();
+  const deleteUser = useDeleteUser();
 
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
@@ -51,34 +54,47 @@ export default function AccountsView() {
       }
       return true;
     });
-  }, [filters]);
+  }, [users, filters]);
 
   const selectedUser = useMemo(() => {
     if (!selectedUserId) return null;
     return users.find((u) => u.id === selectedUserId) || null;
-  }, [selectedUserId]);
+  }, [users, selectedUserId]);
 
   const editingUser = useMemo(() => {
     if (!editingUserId) return null;
     return users.find((u) => u.id === editingUserId) || null;
-  }, [editingUserId]);
+  }, [users, editingUserId]);
 
-  const handleEditUser = (userData: EditUserFormData) => {
-    // In a real app, this would make an API call
-    console.log("Updating user:", userData);
-    // For demo, show success message
-    alert(`User "${userData.name}" updated successfully!`);
+  const handleEditUser = async (userData: EditUserFormData) => {
+    if (!editingUserId) return;
+    
+    try {
+      await updateUser.mutateAsync({
+        userId: editingUserId,
+        updates: userData,
+      });
+      setEditingUserId(null);
+      console.log("User updated successfully:", userData);
+    } catch (error) {
+      console.error("Failed to update user:", error);
+      alert("Failed to update user. Please try again.");
+    }
   };
 
-  const handleDeactivateUser = () => {
+  const handleDeactivateUser = async () => {
     if (!deactivatingUserId) return;
-    // In a real app, this would make an API call
-    console.log("Deactivating user:", deactivatingUserId);
-    const user = users.find((u) => u.id === deactivatingUserId);
-    // For demo, show success message
-    alert(
-      `User "${user?.name}" has been deactivated.\nTheir clients and programs should be reassigned.`,
-    );
+    
+    try {
+      await deleteUser.mutateAsync(deactivatingUserId);
+      const user = users.find((u) => u.id === deactivatingUserId);
+      setDeactivatingUserId(null);
+      setSelectedUserId(null);
+      console.log("User deactivated:", user?.name);
+    } catch (error) {
+      console.error("Failed to deactivate user:", error);
+      alert("Failed to deactivate user. Please try again.");
+    }
   };
 
   const stats = useMemo(
@@ -90,8 +106,24 @@ export default function AccountsView() {
       active: users.filter((u) => u.status === "Active").length,
       pending: users.filter((u) => u.status === "Pending").length,
     }),
-    [],
+    [users],
   );
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-stone-900 dark:text-stone-100">
+            Account Management
+          </h1>
+          <p className="text-stone-500 dark:text-stone-400 mt-1">
+            Loading users...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

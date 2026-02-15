@@ -215,6 +215,76 @@ class ApiClient {
   }
 
   // ===================================
+  // USERS (ACCOUNTS)
+  // ===================================
+
+  /**
+   * List all users (with optional filters)
+   * GET /api/users/list?role=:role&status=:status&search=:search
+   */
+  async listUsers(filters?: { role?: string; status?: string; search?: string }) {
+    const params = new URLSearchParams();
+    if (filters?.role) params.append('role', filters.role);
+    if (filters?.status) params.append('status', filters.status);
+    if (filters?.search) params.append('search', filters.search);
+    
+    const queryString = params.toString();
+    return this.request(`/api/users/list${queryString ? '?' + queryString : ''}`);
+  }
+
+  /**
+   * Get a single user by ID
+   * GET /api/user/:userId
+   */
+  async getUser(userId: string) {
+    return this.request(`/api/user/${userId}`);
+  }
+
+  /**
+   * Save (create or update) a user
+   * POST /api/user/save
+   */
+  async saveUser(userId: string, userData: any) {
+    return this.request('/api/user/save', {
+      method: 'POST',
+      body: JSON.stringify({ userId, userData }),
+    });
+  }
+
+  /**
+   * Update an existing user
+   * PUT /api/user/update
+   */
+  async updateUser(userId: string, updates: any) {
+    return this.request('/api/user/update', {
+      method: 'PUT',
+      body: JSON.stringify({ userId, updates }),
+    });
+  }
+
+  /**
+   * Delete (deactivate) a user
+   * DELETE /api/user/delete
+   */
+  async deleteUser(userId: string) {
+    return this.request('/api/user/delete', {
+      method: 'DELETE',
+      body: JSON.stringify({ userId }),
+    });
+  }
+
+  /**
+   * Invite a new user
+   * POST /api/user/invite
+   */
+  async inviteUser(inviteData: { email: string; role: string; name: string }) {
+    return this.request('/api/user/invite', {
+      method: 'POST',
+      body: JSON.stringify(inviteData),
+    });
+  }
+
+  // ===================================
   // STIMULI/REVIEW
   // ===================================
 

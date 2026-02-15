@@ -9,7 +9,77 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### In Progress
 
-- Phase 8: Session Runner Implementation
+- Phase 9: Offline Support Implementation
+
+## [0.8.0] - 2026-02-15
+
+### Added
+
+- ✨ **Phase 8: Enhanced Session Runner Complete**
+  - **Real Data Integration**
+    - Loads approved stimuli from backend for selected program
+    - Fetches program details including rerun policy configuration
+    - Shuffles stimuli queue based on program trial count
+    - Displays stimulus images or text based on available data
+    - Graceful fallback when no approved stimuli found
+  
+  - **Rerun Policy Implementation**
+    - Error correction with immediate rerun on incorrect responses
+    - Adds failed stimuli back to queue at position +2
+    - Visual notification when rerun policy triggers
+    - Badge indicator showing error correction status
+    - Follows mobile app rerun logic
+  
+  - **Keyboard Shortcuts**
+    - `C` key for Correct response
+    - `I` key for Incorrect response
+    - `N` key for No Response
+    - `P` key for Prompted response
+    - `Esc` key for Pause/Resume
+    - `Ctrl+U` for Undo last trial
+    - Shortcuts panel visible in side panel
+  
+  - **Session Management**
+    - Pause/Resume with visual overlay indicator
+    - Undo last trial with confirmation dialog
+    - Auto-save trial data to backend after each response
+    - Session duration timer (MM:SS format)
+    - Real-time progress bar and trial counter
+    - End session early with confirmation
+  
+  - **Trial Recording**
+    - Complete trial metadata capture (stimulus, response, timestamp)
+    - Rerun trigger tracking per trial
+    - Accuracy calculation (correct/incorrect only)
+    - Real-time session statistics update
+    - Backend persistence via `useUpdateSession()`
+  
+  - **Enhanced UX**
+    - Large, accessible response buttons (disabled when paused)
+    - Color-coded responses: green (correct), red (incorrect), gray (no response), amber (prompted)
+    - Real-time stats in side panel: correct, incorrect, no response, prompted, accuracy%
+    - Loading states during data fetching
+    - Paused state overlay with resume button
+    - Rerun policy notification banner
+    - Keyboard shortcuts reference panel
+
+### Changed
+
+- **SessionRunner.tsx** - Complete rewrite with real data integration (370 lines)
+  - Replaced mock stimulus data with `useStimuli()` hook
+  - Added `usePrograms()` for rerun policy access
+  - Integrated `useUpdateSession()` for real-time persistence
+  - Implemented keyboard event handlers
+  - Added pause/resume state management
+  - Enhanced UI with status indicators and shortcuts panel
+
+### Technical Notes
+
+- **Data Flow**: Session → Load Program → Load Stimuli → Shuffle Queue → Present → Record → Check Policy → Save → Next
+- **Auto-save**: Trial data persists to backend after each response (fire-and-forget)
+- **Accuracy Calculation**: Based on correct/(correct+incorrect) only (excludes no response and prompted)
+- **Rerun Logic**: Follows program's `rerun_policy.error_correction` and `immediate_rerun_on_error` settings
+- **Keyboard Priority**: All shortcuts work globally when session runner is active and not paused
 
 ## [0.7.0] - 2026-02-15
 

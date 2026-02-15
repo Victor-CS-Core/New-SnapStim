@@ -911,16 +911,107 @@ stimuli/{userId}/{programId}/{stimulusId}.json
 
 ---
 
-## Phase 8: Session Runner (Week 7-8)
+## Phase 8: Session Runner (Week 7-8) ✅ COMPLETED
 
-Adapt mobile's `run-session.tsx` logic (2954 lines) to web:
+**Duration:** February 15, 2026  
+**Status:** ✅ Complete  
+**Commit:** (to be added after commit)
 
-1. **Copy trial logic** from mobile app
-2. **Adapt UI** for web (mouse instead of touch)
-3. **Use same data structures** mobile uses
-4. **Call same backend** to save sessions
+### What Was Built
 
-This is the most complex phase - see mobile app code for reference.
+**Enhanced Session Runner with Real Data Integration:**
+
+1. **Real Stimuli Loading** ✅
+   - Loads approved stimuli from backend via `useStimuli(programId, "approved")`
+   - Shuffles stimuli and selects subset based on program's trial count
+   - Displays stimulus images or text based on available data
+   - Graceful fallback if no approved stimuli found
+
+2. **Rerun Policy Implementation** ✅
+   - Loads program details to access rerun_policy configuration
+   - Implements error correction with immediate rerun on incorrect responses
+   - Adds failed stimuli back to queue at position +2
+   - Visual indicator when rerun policy triggers
+   - Badge showing error correction status
+
+3. **Keyboard Shortcuts** ✅
+   - `C` → Correct response
+   - `I` → Incorrect response
+   - `N` → No response
+   - `P` → Prompted response
+   - `Esc` → Pause/Resume session
+   - `Ctrl+U` → Undo last trial
+   - Shortcuts displayed in side panel
+
+4. **Session Management** ✅
+   - Pause/Resume functionality with visual indicator
+   - Undo last trial with confirmation
+   - Auto-save trial data to backend after each response
+   - Session duration timer
+   - Real-time progress tracking
+
+5. **Trial Recording** ✅
+   - Records all trial metadata (stimulus, response, timestamp, etc.)
+   - Tracks rerun triggers per trial
+   - Calculates accuracy based on correct/incorrect only
+   - Updates session summary in real-time
+   - Persists to backend via `useUpdateSession()`
+
+6. **User Experience** ✅
+   - Large, accessible response buttons
+   - Color-coded responses (green/red/gray/amber)
+   - Real-time session statistics
+   - Loading states for data fetching
+   - Paused state overlay
+   - Rerun policy notifications
+
+### Technical Implementation
+
+**Data Flow:**
+```
+Session Start → Load Program → Load Approved Stimuli → Shuffle Queue
+→ Present Stimulus → Record Response → Check Rerun Policy 
+→ Save to Backend → Next Trial → Session Complete
+```
+
+**Components Modified:**
+- `src/sections/sessions/components/SessionRunner.tsx` (370 lines)
+
+**Hooks Integrated:**
+- `useStimuli(programId, "approved")` - Fetch approved stimuli
+- `usePrograms(clientId)` - Get program with rerun policy
+- `useUpdateSession()` - Auto-save trial data
+
+**Key Features:**
+- Real-time backend persistence (fire-and-forget for performance)
+- Keyboard-first navigation for efficiency
+- Rerun policy logic matching mobile app
+- Pause/Resume session state
+- Undo functionality for error correction
+
+### Files Modified
+
+**Session Runner:**
+- Enhanced `SessionRunner.tsx` with:
+  - Real stimuli loading from backend
+  - Program rerun policy implementation
+  - Keyboard event handlers
+  - Auto-save functionality
+  - Pause/resume logic
+  - Undo last trial feature
+  - Enhanced UI with status indicators
+
+### Known Limitations
+
+- Response time tracking uses placeholder (2000ms) - needs actual timing implementation
+- Session notes feature shows button but doesn't open modal yet
+- Zoom image button present but functionality not implemented
+- No offline queue yet (will be added in Phase 9)
+- Session resume from interruption not fully implemented
+
+### Next Steps
+
+→ **Proceed to Phase 9:** Offline Support Implementation
 
 ---
 

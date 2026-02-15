@@ -968,21 +968,25 @@ stimuli/{userId}/{programId}/{stimulusId}.json
 ### Technical Implementation
 
 **Data Flow:**
+
 ```
 Session Start → Load Program → Load Approved Stimuli → Shuffle Queue
-→ Present Stimulus → Record Response → Check Rerun Policy 
+→ Present Stimulus → Record Response → Check Rerun Policy
 → Save to Backend → Next Trial → Session Complete
 ```
 
 **Components Modified:**
+
 - `src/sections/sessions/components/SessionRunner.tsx` (370 lines)
 
 **Hooks Integrated:**
+
 - `useStimuli(programId, "approved")` - Fetch approved stimuli
 - `usePrograms(clientId)` - Get program with rerun policy
 - `useUpdateSession()` - Auto-save trial data
 
 **Key Features:**
+
 - Real-time backend persistence (fire-and-forget for performance)
 - Keyboard-first navigation for efficiency
 - Rerun policy logic matching mobile app
@@ -992,6 +996,7 @@ Session Start → Load Program → Load Approved Stimuli → Shuffle Queue
 ### Files Modified
 
 **Session Runner:**
+
 - Enhanced `SessionRunner.tsx` with:
   - Real stimuli loading from backend
   - Program rerun policy implementation

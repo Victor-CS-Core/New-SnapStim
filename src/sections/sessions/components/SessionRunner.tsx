@@ -1,14 +1,28 @@
-import { useState, useEffect, useCallback } from "react";
-import { Pause, X, ZoomIn, MessageSquare, Check, XIcon, Circle, Disc, Undo2, Play } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useStimuli } from "@/hooks/useStimuli";
 import { usePrograms } from "@/hooks/usePrograms";
 import { useCreateSession, useUpdateSession } from "@/hooks/useSessions";
-import type { Session, Trial, TrialResponse } from "../../../../product-plan/sections/sessions/types";
+import { useStimuli } from "@/hooks/useStimuli";
+import {
+  Check,
+  Circle,
+  Disc,
+  MessageSquare,
+  Pause,
+  Play,
+  Undo2,
+  X,
+  XIcon,
+  ZoomIn,
+} from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import type { ReviewQueueItem } from "../../../../product-plan/sections/review/types";
-import type { Program } from "../../../../product-plan/sections/programs/types";
+import type {
+  Session,
+  Trial,
+  TrialResponse,
+} from "../../../../product-plan/sections/sessions/types";
 
 interface SessionRunnerProps {
   session: Session;
@@ -23,11 +37,14 @@ export default function SessionRunner({
 }: SessionRunnerProps) {
   // Load program details to get rerun policy
   const { data: programs } = usePrograms(session.client_id);
-  const program = programs?.find(p => p.program_id === session.program_id);
-  
+  const program = programs?.find((p) => p.program_id === session.program_id);
+
   // Load approved stimuli for this program
-  const { data: approvedStimuli, isLoading: stimuliLoading } = useStimuli(session.program_id, "approved");
-  
+  const { data: approvedStimuli, isLoading: stimuliLoading } = useStimuli(
+    session.program_id,
+    "approved",
+  );
+
   const createSession = useCreateSession();
   const updateSession = useUpdateSession();
 
@@ -40,18 +57,24 @@ export default function SessionRunner({
 
   // Initialize stimulus queue from approved stimuli
   useEffect(() => {
-    if (approvedStimuli && approvedStimuli.length > 0 && stimulusQueue.length === 0) {
+    if (
+      approvedStimuli &&
+      approvedStimuli.length > 0 &&
+      stimulusQueue.length === 0
+    ) {
       // Shuffle and take a subset based on program trial count or default to all
-      const trialCount = program?.rerun_policy?.trial_count || approvedStimuli.length;
+      const trialCount =
+        program?.rerun_policy?.trial_count || approvedStimuli.length;
       const shuffled = [...approvedStimuli].sort(() => Math.random() - 0.5);
-      setStimulusQueue(shuffled.slice(0, Math.min(trialCount, shuffled.length)));
+      setStimulusQueue(
+        shuffled.slice(0, Math.min(trialCount, shuffled.length)),
+      );
     }
   }, [approvedStimuli, stimulusQueue.length, program]);
 
   const currentStimulus = stimulusQueue[currentTrialIndex];
-  const progress = stimulusQueue.length > 0 
-    ? ((trials.length) / stimulusQueue.length) * 100 
-    : 0;
+  const progress =
+    stimulusQueue.length > 0 ? (trials.length / stimulusQueue.length) * 100 : 0;
 
   // Timer
   useEffect(() => {
@@ -63,51 +86,63 @@ export default function SessionRunner({
   }, [isPaused]);
 
   // Keyboard shortcuts
-  const handleKeyPress = useCallback((e: KeyboardEvent) => {
-    if (isPaused) return;
-    
-    switch (e.key.toLowerCase()) {
-      case 'c':
-        handleResponse("correct");
-        break;
-      case 'i':
-        handleResponse("incorrect");
-        break;
-      case 'n':
-        handleResponse("no_response");
-        break;
-      case 'p':
-        handleResponse("prompted");
-        break;
-      case 'u':
-        if (e.ctrlKey || e.metaKey) {
-          e.preventDefault();
-          handleUndo();
-        }
-        break;
-      case 'escape':
-        setIsPaused(prev => !prev);
-        break;
-    }
-  }, [isPaused, currentTrialIndex, trials]);
+  const handleKeyPress = useCallback(
+    (e: KeyboardEvent) => {
+      if (isPaused) return;
+
+      switch (e.key.toLowerCase()) {
+        case "c":
+          handleResponse("correct");
+          break;
+        case "i":
+          handleResponse("incorrect");
+          break;
+        case "n":
+          handleResponse("no_response");
+          break;
+        case "p":
+          handleResponse("prompted");
+          break;
+        case "u":
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            handleUndo();
+          }
+          break;
+        case "escape":
+          setIsPaused((prev) => !prev);
+          break;
+      }
+    },
+    [isPaused, currentTrialIndex, trials],
+  );
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, [handleKeyPress]);
 
   // Apply rerun policy when needed
-  const applyRerunPolicy = (response: TrialResponse, stimulus: ReviewQueueItem) => {
+  const applyRerunPolicy = (
+    response: TrialResponse,
+    stimulus: ReviewQueueItem,
+  ) => {
     if (!program?.rerun_policy) return;
 
     const { error_correction, immediate_rerun_on_error } = program.rerun_policy;
 
-    if (error_correction && immediate_rerun_on_error && response === "incorrect") {
+    if (
+      error_correction &&
+      immediate_rerun_on_error &&
+      response === "incorrect"
+    ) {
       // Add stimulus back to queue immediately after current position
       const newQueue = [...stimulusQueue];
       newQueue.splice(currentTrialIndex + 2, 0, stimulus);
       setStimulusQueue(newQueue);
-      setRerunMessage("This stimulus will be presented again due to error correction");
+      setRerunMessage(
+        "This stimulus will be presented again due to error correction",
+      );
       setTimeout(() => setRerunMessage(null), 3000);
       return true;
     }
@@ -125,7 +160,8 @@ export default function SessionRunner({
       stimulus_id: currentStimulus.stimulus_id,
       stimulus_text: currentStimulus.name || currentStimulus.stimulus_id,
       stimulus_image_url: currentStimulus.image_url || "",
-      teaching_instruction: program?.teaching_instructions || "Present and prompt as needed",
+      teaching_instruction:
+        program?.teaching_instructions || "Present and prompt as needed",
       response,
       timestamp: new Date().toISOString(),
       response_time_ms: 2000, // TODO: Implement actual response time tracking
@@ -146,7 +182,7 @@ export default function SessionRunner({
       duration_seconds: duration,
       last_modified_date: new Date().toISOString(),
     };
-    
+
     // Save to backend (fire and forget for performance)
     updateSession.mutate(updatedSession);
 
@@ -167,7 +203,7 @@ export default function SessionRunner({
 
   const handleUndo = () => {
     if (trials.length === 0) return;
-    
+
     if (confirm("Undo the last trial?")) {
       setTrials(trials.slice(0, -1));
       if (currentTrialIndex > 0) {
@@ -206,9 +242,10 @@ export default function SessionRunner({
   };
 
   const completedTrials = stats.correct + stats.incorrect;
-  const accuracy = completedTrials > 0 
-    ? Math.round((stats.correct / completedTrials) * 100) 
-    : 0;
+  const accuracy =
+    completedTrials > 0
+      ? Math.round((stats.correct / completedTrials) * 100)
+      : 0;
 
   // Loading state
   if (stimuliLoading || !currentStimulus) {
@@ -216,7 +253,9 @@ export default function SessionRunner({
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="text-stone-500 dark:text-stone-400 mb-2">
-            {stimuliLoading ? "Loading stimuli..." : "No approved stimuli found for this program"}
+            {stimuliLoading
+              ? "Loading stimuli..."
+              : "No approved stimuli found for this program"}
           </div>
           {!stimuliLoading && !currentStimulus && (
             <Button variant="outline" onClick={onExit}>
@@ -268,27 +307,33 @@ export default function SessionRunner({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div>
-                <p className="text-sm text-stone-500 dark:text-stone-400">Client</p>
+                <p className="text-sm text-stone-500 dark:text-stone-400">
+                  Client
+                </p>
                 <p className="font-semibold text-stone-900 dark:text-stone-100">
                   {session.client_id}
                 </p>
               </div>
               <div className="h-8 w-px bg-stone-200 dark:bg-stone-700" />
               <div>
-                <p className="text-sm text-stone-500 dark:text-stone-400">Program</p>
+                <p className="text-sm text-stone-500 dark:text-stone-400">
+                  Program
+                </p>
                 <p className="font-semibold text-stone-900 dark:text-stone-100">
                   {program?.program_name || session.program_id}
                 </p>
                 {program && (
                   <Badge variant="outline" className="mt-1 text-xs">
-                    {program.program_type.replace(/_/g, ' ')}
+                    {program.program_type.replace(/_/g, " ")}
                   </Badge>
                 )}
               </div>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-center">
-                <p className="text-sm text-stone-500 dark:text-stone-400">Duration</p>
+                <p className="text-sm text-stone-500 dark:text-stone-400">
+                  Duration
+                </p>
                 <p className="text-lg font-bold text-stone-900 dark:text-stone-100">
                   {formatTime(duration)}
                 </p>
@@ -299,11 +344,15 @@ export default function SessionRunner({
                 onClick={() => setIsPaused(!isPaused)}
                 title="Pause (Esc)"
               >
-                {isPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+                {isPaused ? (
+                  <Play className="h-4 w-4" />
+                ) : (
+                  <Pause className="h-4 w-4" />
+                )}
               </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={handleUndo}
                 disabled={trials.length === 0}
                 title="Undo Last Trial (Ctrl+U)"
@@ -347,7 +396,8 @@ export default function SessionRunner({
                   Teaching Instruction
                 </Badge>
                 <h2 className="text-2xl font-bold text-stone-900 dark:text-stone-100">
-                  {program?.teaching_instructions || "Present and prompt as needed"}
+                  {program?.teaching_instructions ||
+                    "Present and prompt as needed"}
                 </h2>
               </div>
             </CardContent>
@@ -365,7 +415,7 @@ export default function SessionRunner({
                       className="max-w-full max-h-[400px] object-contain mx-auto mb-4 rounded-lg"
                       onError={(e) => {
                         // Fallback to text display if image fails to load
-                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.style.display = "none";
                       }}
                     />
                     {currentStimulus.name && (
@@ -468,27 +518,45 @@ export default function SessionRunner({
               </h3>
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-stone-600 dark:text-stone-400">Correct</span>
-                  <span className="font-bold text-emerald-600">{stats.correct}</span>
+                  <span className="text-stone-600 dark:text-stone-400">
+                    Correct
+                  </span>
+                  <span className="font-bold text-emerald-600">
+                    {stats.correct}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-stone-600 dark:text-stone-400">Incorrect</span>
-                  <span className="font-bold text-red-600">{stats.incorrect}</span>
+                  <span className="text-stone-600 dark:text-stone-400">
+                    Incorrect
+                  </span>
+                  <span className="font-bold text-red-600">
+                    {stats.incorrect}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-stone-600 dark:text-stone-400">No Response</span>
-                  <span className="font-bold text-stone-600 dark:text-stone-400">{stats.noResponse}</span>
+                  <span className="text-stone-600 dark:text-stone-400">
+                    No Response
+                  </span>
+                  <span className="font-bold text-stone-600 dark:text-stone-400">
+                    {stats.noResponse}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-stone-600 dark:text-stone-400">Prompted</span>
-                  <span className="font-bold text-amber-600">{stats.prompted}</span>
+                  <span className="text-stone-600 dark:text-stone-400">
+                    Prompted
+                  </span>
+                  <span className="font-bold text-amber-600">
+                    {stats.prompted}
+                  </span>
                 </div>
                 <div className="pt-3 border-t border-stone-200 dark:border-stone-700">
                   <div className="flex justify-between text-sm">
                     <span className="font-semibold text-stone-900 dark:text-stone-100">
                       Accuracy
                     </span>
-                    <span className="font-bold text-emerald-600">{accuracy}%</span>
+                    <span className="font-bold text-emerald-600">
+                      {accuracy}%
+                    </span>
                   </div>
                   <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
                     Based on correct/incorrect only
@@ -511,27 +579,39 @@ export default function SessionRunner({
               <div className="space-y-2 text-xs text-stone-600 dark:text-stone-400">
                 <div className="flex justify-between">
                   <span>Correct</span>
-                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">C</kbd>
+                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">
+                    C
+                  </kbd>
                 </div>
                 <div className="flex justify-between">
                   <span>Incorrect</span>
-                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">I</kbd>
+                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">
+                    I
+                  </kbd>
                 </div>
                 <div className="flex justify-between">
                   <span>No Response</span>
-                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">N</kbd>
+                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">
+                    N
+                  </kbd>
                 </div>
                 <div className="flex justify-between">
                   <span>Prompted</span>
-                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">P</kbd>
+                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">
+                    P
+                  </kbd>
                 </div>
                 <div className="flex justify-between">
                   <span>Pause/Resume</span>
-                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">Esc</kbd>
+                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">
+                    Esc
+                  </kbd>
                 </div>
                 <div className="flex justify-between">
                   <span>Undo</span>
-                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">Ctrl+U</kbd>
+                  <kbd className="px-2 py-1 bg-stone-100 dark:bg-stone-800 rounded">
+                    Ctrl+U
+                  </kbd>
                 </div>
               </div>
             </CardContent>

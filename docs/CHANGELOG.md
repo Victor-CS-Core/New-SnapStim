@@ -55,14 +55,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - ✨ **Phase 6: Data Integration Complete - Backend Monorepo + Full CRUD**
-  
   - **Backend Monorepo Integration**
     - Moved backend server into `ProjectUI/server/` directory
     - Added `concurrently` for running both frontend and backend
     - Updated package.json scripts: `dev:full`, `dev:server`
     - Backend runs on port 8787, frontend on 5174
     - Created `.gitignore` to protect Firebase credentials
-  
   - **Programs Backend** (5 endpoints)
     - `GET /api/program/list` - List programs with user/client filtering
     - `GET /api/program/:userId/:clientId/:programId` - Get single program
@@ -71,14 +69,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `DELETE /api/program/delete` - Soft delete program
     - Storage: `programs/{userId}/{clientId}/{programId}.json`
     - Backend file: `server/src/routes/programRoutes.ts` (246 lines)
-  
   - **Sessions Backend Integration** (3 endpoints)
     - `POST /api/session/save` - Create/update session
     - `GET /api/sessions` - List sessions with filtering
     - `POST /api/session/export` - Export session data
     - Storage: `sessions/{userId}/{clientId}/{sessionId}/`
     - Endpoints existed from mobile app, connected hooks to use them
-  
   - **Stimuli/Review Backend** (5 endpoints)
     - `GET /api/stimuli/list` - List stimuli with program/status filtering
     - `GET /api/stimuli/:userId/:programId/:stimulusId` - Get single stimulus
@@ -106,7 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Firebase Storage**: All entities stored in structured JSON files
 - **Soft Deletes**: Records marked with `{ deleted: true }` instead of physical deletion
-- **Zod Validation**: Request validation on all backend endpoints  
+- **Zod Validation**: Request validation on all backend endpoints
 - **Offline Support**: All hooks fallback to mock data when backend unavailable
 - **Reporting Deferred**: Non-critical Reporting section still using mock data
 - **Security**: `firebase-service-account.json` properly protected in `.gitignore`

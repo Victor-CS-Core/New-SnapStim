@@ -738,11 +738,12 @@ export function ClientsView() {
 
 **Duration:** February 15, 2026  
 **Status:** ✅ Complete  
-**Commit:** 4282ffd (backend integration), [next commit] (full completion)
+**Commit:** 4282ffd (backend integration), 87dab5a (full completion)
 
 ### What Was Built
 
 **1. Programs Integration** ✅
+
 - Backend CRUD endpoints (`server/src/routes/programRoutes.ts`)
   - GET `/api/program/list` - List programs with filtering
   - GET `/api/program/:userId/:clientId/:programId` - Get single program
@@ -754,15 +755,17 @@ export function ClientsView() {
 - Storage: `programs/{userId}/{clientId}/{programId}.json`
 
 **2. Sessions Integration** ✅
+
 - Backend endpoints already existed from mobile app
   - POST `/api/session/save` - Create/update session
-  - GET `/api/sessions` - List sessions  
+  - GET `/api/sessions` - List sessions
   - POST `/api/session/export` - Export session data
 - Updated `useCreateSession()` and `useUpdateSession()` hooks
 - Frontend now calls real backend API
 - Storage: `sessions/{userId}/{clientId}/{sessionId}/`
 
 **3. Stimuli/Review Integration** ✅
+
 - New backend CRUD endpoints (`server/src/routes/stimuliRoutes.ts`)
   - GET `/api/stimuli/list` - List stimuli with filtering
   - GET `/api/stimuli/:userId/:programId/:stimulusId` - Get single stimulus
@@ -773,7 +776,8 @@ export function ClientsView() {
 - Generation endpoint already existed (`POST /api/stimuli`)
 - Storage: `stimuli/{userId}/{programId}/{stimulusId}.json`
 
-**4. Reporting** ⚠️ *Deferred*
+**4. Reporting** ⚠️ _Deferred_
+
 - Hooks still use mock data (non-critical for MVP)
 - `useDashboardMetrics`, `useReportTemplates`, `useExportJobs`, `useScheduledExports`
 - Backend endpoints can be added in future phase
@@ -789,11 +793,13 @@ export function ClientsView() {
 ### Technical Implementation
 
 **API Client Methods Added:**
+
 - Programs: `listPrograms`, `getProgram`, `saveProgram`, `updateProgram`, `deleteProgram`
 - Sessions: `saveSession` (create/update use same endpoint)
 - Stimuli: `listStimuli`, `getStimulus`, `saveStimulus`, `deleteStimulus`, `submitReview`
 
 **Firebase Storage Paths:**
+
 ```
 programs/{userId}/{clientId}/{programId}.json
 sessions/{userId}/{clientId}/{sessionId}/
@@ -803,17 +809,20 @@ stimuli/{userId}/{programId}/{stimulusId}.json
 ### Files Created/Modified
 
 **Backend:**
+
 - `server/src/routes/programRoutes.ts` (246 lines) - Program CRUD
 - `server/src/routes/stimuliRoutes.ts` (245 lines) - Stimuli CRUD & Review
 - `server/src/index.ts` - Registered new routes
 
 **Frontend:**
+
 - `src/lib/api.ts` - Added 9 new API methods
 - `src/hooks/usePrograms.ts` - Connected to real API
-- `src/hooks/useSessions.ts` - Connected to real API  
+- `src/hooks/useSessions.ts` - Connected to real API
 - `src/hooks/useStimuli.ts` - Connected to real API
 
 **Documentation:**
+
 - `server/README.md` - API endpoint documentation
 - `README.md` - Updated with monorepo structure
 

@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from 'react';
-import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from "react";
+import type { ReactNode } from "react";
 
 /**
  * Navigation context data that can be passed between sections
@@ -22,7 +22,9 @@ interface NavigationContextValue {
   updateContext: (updates: Partial<NavigationContextData>) => void;
 }
 
-const NavigationContext = createContext<NavigationContextValue | undefined>(undefined);
+const NavigationContext = createContext<NavigationContextValue | undefined>(
+  undefined,
+);
 
 interface NavigationProviderProps {
   children: ReactNode;
@@ -30,10 +32,10 @@ interface NavigationProviderProps {
   onNavigate?: (path: string, context?: NavigationContextData) => void;
 }
 
-export function NavigationProvider({ 
-  children, 
-  initialPath = '/',
-  onNavigate 
+export function NavigationProvider({
+  children,
+  initialPath = "/",
+  onNavigate,
 }: NavigationProviderProps) {
   const [currentPath, setCurrentPath] = useState(initialPath);
   const [contextData, setContextData] = useState<NavigationContextData>({});
@@ -54,7 +56,7 @@ export function NavigationProvider({
   };
 
   const updateContext = (updates: Partial<NavigationContextData>) => {
-    setContextData(prev => ({ ...prev, ...updates }));
+    setContextData((prev) => ({ ...prev, ...updates }));
   };
 
   return (
@@ -79,7 +81,7 @@ export function NavigationProvider({
 export function useNavigation() {
   const context = useContext(NavigationContext);
   if (!context) {
-    throw new Error('useNavigation must be used within a NavigationProvider');
+    throw new Error("useNavigation must be used within a NavigationProvider");
   }
   return context;
 }

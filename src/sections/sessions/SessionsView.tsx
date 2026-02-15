@@ -64,7 +64,7 @@ export default function SessionsView() {
             onViewRecap={(sessionId: string) => {
               // Load session by ID from historical data
               const session = historicalSessions.find(
-                (s) => s.session_id === sessionId
+                (s) => s.session_id === sessionId,
               );
               if (session) {
                 setActiveSession(session);

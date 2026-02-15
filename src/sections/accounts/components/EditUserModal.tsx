@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogContent,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UserCog } from "lucide-react";
@@ -21,7 +28,12 @@ export interface EditUserFormData {
   status: "Active" | "Inactive" | "Pending";
 }
 
-export default function EditUserModal({ open, onClose, onSave, user }: EditUserModalProps) {
+export default function EditUserModal({
+  open,
+  onClose,
+  onSave,
+  user,
+}: EditUserModalProps) {
   const [formData, setFormData] = useState<EditUserFormData>({
     id: user.id,
     name: user.name,
@@ -48,7 +60,7 @@ export default function EditUserModal({ open, onClose, onSave, user }: EditUserM
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       onSave(formData);
@@ -81,7 +93,9 @@ export default function EditUserModal({ open, onClose, onSave, user }: EditUserM
               <Input
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 required
               />
             </div>
@@ -93,7 +107,9 @@ export default function EditUserModal({ open, onClose, onSave, user }: EditUserM
               <Input
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 required
               />
             </div>
@@ -105,7 +121,9 @@ export default function EditUserModal({ open, onClose, onSave, user }: EditUserM
               <Input
                 type="tel"
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
                 placeholder="(555) 123-4567"
               />
             </div>
@@ -117,11 +135,20 @@ export default function EditUserModal({ open, onClose, onSave, user }: EditUserM
               <select
                 className="w-full rounded-md border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 px-3 py-2 text-sm"
                 value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value as "BCBA" | "RBT" | "Caregiver" })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    role: e.target.value as "BCBA" | "RBT" | "Caregiver",
+                  })
+                }
                 required
               >
-                <option value="BCBA">BCBA (Board Certified Behavior Analyst)</option>
-                <option value="RBT">RBT (Registered Behavior Technician)</option>
+                <option value="BCBA">
+                  BCBA (Board Certified Behavior Analyst)
+                </option>
+                <option value="RBT">
+                  RBT (Registered Behavior Technician)
+                </option>
                 <option value="Caregiver">Caregiver</option>
               </select>
             </div>
@@ -133,7 +160,12 @@ export default function EditUserModal({ open, onClose, onSave, user }: EditUserM
               <select
                 className="w-full rounded-md border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 px-3 py-2 text-sm"
                 value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value as "Active" | "Inactive" | "Pending" })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    status: e.target.value as "Active" | "Inactive" | "Pending",
+                  })
+                }
                 required
               >
                 <option value="Active">Active</option>

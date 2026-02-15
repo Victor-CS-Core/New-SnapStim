@@ -32,9 +32,7 @@ export function EmptyState({
         <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">
           {title}
         </h3>
-        <p className="text-stone-500 dark:text-stone-400 mb-6">
-          {description}
-        </p>
+        <p className="text-stone-500 dark:text-stone-400 mb-6">{description}</p>
         {action && (
           <div className="flex gap-3">
             <Button onClick={action.onClick}>{action.label}</Button>

@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogContent,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UserPlus } from "lucide-react";
@@ -21,7 +28,11 @@ export interface ClientFormData {
   guardian_phone?: string;
 }
 
-export default function AddClientModal({ open, onClose, onAdd }: AddClientModalProps) {
+export default function AddClientModal({
+  open,
+  onClose,
+  onAdd,
+}: AddClientModalProps) {
   const [formData, setFormData] = useState<ClientFormData>({
     first_name: "",
     last_name: "",
@@ -38,7 +49,7 @@ export default function AddClientModal({ open, onClose, onAdd }: AddClientModalP
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       onAdd(formData);
@@ -87,7 +98,9 @@ export default function AddClientModal({ open, onClose, onAdd }: AddClientModalP
                   </label>
                   <Input
                     value={formData.first_name}
-                    onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, first_name: e.target.value })
+                    }
                     required
                     placeholder="Emma"
                   />
@@ -98,7 +111,9 @@ export default function AddClientModal({ open, onClose, onAdd }: AddClientModalP
                   </label>
                   <Input
                     value={formData.last_name}
-                    onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, last_name: e.target.value })
+                    }
                     required
                     placeholder="Rodriguez"
                   />
@@ -113,7 +128,12 @@ export default function AddClientModal({ open, onClose, onAdd }: AddClientModalP
                   <Input
                     type="date"
                     value={formData.date_of_birth}
-                    onChange={(e) => setFormData({ ...formData, date_of_birth: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        date_of_birth: e.target.value,
+                      })
+                    }
                     required
                   />
                 </div>
@@ -124,7 +144,12 @@ export default function AddClientModal({ open, onClose, onAdd }: AddClientModalP
                   <select
                     className="w-full h-10 px-3 rounded-md border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-950 text-stone-900 dark:text-stone-100"
                     value={formData.primary_therapist}
-                    onChange={(e) => setFormData({ ...formData, primary_therapist: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        primary_therapist: e.target.value,
+                      })
+                    }
                     required
                   >
                     <option value="usr_1">Dr. Sarah Chen (BCBA)</option>
@@ -148,7 +173,12 @@ export default function AddClientModal({ open, onClose, onAdd }: AddClientModalP
                   </label>
                   <Input
                     value={formData.guardian_name}
-                    onChange={(e) => setFormData({ ...formData, guardian_name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        guardian_name: e.target.value,
+                      })
+                    }
                     placeholder="Parent or Guardian Name"
                   />
                 </div>
@@ -160,7 +190,12 @@ export default function AddClientModal({ open, onClose, onAdd }: AddClientModalP
                     <Input
                       type="email"
                       value={formData.guardian_email}
-                      onChange={(e) => setFormData({ ...formData, guardian_email: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          guardian_email: e.target.value,
+                        })
+                      }
                       placeholder="email@example.com"
                     />
                   </div>
@@ -171,7 +206,12 @@ export default function AddClientModal({ open, onClose, onAdd }: AddClientModalP
                     <Input
                       type="tel"
                       value={formData.guardian_phone}
-                      onChange={(e) => setFormData({ ...formData, guardian_phone: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          guardian_phone: e.target.value,
+                        })
+                      }
                       placeholder="(555) 123-4567"
                     />
                   </div>

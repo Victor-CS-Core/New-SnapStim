@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogContent,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UserCog } from "lucide-react";
@@ -25,7 +32,12 @@ export interface EditClientFormData {
   guardian_phone?: string;
 }
 
-export default function EditClientModal({ open, onClose, onSave, client }: EditClientModalProps) {
+export default function EditClientModal({
+  open,
+  onClose,
+  onSave,
+  client,
+}: EditClientModalProps) {
   const [formData, setFormData] = useState<EditClientFormData>({
     client_id: client.client_id,
     first_name: client.first_name,
@@ -60,7 +72,7 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       onSave(formData);
@@ -91,7 +103,7 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
               <h3 className="text-sm font-semibold text-stone-900 dark:text-stone-100">
                 Client Information
               </h3>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-stone-700 dark:text-stone-300">
@@ -100,11 +112,13 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
                   <Input
                     type="text"
                     value={formData.first_name}
-                    onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, first_name: e.target.value })
+                    }
                     required
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-stone-700 dark:text-stone-300">
                     Last Name *
@@ -112,7 +126,9 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
                   <Input
                     type="text"
                     value={formData.last_name}
-                    onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, last_name: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -125,7 +141,9 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
                 <Input
                   type="date"
                   value={formData.date_of_birth}
-                  onChange={(e) => setFormData({ ...formData, date_of_birth: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, date_of_birth: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -137,7 +155,12 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
                 <select
                   className="w-full rounded-md border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 px-3 py-2 text-sm"
                   value={formData.primary_therapist}
-                  onChange={(e) => setFormData({ ...formData, primary_therapist: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      primary_therapist: e.target.value,
+                    })
+                  }
                   required
                 >
                   <option value="usr_1">Dr. Sarah Chen (BCBA)</option>
@@ -154,7 +177,15 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
                 <select
                   className="w-full rounded-md border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 px-3 py-2 text-sm"
                   value={formData.status}
-                  onChange={(e) => setFormData({ ...formData, status: e.target.value as "active" | "inactive" | "discharged" })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      status: e.target.value as
+                        | "active"
+                        | "inactive"
+                        | "discharged",
+                    })
+                  }
                   required
                 >
                   <option value="active">Active</option>
@@ -170,10 +201,15 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
                 <Input
                   type="text"
                   value={formData.tags.join(", ")}
-                  onChange={(e) => setFormData({ 
-                    ...formData, 
-                    tags: e.target.value.split(",").map(t => t.trim()).filter(Boolean)
-                  })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      tags: e.target.value
+                        .split(",")
+                        .map((t) => t.trim())
+                        .filter(Boolean),
+                    })
+                  }
                   placeholder="e.g., verbal, non-verbal, autism"
                 />
               </div>
@@ -184,7 +220,7 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
               <h3 className="text-sm font-semibold text-stone-900 dark:text-stone-100">
                 Guardian Information (Optional)
               </h3>
-              
+
               <div className="space-y-2">
                 <label className="text-sm font-medium text-stone-700 dark:text-stone-300">
                   Guardian Name
@@ -192,7 +228,9 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
                 <Input
                   type="text"
                   value={formData.guardian_name}
-                  onChange={(e) => setFormData({ ...formData, guardian_name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, guardian_name: e.target.value })
+                  }
                   placeholder="Full name"
                 />
               </div>
@@ -204,7 +242,9 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
                 <Input
                   type="email"
                   value={formData.guardian_email}
-                  onChange={(e) => setFormData({ ...formData, guardian_email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, guardian_email: e.target.value })
+                  }
                   placeholder="guardian@example.com"
                 />
               </div>
@@ -216,7 +256,9 @@ export default function EditClientModal({ open, onClose, onSave, client }: EditC
                 <Input
                   type="tel"
                   value={formData.guardian_phone}
-                  onChange={(e) => setFormData({ ...formData, guardian_phone: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, guardian_phone: e.target.value })
+                  }
                   placeholder="(555) 123-4567"
                 />
               </div>

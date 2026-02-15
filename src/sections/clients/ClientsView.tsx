@@ -2,7 +2,11 @@ import { useState, useMemo, useEffect } from "react";
 import { Plus, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton, SkeletonStats, SkeletonList } from "@/components/ui/skeleton";
+import {
+  Skeleton,
+  SkeletonStats,
+  SkeletonList,
+} from "@/components/ui/skeleton";
 import { EmptyState } from "@/components/ui/empty-state";
 import { useNavigation } from "@/lib/NavigationContext";
 import ClientList from "./components/ClientList";
@@ -44,14 +48,18 @@ export default function ClientsView() {
     // In a real app, this would make an API call
     console.log("Adding new client:", clientData);
     // For demo, show success message
-    alert(`Client ${clientData.first_name} ${clientData.last_name} added successfully!\nThis would normally save to the database.`);
+    alert(
+      `Client ${clientData.first_name} ${clientData.last_name} added successfully!\nThis would normally save to the database.`,
+    );
   };
 
   const handleEditClient = (clientData: EditClientFormData) => {
     // In a real app, this would make an API call
     console.log("Updating client:", clientData);
     // For demo, show success message
-    alert(`Client "${clientData.first_name} ${clientData.last_name}" updated successfully!`);
+    alert(
+      `Client "${clientData.first_name} ${clientData.last_name}" updated successfully!`,
+    );
   };
 
   const selectedClient = useMemo(() => {
@@ -92,9 +100,7 @@ export default function ClientsView() {
             Manage client profiles and programs
           </p>
         </div>
-        <Button
-          onClick={() => setShowAddModal(true)}
-        >
+        <Button onClick={() => setShowAddModal(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Add Client
         </Button>
@@ -186,25 +192,25 @@ export default function ClientsView() {
               alerts={clientAlerts}
               onStartSession={(programId) => {
                 // Navigate to Sessions with both client and program context
-                navigateTo("/sessions", { 
-                  clientId: selectedClient.client_id, 
+                navigateTo("/sessions", {
+                  clientId: selectedClient.client_id,
                   programId,
-                  sourceView: "clients"
+                  sourceView: "clients",
                 });
               }}
               onAddProgram={() => {
                 // Navigate to Programs or show program assignment modal
-                navigateTo("/programs", { 
+                navigateTo("/programs", {
                   clientId: selectedClient.client_id,
                   action: "create",
-                  sourceView: "clients"
+                  sourceView: "clients",
                 });
               }}
               onViewReports={() => {
                 // Navigate to Reporting filtered by this client
-                navigateTo("/reporting", { 
+                navigateTo("/reporting", {
                   clientId: selectedClient.client_id,
-                  sourceView: "clients"
+                  sourceView: "clients",
                 });
               }}
               onEditProfile={() => {

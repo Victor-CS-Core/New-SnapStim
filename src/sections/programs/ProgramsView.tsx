@@ -70,7 +70,9 @@ export default function ProgramsView() {
     console.log("Creating new program:", programData);
     // For demo, show success message
     if (programData.generate_ai_stimuli) {
-      alert(`Program "${programData.program_name}" created successfully!\nGenerating ${programData.stimuli_count} AI stimuli...\nYou will be redirected to Review when ready.`);
+      alert(
+        `Program "${programData.program_name}" created successfully!\nGenerating ${programData.stimuli_count} AI stimuli...\nYou will be redirected to Review when ready.`,
+      );
     } else {
       alert(`Program "${programData.program_name}" created successfully!`);
     }
@@ -169,9 +171,7 @@ export default function ProgramsView() {
             Manage skill acquisition programs and track progress
           </p>
         </div>
-        <Button
-          onClick={() => setShowAddModal(true)}
-        >
+        <Button onClick={() => setShowAddModal(true)}>
           <Plus className="mr-2 h-4 w-4" />
           New Program
         </Button>
@@ -231,10 +231,10 @@ export default function ProgramsView() {
           onClose={handleCloseDetail}
           onStartSession={() => {
             // Navigate to Sessions with program and client context
-            navigateTo("/sessions", { 
+            navigateTo("/sessions", {
               programId: selectedProgram.program_id,
               clientId: selectedProgram.client_id,
-              sourceView: "programs"
+              sourceView: "programs",
             });
             handleCloseDetail();
           }}

@@ -33,16 +33,18 @@ export default function SessionSelection({
   onViewHistory,
   initialClientId,
 }: SessionSelectionProps) {
-  const [selectedClientId, setSelectedClientId] = useState<string | null>(initialClientId || null);
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(
+    initialClientId || null,
+  );
   const [search, setSearch] = useState("");
-  
+
   // Set initial client if provided from navigation context
   useEffect(() => {
     if (initialClientId) {
       setSelectedClientId(initialClientId);
     }
   }, [initialClientId]);
-  
+
   const recentSessions = sessions.slice(0, 5);
 
   // Filter clients by search
@@ -182,7 +184,10 @@ export default function SessionSelection({
                       alt={`${selectedClient.first_name} ${selectedClient.last_name}`}
                     />
                     <AvatarFallback className="bg-primary/10 text-primary">
-                      {getInitials(selectedClient.first_name, selectedClient.last_name)}
+                      {getInitials(
+                        selectedClient.first_name,
+                        selectedClient.last_name,
+                      )}
                     </AvatarFallback>
                   </Avatar>
                   <div>
@@ -243,7 +248,7 @@ export default function SessionSelection({
                             Last:{" "}
                             {program.last_run_date
                               ? new Date(
-                                  program.last_run_date
+                                  program.last_run_date,
                                 ).toLocaleDateString()
                               : "Never"}
                           </span>
@@ -304,10 +309,10 @@ export default function SessionSelection({
               ) : (
                 recentSessions.map((session) => {
                   const sessionClient = clients.find(
-                    (c) => c.client_id === session.client_id
+                    (c) => c.client_id === session.client_id,
                   );
                   const sessionProgram = programs.find(
-                    (p) => p.program_id === session.program_id
+                    (p) => p.program_id === session.program_id,
                   );
                   return (
                     <div
@@ -325,7 +330,7 @@ export default function SessionSelection({
                             <AvatarFallback className="bg-primary/10 text-primary text-xs">
                               {getInitials(
                                 sessionClient.first_name,
-                                sessionClient.last_name
+                                sessionClient.last_name,
                               )}
                             </AvatarFallback>
                           </Avatar>
@@ -347,7 +352,9 @@ export default function SessionSelection({
                         </p>
                         <Badge
                           variant={
-                            session.status === "completed" ? "default" : "outline"
+                            session.status === "completed"
+                              ? "default"
+                              : "outline"
                           }
                           className="text-xs"
                         >

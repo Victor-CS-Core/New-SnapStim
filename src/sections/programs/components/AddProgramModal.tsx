@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogContent,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Target } from "lucide-react";
@@ -23,7 +30,12 @@ export interface ProgramFormData {
   stimuli_count: number;
 }
 
-export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddProgramModalProps) {
+export default function AddProgramModal({
+  open,
+  onClose,
+  onAdd,
+  clientId,
+}: AddProgramModalProps) {
   const [formData, setFormData] = useState<ProgramFormData>({
     program_name: "",
     client_id: clientId || "",
@@ -41,7 +53,7 @@ export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddP
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       onAdd(formData);
@@ -91,7 +103,9 @@ export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddP
                   </label>
                   <Input
                     value={formData.program_name}
-                    onChange={(e) => setFormData({ ...formData, program_name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, program_name: e.target.value })
+                    }
                     required
                     placeholder="e.g., 'Tacting Colors' or 'Receptive ID - Animals'"
                   />
@@ -105,7 +119,9 @@ export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddP
                     <select
                       className="w-full h-10 px-3 rounded-md border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-950 text-stone-900 dark:text-stone-100"
                       value={formData.client_id}
-                      onChange={(e) => setFormData({ ...formData, client_id: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, client_id: e.target.value })
+                      }
                       required
                     >
                       <option value="">Select a client</option>
@@ -123,13 +139,24 @@ export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddP
                     <select
                       className="w-full h-10 px-3 rounded-md border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-950 text-stone-900 dark:text-stone-100"
                       value={formData.program_type}
-                      onChange={(e) => setFormData({ ...formData, program_type: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          program_type: e.target.value,
+                        })
+                      }
                       required
                     >
-                      <option value="receptive_identification">Receptive Identification</option>
-                      <option value="expressive_labeling">Expressive Labeling</option>
+                      <option value="receptive_identification">
+                        Receptive Identification
+                      </option>
+                      <option value="expressive_labeling">
+                        Expressive Labeling
+                      </option>
                       <option value="intraverbal">Intraverbal</option>
-                      <option value="listener_responding">Listener Responding</option>
+                      <option value="listener_responding">
+                        Listener Responding
+                      </option>
                       <option value="imitation">Imitation</option>
                     </select>
                   </div>
@@ -142,7 +169,9 @@ export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddP
                     </label>
                     <Input
                       value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, category: e.target.value })
+                      }
                       placeholder="e.g., 'Receptive Language'"
                     />
                   </div>
@@ -155,7 +184,12 @@ export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddP
                       min="0"
                       max="100"
                       value={formData.mastery_threshold}
-                      onChange={(e) => setFormData({ ...formData, mastery_threshold: parseInt(e.target.value) })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          mastery_threshold: parseInt(e.target.value),
+                        })
+                      }
                     />
                   </div>
                 </div>
@@ -167,7 +201,9 @@ export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddP
                   <textarea
                     className="w-full min-h-[80px] px-3 py-2 rounded-md border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-950 text-stone-900 dark:text-stone-100"
                     value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, description: e.target.value })
+                    }
                     placeholder="Brief description of program goals and methodology..."
                   />
                 </div>
@@ -185,10 +221,18 @@ export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddP
                     type="checkbox"
                     id="generate_ai"
                     checked={formData.generate_ai_stimuli}
-                    onChange={(e) => setFormData({ ...formData, generate_ai_stimuli: e.target.checked })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        generate_ai_stimuli: e.target.checked,
+                      })
+                    }
                     className="h-4 w-4"
                   />
-                  <label htmlFor="generate_ai" className="text-sm text-stone-900 dark:text-stone-100">
+                  <label
+                    htmlFor="generate_ai"
+                    className="text-sm text-stone-900 dark:text-stone-100"
+                  >
                     Generate AI stimuli images
                   </label>
                 </div>
@@ -204,7 +248,12 @@ export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddP
                         min="1"
                         max="30"
                         value={formData.stimuli_count}
-                        onChange={(e) => setFormData({ ...formData, stimuli_count: parseInt(e.target.value) })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            stimuli_count: parseInt(e.target.value),
+                          })
+                        }
                       />
                     </div>
                     <div>
@@ -216,7 +265,12 @@ export default function AddProgramModal({ open, onClose, onAdd, clientId }: AddP
                         min="1"
                         max="30"
                         value={formData.trial_count}
-                        onChange={(e) => setFormData({ ...formData, trial_count: parseInt(e.target.value) })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            trial_count: parseInt(e.target.value),
+                          })
+                        }
                       />
                     </div>
                   </div>

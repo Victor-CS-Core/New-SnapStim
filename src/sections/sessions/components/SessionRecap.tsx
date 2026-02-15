@@ -14,26 +14,35 @@ interface SessionRecapProps {
   onSave?: (session: Session) => void;
 }
 
-export default function SessionRecap({ session, onExit, onSave }: SessionRecapProps) {
+export default function SessionRecap({
+  session,
+  onExit,
+  onSave,
+}: SessionRecapProps) {
   const { navigateTo } = useNavigation();
   const [notes, setNotes] = useState(session.notes || "");
   const [isSaving, setIsSaving] = useState(false);
 
   // Resolve client and program names
-  const client = useMemo(() => 
-    clientsData.clients.find((c: any) => c.client_id === session.client_id),
-    [session.client_id]
+  const client = useMemo(
+    () =>
+      clientsData.clients.find((c: any) => c.client_id === session.client_id),
+    [session.client_id],
   );
-  
-  const program = useMemo(() => 
-    programsData.programs.find((p: any) => p.program_id === session.program_id),
-    [session.program_id]
+
+  const program = useMemo(
+    () =>
+      programsData.programs.find(
+        (p: any) => p.program_id === session.program_id,
+      ),
+    [session.program_id],
   );
 
   const stats = {
     correct: session.trials.filter((t) => t.response === "correct").length,
     incorrect: session.trials.filter((t) => t.response === "incorrect").length,
-    noResponse: session.trials.filter((t) => t.response === "no_response").length,
+    noResponse: session.trials.filter((t) => t.response === "no_response")
+      .length,
     prompted: session.trials.filter((t) => t.response === "prompted").length,
   };
 
@@ -78,37 +87,55 @@ export default function SessionRecap({ session, onExit, onSave }: SessionRecapPr
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-stone-500 dark:text-stone-400">Client</p>
+                  <p className="text-sm text-stone-500 dark:text-stone-400">
+                    Client
+                  </p>
                   <p className="font-semibold text-stone-900 dark:text-stone-100">
-                    {client ? `${client.first_name} ${client.last_name}` : session.client_id}
+                    {client
+                      ? `${client.first_name} ${client.last_name}`
+                      : session.client_id}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-stone-500 dark:text-stone-400">Program</p>
+                  <p className="text-sm text-stone-500 dark:text-stone-400">
+                    Program
+                  </p>
                   <p className="font-semibold text-stone-900 dark:text-stone-100">
                     {program?.program_name || session.program_id}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-stone-500 dark:text-stone-400">Date</p>
+                  <p className="text-sm text-stone-500 dark:text-stone-400">
+                    Date
+                  </p>
                   <p className="font-semibold text-stone-900 dark:text-stone-100">
                     {new Date(session.start_time).toLocaleDateString()}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-stone-500 dark:text-stone-400">Duration</p>
+                  <p className="text-sm text-stone-500 dark:text-stone-400">
+                    Duration
+                  </p>
                   <p className="font-semibold text-stone-900 dark:text-stone-100">
                     {formatTime(duration)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-stone-500 dark:text-stone-400">Status</p>
-                  <Badge variant={session.status === "completed" ? "default" : "outline"}>
+                  <p className="text-sm text-stone-500 dark:text-stone-400">
+                    Status
+                  </p>
+                  <Badge
+                    variant={
+                      session.status === "completed" ? "default" : "outline"
+                    }
+                  >
                     {session.status}
                   </Badge>
                 </div>
                 <div>
-                  <p className="text-sm text-stone-500 dark:text-stone-400">Type</p>
+                  <p className="text-sm text-stone-500 dark:text-stone-400">
+                    Type
+                  </p>
                   <Badge variant="outline">{session.session_type}</Badge>
                 </div>
               </div>
@@ -235,8 +262,8 @@ export default function SessionRecap({ session, onExit, onSave }: SessionRecapPr
               <CardTitle className="text-base">Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button 
-                className="w-full" 
+              <Button
+                className="w-full"
                 onClick={() => {
                   setIsSaving(true);
                   // Update session notes
@@ -246,15 +273,22 @@ export default function SessionRecap({ session, onExit, onSave }: SessionRecapPr
                     onSave(updatedSession);
                   }
                   // Save to localStorage for persistence
-                  const savedSessions = JSON.parse(localStorage.getItem('sessions') || '[]');
-                  const existingIndex = savedSessions.findIndex((s: Session) => s.session_id === session.session_id);
+                  const savedSessions = JSON.parse(
+                    localStorage.getItem("sessions") || "[]",
+                  );
+                  const existingIndex = savedSessions.findIndex(
+                    (s: Session) => s.session_id === session.session_id,
+                  );
                   if (existingIndex >= 0) {
                     savedSessions[existingIndex] = updatedSession;
                   } else {
                     savedSessions.push(updatedSession);
                   }
-                  localStorage.setItem('sessions', JSON.stringify(savedSessions));
-                  
+                  localStorage.setItem(
+                    "sessions",
+                    JSON.stringify(savedSessions),
+                  );
+
                   setTimeout(() => {
                     setIsSaving(false);
                     onExit();
@@ -263,18 +297,18 @@ export default function SessionRecap({ session, onExit, onSave }: SessionRecapPr
                 disabled={isSaving}
               >
                 <Save className="mr-2 h-4 w-4" />
-                {isSaving ? 'Saving...' : 'Save & Exit'}
+                {isSaving ? "Saving..." : "Save & Exit"}
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full"
                 onClick={() => {
-                  navigateTo('/reporting', {
+                  navigateTo("/reporting", {
                     clientId: session.client_id,
                     programId: session.program_id,
                     sessionId: session.session_id,
-                    sourceView: 'sessions',
-                    tab: 'analytics'
+                    sourceView: "sessions",
+                    tab: "analytics",
                   });
                 }}
               >

@@ -39,14 +39,25 @@ interface StatCardProps {
   alert?: boolean;
 }
 
-function StatCard({ title, value, subtitle, icon, trend, alert }: StatCardProps) {
+function StatCard({
+  title,
+  value,
+  subtitle,
+  icon,
+  trend,
+  alert,
+}: StatCardProps) {
   return (
     <Card className={alert ? "border-amber-500 dark:border-amber-600" : ""}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-stone-600 dark:text-stone-400">
           {title}
         </CardTitle>
-        <div className={alert ? "text-amber-600 dark:text-amber-500" : "text-primary"}>
+        <div
+          className={
+            alert ? "text-amber-600 dark:text-amber-500" : "text-primary"
+          }
+        >
           {icon}
         </div>
       </CardHeader>
@@ -97,14 +108,19 @@ function AlertItem({ title, description, severity, onClick }: AlertItemProps) {
       onClick={onClick}
     >
       <div className="mt-0.5">
-        <AlertTriangle className={`h-4 w-4 ${severity === "high" ? "text-red-500" : "text-amber-500"}`} />
+        <AlertTriangle
+          className={`h-4 w-4 ${severity === "high" ? "text-red-500" : "text-amber-500"}`}
+        />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
           <span className="text-sm font-medium text-stone-900 dark:text-stone-100">
             {title}
           </span>
-          <Badge variant="secondary" className={`text-[10px] ${severityColors[severity]}`}>
+          <Badge
+            variant="secondary"
+            className={`text-[10px] ${severityColors[severity]}`}
+          >
             {severity}
           </Badge>
         </div>
@@ -148,12 +164,15 @@ export default function DashboardView() {
   const metrics = useMemo(() => {
     const activeClients = clients.filter((c) => c.status === "active");
     const clientsNeedingAttention = activeClients.filter(
-      (c) => c.ai_insights?.intervention_suggested || c.ai_insights?.risk_score > 50
+      (c) =>
+        c.ai_insights?.intervention_suggested || c.ai_insights?.risk_score > 50,
     );
 
     const activePrograms = programs.filter((p) => p.status === "active");
     const masteredPrograms = programs.filter((p) => p.status === "mastered");
-    const improvingPrograms = programs.filter((p) => p.performance.trend === "improving");
+    const improvingPrograms = programs.filter(
+      (p) => p.performance.trend === "improving",
+    );
 
     // Get sessions from this week
     const oneWeekAgo = new Date();
@@ -167,19 +186,21 @@ export default function DashboardView() {
     const avgAccuracy =
       activePrograms.length > 0
         ? Math.round(
-            activePrograms.reduce((sum, p) => sum + p.performance.accuracy_percent, 0) /
-              activePrograms.length
+            activePrograms.reduce(
+              (sum, p) => sum + p.performance.accuracy_percent,
+              0,
+            ) / activePrograms.length,
           )
         : 0;
 
     // Calculate total AI stimuli
     const totalAIStimuli = programs.reduce(
       (sum, p) => sum + p.ai_metadata.stimuli_generated,
-      0
+      0,
     );
     const approvedStimuli = programs.reduce(
       (sum, p) => sum + p.ai_metadata.stimuli_approved,
-      0
+      0,
     );
 
     return {
@@ -193,7 +214,9 @@ export default function DashboardView() {
       totalAIStimuli,
       approvedStimuli,
       aiApprovalRate:
-        totalAIStimuli > 0 ? Math.round((approvedStimuli / totalAIStimuli) * 100) : 0,
+        totalAIStimuli > 0
+          ? Math.round((approvedStimuli / totalAIStimuli) * 100)
+          : 0,
     };
   }, []);
 
@@ -208,7 +231,11 @@ export default function DashboardView() {
           title: `${client.first_name} ${client.last_name}`,
           description: client.ai_insights.explanation_text || "Needs attention",
           severity: client.ai_insights.risk_score > 70 ? "high" : "medium",
-          onClick: () => navigateTo("/clients", { clientId: client.client_id, sourceView: "dashboard" }),
+          onClick: () =>
+            navigateTo("/clients", {
+              clientId: client.client_id,
+              sourceView: "dashboard",
+            }),
         });
       }
     });
@@ -220,8 +247,14 @@ export default function DashboardView() {
         result.push({
           title: program.program_name,
           description: `${client?.first_name || "Client"} - Declining performance: ${program.performance.accuracy_percent}% accuracy`,
-          severity: program.performance.accuracy_percent < 50 ? "high" : "medium",
-          onClick: () => navigateTo("/programs", { programId: program.program_id, clientId: program.client_id, sourceView: "dashboard" }),
+          severity:
+            program.performance.accuracy_percent < 50 ? "high" : "medium",
+          onClick: () =>
+            navigateTo("/programs", {
+              programId: program.program_id,
+              clientId: program.client_id,
+              sourceView: "dashboard",
+            }),
         });
       }
     });
@@ -232,15 +265,22 @@ export default function DashboardView() {
   // Get recent activity
   const recentActivity = useMemo(() => {
     const sortedSessions = [...sessions]
-      .sort((a, b) => new Date(b.start_time).getTime() - new Date(a.start_time).getTime())
+      .sort(
+        (a, b) =>
+          new Date(b.start_time).getTime() - new Date(a.start_time).getTime(),
+      )
       .slice(0, 5);
 
     return sortedSessions.map((session) => {
       const client = clients.find((c) => c.client_id === session.client_id);
       const program = programs.find((p) => p.program_id === session.program_id);
 
-      const correctTrials = session.trials.filter((t) => t.response === "correct").length;
-      const accuracy = Math.round((correctTrials / session.trials.length) * 100);
+      const correctTrials = session.trials.filter(
+        (t) => t.response === "correct",
+      ).length;
+      const accuracy = Math.round(
+        (correctTrials / session.trials.length) * 100,
+      );
 
       const timeAgo = getTimeAgo(new Date(session.start_time));
 
@@ -308,7 +348,10 @@ export default function DashboardView() {
                 Needs Attention
               </CardTitle>
               {alerts.length > 0 && (
-                <Badge variant="secondary" className="bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400">
+                <Badge
+                  variant="secondary"
+                  className="bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400"
+                >
                   {alerts.length}
                 </Badge>
               )}
@@ -342,7 +385,9 @@ export default function DashboardView() {
             <Button
               className="w-full justify-start"
               variant="outline"
-              onClick={() => navigateTo("/sessions", { sourceView: "dashboard" })}
+              onClick={() =>
+                navigateTo("/sessions", { sourceView: "dashboard" })
+              }
             >
               <Play className="mr-2 h-4 w-4" />
               Start New Session
@@ -350,7 +395,12 @@ export default function DashboardView() {
             <Button
               className="w-full justify-start"
               variant="outline"
-              onClick={() => navigateTo("/programs", { action: "create", sourceView: "dashboard" })}
+              onClick={() =>
+                navigateTo("/programs", {
+                  action: "create",
+                  sourceView: "dashboard",
+                })
+              }
             >
               <Target className="mr-2 h-4 w-4" />
               Create Program
@@ -358,7 +408,12 @@ export default function DashboardView() {
             <Button
               className="w-full justify-start"
               variant="outline"
-              onClick={() => navigateTo("/clients", { action: "add", sourceView: "dashboard" })}
+              onClick={() =>
+                navigateTo("/clients", {
+                  action: "add",
+                  sourceView: "dashboard",
+                })
+              }
             >
               <Users className="mr-2 h-4 w-4" />
               Add Client
@@ -366,7 +421,9 @@ export default function DashboardView() {
             <Button
               className="w-full justify-start"
               variant="outline"
-              onClick={() => navigateTo("/reporting", { sourceView: "dashboard" })}
+              onClick={() =>
+                navigateTo("/reporting", { sourceView: "dashboard" })
+              }
             >
               <FileText className="mr-2 h-4 w-4" />
               View Reports

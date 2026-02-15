@@ -26,7 +26,9 @@ export default function AccountsView() {
   const [filters, setFilters] = useState<UserFiltersType>({});
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
-  const [deactivatingUserId, setDeactivatingUserId] = useState<string | null>(null);
+  const [deactivatingUserId, setDeactivatingUserId] = useState<string | null>(
+    null,
+  );
 
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
@@ -72,9 +74,11 @@ export default function AccountsView() {
     if (!deactivatingUserId) return;
     // In a real app, this would make an API call
     console.log("Deactivating user:", deactivatingUserId);
-    const user = users.find(u => u.id === deactivatingUserId);
+    const user = users.find((u) => u.id === deactivatingUserId);
     // For demo, show success message
-    alert(`User "${user?.name}" has been deactivated.\nTheir clients and programs should be reassigned.`);
+    alert(
+      `User "${user?.name}" has been deactivated.\nTheir clients and programs should be reassigned.`,
+    );
   };
 
   const stats = useMemo(
@@ -205,7 +209,7 @@ export default function AccountsView() {
         onClose={() => setDeactivatingUserId(null)}
         onConfirm={handleDeactivateUser}
         title="Deactivate User Account"
-        description={`Are you sure you want to deactivate ${users.find(u => u.id === deactivatingUserId)?.name}? They will lose access to the system and their clients/programs should be reassigned.`}
+        description={`Are you sure you want to deactivate ${users.find((u) => u.id === deactivatingUserId)?.name}? They will lose access to the system and their clients/programs should be reassigned.`}
         confirmLabel="Deactivate"
         confirmVariant="destructive"
       />

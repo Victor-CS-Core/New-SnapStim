@@ -545,12 +545,14 @@ export default App;
 ### What Was Built
 
 **React Query Integration:**
+
 - ✅ Added QueryClientProvider with optimized configuration
 - ✅ Created useClients hook with full CRUD operations
 - ✅ Implemented graceful fallback to mock data when backend offline
 - ✅ Added cache invalidation on mutations
 
 **Firebase Storage:**
+
 - ✅ Created useImageUpload hook for profile images
 - ✅ Image validation (5MB max, image types only)
 - ✅ Upload progress tracking with real-time percentage
@@ -558,6 +560,7 @@ export default App;
 - ✅ Storage path: `client-avatars/{userId}/{timestamp}_{filename}`
 
 **UI Updates:**
+
 - ✅ Updated AddClientModal with optional image upload
 - ✅ Updated EditClientModal with same image upload capability
 - ✅ Support for clients without images (fallback to initials)
@@ -565,11 +568,13 @@ export default App;
 - ✅ Added Data Source indicator to DevTools
 
 **Bug Fixes:**
+
 - ✅ Fixed API exports (export instance as default, not class)
 - ✅ Fixed React hooks order violation in ClientsView
 - ✅ Fixed DevTools UI conflicts (disabled React Query DevTools)
 
 **Documentation:**
+
 - ✅ Created FIREBASE-STORAGE-SETUP.md with security rules
 - ✅ Documented optional image upload feature
 - ✅ Added troubleshooting guide

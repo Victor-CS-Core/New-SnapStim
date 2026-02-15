@@ -1,39 +1,54 @@
-import { useState, useMemo, useEffect } from "react";
-import { Plus, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EmptyState } from "@/components/ui/empty-state";
 import {
   Skeleton,
-  SkeletonStats,
   SkeletonList,
+  SkeletonStats,
 } from "@/components/ui/skeleton";
-import { EmptyState } from "@/components/ui/empty-state";
+import {
+  useClients,
+  useCreateClient,
+  useDeleteClient,
+  useUpdateClient,
+} from "@/hooks/useClients";
 import { useNavigation } from "@/lib/NavigationContext";
-import ClientList from "./components/ClientList";
-import ClientDashboard from "./components/ClientDashboard";
-import AddClientModal from "./components/AddClientModal";
-import type { ClientFormData } from "./components/AddClientModal";
-import EditClientModal from "./components/EditClientModal";
-import type { EditClientFormData } from "./components/EditClientModal";
+import { Plus, Users } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import clientsData from "../../../product-plan/sections/clients/data.json";
 import type {
-  Client,
-  Program,
   Alert,
+  Program
 } from "../../../product-plan/sections/clients/types";
+import type { ClientFormData } from "./components/AddClientModal";
+import AddClientModal from "./components/AddClientModal";
+import ClientDashboard from "./components/ClientDashboard";
+import ClientList from "./components/ClientList";
+import type { EditClientFormData } from "./components/EditClientModal";
+import EditClientModal from "./components/EditClientModal";
 
-const clients = clientsData.clients as Client[];
+// Programs and alerts still use mock data until Phase 6
 const allPrograms = clientsData.programs as Program[];
 const allAlerts = clientsData.alerts as Alert[];
 
 export default function ClientsView() {
   const { navigateTo } = useNavigation();
-  const [selectedClientId, setSelectedClientId] = useState<string | null>(
-    clients.length > 0 ? clients[0].client_id : null,
-  );
+  const { data: clients, isLoading: isLoadingClients, error } = useClients();
+  const createClient = useCreateClient();
+  const updateClient = useUpdateClient();
+  const deleteClient = useDeleteClient();
+
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [isLoadingClient, setIsLoadingClient] = useState(false);
+
+  // Update selectedClientId when clients load
+  useEffect(() => {
+    if (clients && clients.length > 0 && !selectedClientId) {
+      setSelectedClientId(clients[0].client_id);
+    }
+  }, [clients, selectedClientId]);
 
   // Simulate loading when switching clients
   useEffect(() => {
@@ -44,49 +59,69 @@ export default function ClientsView() {
     }
   }, [selectedClientId]);
 
-  const handleAddClient = (clientData: ClientFormData) => {
-    // In a real app, this would make an API call
-    console.log("Adding new client:", clientData);
-    // For demo, show success message
-    alert(
-      `Client ${clientData.first_name} ${clientData.last_name} added successfully!\nThis would normally save to the database.`,
-    );
+  // Show warning if using mock data fallback
+  useEffect(() => {
+    if (error) {
+      console.warn("Using mock data due to backend error:", error);
+    }
+  }, [error]);
+
+  const handleAddClient = async (clientData: ClientFormData) => {
+    try {
+      await createClient.mutateAsync(clientData as any);
+      alert(`Client ${clientData.first_name} ${clientData.last_name} added successfully!`);
+      setShowAddModal(false);
+    } catch (error) {
+      console.error('Failed to create client:', error);
+      alert('Failed to create client. Using offline mode.');
+    }
   };
 
-  const handleEditClient = (clientData: EditClientFormData) => {
-    // In a real app, this would make an API call
-    console.log("Updating client:", clientData);
-    // For demo, show success message
-    alert(
-      `Client "${clientData.first_name} ${clientData.last_name}" updated successfully!`,
-    );
+  const handleEditClient = async (clientData: EditClientFormData) => {
+    try {
+      await updateClient.mutateAsync(clientData as any);
+      alert(`Client "${clientData.first_name} ${clientData.last_name}" updated successfully!`);
+      setShowEditModal(false);
+    } catch (error) {
+      console.error('Failed to update client:', error);
+      alert('Failed to update client. Using offline mode.');
+    }
   };
 
   const selectedClient = useMemo(() => {
-    if (!selectedClientId) return null;
+    if (!selectedClientId || !clients) return null;
     return clients.find((c) => c.client_id === selectedClientId) || null;
-  }, [selectedClientId]);
+  }, [selectedClientId, clients]);
 
   const clientPrograms = useMemo(() => {
-    if (!selectedClientId) return [];
+    if (!selectedClientId || !allPrograms) return [];
     return allPrograms.filter((p) => p.client_id === selectedClientId);
   }, [selectedClientId]);
 
   const clientAlerts = useMemo(() => {
-    if (!selectedClientId) return [];
+    if (!selectedClientId || !allAlerts) return [];
     return allAlerts.filter((a) => a.client_id === selectedClientId);
   }, [selectedClientId]);
 
   const stats = useMemo(
     () => ({
-      total: clients.length,
-      active: clients.filter((c) => c.status === "active").length,
-      needsAttention: clients.filter(
+      total: (clients || []).length,
+      active: (clients || []).filter((c) => c.status === "active").length,
+      needsAttention: (clients || []).filter(
         (c) => c.ai_insights.intervention_suggested,
       ).length,
     }),
-    [],
+    [clients],
   );
+
+  // Show loading state AFTER all hooks
+  if (isLoadingClients) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-gray-500">Loading clients...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -158,7 +193,7 @@ export default function ClientsView() {
           </CardHeader>
           <CardContent>
             <ClientList
-              clients={clients}
+              clients={clients || []}
               selectedClientId={selectedClientId || undefined}
               onSelectClient={setSelectedClientId}
             />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogHeader,
@@ -9,7 +9,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { UserCog } from "lucide-react";
+import { UserCog, Upload, X } from "lucide-react";
+import { useImageUpload } from "@/hooks/useImageUpload";
+import { useAuth } from "@/contexts/AuthContext";
 import type { Client } from "../../../../product-plan/sections/clients/types";
 
 interface EditClientModalProps {
@@ -27,6 +29,7 @@ export interface EditClientFormData {
   primary_therapist: string;
   status: "active" | "inactive" | "discharged";
   tags: string[];
+  avatar_url?: string;
   guardian_name?: string;
   guardian_email?: string;
   guardian_phone?: string;
@@ -38,6 +41,10 @@ export default function EditClientModal({
   onSave,
   client,
 }: EditClientModalProps) {
+  const { user } = useAuth();
+  const { uploadImage, uploadState, resetUploadState } = useImageUpload();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [formData, setFormData] = useState<EditClientFormData>({
     client_id: client.client_id,
     first_name: client.first_name,
@@ -46,11 +53,13 @@ export default function EditClientModal({
     primary_therapist: client.primary_therapist,
     status: client.status,
     tags: client.tags,
+    avatar_url: client.avatar_url || "",
     guardian_name: "",
     guardian_email: "",
     guardian_phone: "",
   });
 
+  const [imagePreview, setImagePreview] = useState<string>(client.avatar_url || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Update form when client prop changes
@@ -63,11 +72,43 @@ export default function EditClientModal({
       primary_therapist: client.primary_therapist,
       status: client.status,
       tags: client.tags,
+      avatar_url: client.avatar_url || "",
       guardian_name: "",
       guardian_email: "",
       guardian_phone: "",
     });
+    setImagePreview(client.avatar_url || "");
   }, [client]);
+
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+
+    try {
+      // Show preview immediately
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+
+      // Upload to Firebase Storage
+      const downloadURL = await uploadImage(file, user.uid, "client-avatars");
+      setFormData({ ...formData, avatar_url: downloadURL });
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      setImagePreview(client.avatar_url || "");
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview("");
+    setFormData({ ...formData, avatar_url: "" });
+    resetUploadState();
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,6 +139,66 @@ export default function EditClientModal({
       <form onSubmit={handleSubmit}>
         <DialogContent>
           <div className="space-y-6">
+            {/* Profile Image Upload */}
+            <div>
+              <h3 className="text-sm font-semibold text-stone-900 dark:text-stone-100 mb-3">
+                Profile Image <span className="text-stone-500 font-normal">(Optional)</span>
+              </h3>
+              <div className="flex items-center gap-4">
+                {imagePreview ? (
+                  <div className="relative">
+                    <img
+                      src={imagePreview}
+                      alt="Profile preview"
+                      className="w-20 h-20 rounded-full object-cover border-2 border-stone-200 dark:border-stone-700"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleRemoveImage}
+                      className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                      disabled={uploadState.uploading}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="w-20 h-20 rounded-full bg-stone-100 dark:bg-stone-800 flex items-center justify-center border-2 border-dashed border-stone-300 dark:border-stone-600">
+                    <UserCog className="h-8 w-8 text-stone-400" />
+                  </div>
+                )}
+                <div className="flex-1">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageSelect}
+                    className="hidden"
+                    id="avatar-upload-edit"
+                    disabled={uploadState.uploading}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={uploadState.uploading}
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    {uploadState.uploading
+                      ? `Uploading ${Math.round(uploadState.progress)}%`
+                      : "Upload New Image"}
+                  </Button>
+                  {uploadState.error && (
+                    <p className="text-xs text-red-500 mt-1">
+                      {uploadState.error}
+                    </p>
+                  )}
+                  <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
+                    JPG, PNG or GIF. Max 5MB.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Client Information */}
             <div className="space-y-4">
               <h3 className="text-sm font-semibold text-stone-900 dark:text-stone-100">
@@ -271,11 +372,11 @@ export default function EditClientModal({
             type="button"
             variant="outline"
             onClick={onClose}
-            disabled={isSubmitting}
+            disabled={isSubmitting || uploadState.uploading}
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button type="submit" disabled={isSubmitting || uploadState.uploading}>
             {isSubmitting ? "Saving..." : "Save Changes"}
           </Button>
         </DialogFooter>

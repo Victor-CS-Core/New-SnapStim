@@ -10,7 +10,7 @@
  */
 
 import { useEffect, useState } from "react";
-import { api } from "../lib/api";
+import api from "../lib/api";
 import { auth, db, storage } from "../lib/firebase";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -98,6 +98,17 @@ export function DevTools() {
         type: db.type,
         app: db.app.name,
       }),
+    },
+    {
+      name: "Data Source",
+      fn: async () => {
+        try {
+          await api.health();
+          return { source: "Backend API", status: "connected" };
+        } catch {
+          return { source: "Mock Data", status: "offline" };
+        }
+      },
     },
   ];
 

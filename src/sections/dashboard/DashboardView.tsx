@@ -16,19 +16,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useNavigation } from "@/lib/NavigationContext";
-
-// Import data
-import clientsData from "../../../product-plan/sections/clients/data.json";
-import programsData from "../../../product-plan/sections/programs/data.json";
-import sessionsData from "../../../product-plan/sections/sessions/data.json";
+import { useClients } from "@/hooks/useClients";
+import { usePrograms } from "@/hooks/usePrograms";
+import { useSessions } from "@/hooks/useSessions";
 
 import type { Client } from "../../../product-plan/sections/clients/types";
 import type { Program } from "../../../product-plan/sections/programs/types";
 import type { Session } from "../../../product-plan/sections/sessions/types";
-
-const clients = clientsData.clients as Client[];
-const programs = programsData.programs as Program[];
-const sessions = sessionsData.sessions as Session[];
 
 interface StatCardProps {
   title: string;
@@ -159,9 +153,32 @@ function ActivityItem({ icon, title, subtitle, time }: ActivityItemProps) {
 
 export default function DashboardView() {
   const { navigateTo } = useNavigation();
+  
+  // Load data from backend via React Query hooks
+  const { data: clients = [], isLoading: clientsLoading } = useClients();
+  const { data: programs = [], isLoading: programsLoading } = usePrograms();
+  const { data: sessions = [], isLoading: sessionsLoading } = useSessions();
+
+  // Show loading state while data is fetching
+  const isLoading = clientsLoading || programsLoading || sessionsLoading;
 
   // Calculate metrics
   const metrics = useMemo(() => {
+    if (isLoading || !clients.length) {
+      return {
+        activeClientsCount: 0,
+        clientsNeedingAttentionCount: 0,
+        activeProgramsCount: 0,
+        masteredProgramsCount: 0,
+        improvingProgramsCount: 0,
+        sessionsThisWeek: 0,
+        avgAccuracy: 0,
+        totalAIStimuli: 0,
+        approvedStimuli: 0,
+        aiApprovalRate: 0,
+      };
+    }
+
     const activeClients = clients.filter((c) => c.status === "active");
     const clientsNeedingAttention = activeClients.filter(
       (c) =>
@@ -218,7 +235,7 @@ export default function DashboardView() {
           ? Math.round((approvedStimuli / totalAIStimuli) * 100)
           : 0,
     };
-  }, []);
+  }, [clients, programs, sessions, isLoading]);
 
   // Get alerts
   const alerts = useMemo(() => {
@@ -260,7 +277,7 @@ export default function DashboardView() {
     });
 
     return result.slice(0, 5); // Show top 5 alerts
-  }, []);
+  }, [clients, programs, navigateTo]);
 
   // Get recent activity
   const recentActivity = useMemo(() => {
@@ -291,7 +308,32 @@ export default function DashboardView() {
         time: timeAgo,
       };
     });
-  }, []);
+  }, [sessions, clients, programs]);
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold text-stone-900 dark:text-stone-100">
+            Dashboard
+          </h1>
+          <p className="mt-2 text-stone-600 dark:text-stone-400">
+            Loading dashboard data...
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <Card key={i} className="animate-pulse">
+              <CardContent className="pt-6">
+                <div className="h-20 bg-stone-200 dark:bg-stone-700 rounded"></div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

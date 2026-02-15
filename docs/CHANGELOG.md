@@ -9,7 +9,73 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### In Progress
 
-- Phase 3: Data Integration (replacing mock data with API calls)
+- Phase 6: Data Integration for Programs, Sessions, Review, Reporting
+
+## [0.5.0] - 2026-02-15
+
+### Added
+
+- 🔄 **Phase 5: Data Integration - Clients Complete**
+  - React Query (TanStack Query) integration for data fetching
+  - QueryClientProvider with optimized settings (5min staleTime, retry 1)
+  - `useClients` hook with full CRUD operations:
+    - `useClients()` - Fetch all clients with mock fallback
+    - `useCreateClient()` - Create new client
+    - `useUpdateClient()` - Update existing client
+    - `useDeleteClient()` - Delete client
+  - Graceful degradation to mock data when backend offline
+  - Cache invalidation on mutations for real-time updates
+- 📸 **Firebase Storage Integration**
+  - `useImageUpload` hook for profile image uploads
+  - File type validation (images only: JPG, PNG, GIF)
+  - File size validation (5MB maximum)
+  - Upload progress tracking with percentage display
+  - Error handling with user-friendly messages
+  - Storage path: `client-avatars/{userId}/{timestamp}_{filename}`
+  - Security rules documented in FIREBASE-STORAGE-SETUP.md
+- 🖼️ **Profile Image Features**
+  - Optional image upload in AddClientModal
+  - Optional image upload in EditClientModal
+  - Image preview before form submission
+  - Remove image functionality
+  - Fallback to initials when no image provided
+  - Professional avatar component with automatic fallback
+- 🔧 **Developer Tools Enhancement**
+  - Added "Data Source" indicator showing Backend vs Mock data status
+  - Visual feedback when using fallback data
+- 📚 **Documentation**
+  - Created FIREBASE-STORAGE-SETUP.md with complete setup guide
+  - Security rules configuration for Firebase Storage
+  - Testing instructions and troubleshooting guide
+
+### Changed
+
+- Updated ClientsView to use React Query hooks instead of mock data
+- Enhanced AddClientModal with image upload capability
+- Enhanced EditClientModal with image upload capability
+- DevTools now shows active data source (Backend/Mock)
+
+### Fixed
+
+- 🐛 API exports bug: Export api instance as default instead of ApiClient class
+- 🐛 React hooks order violation in ClientsView (moved loading check after hooks)
+- 🐛 File picker reopening issue (removed duplicate trigger mechanism)
+- 🐛 React Query DevTools UI overlap with custom DevTools (disabled RQ DevTools)
+
+### Technical Details
+
+- Static import used for mock data fallback (simpler than dynamic)
+- React Query provides automatic caching and background refetching
+- Firebase Storage URLs saved directly to client records
+- Avatar component handles missing images gracefully
+- Phase 6 boundary preserved (programs/alerts remain on mock data)
+- Zero TypeScript compilation errors
+- Smart import path handling for product-plan folder (relative paths)
+
+### Known Technical Debt
+
+- Therapist dropdown list is hardcoded (will be dynamic in Phase 6 - Accounts)
+- Programs and alerts still using mock data (will be integrated in Phase 6)
 
 ## [0.4.0] - 2026-02-15
 

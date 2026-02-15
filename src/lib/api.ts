@@ -142,6 +142,59 @@ class ApiClient {
     });
   }
 
+  /**
+   * List programs for a user (optionally filtered by clientId)
+   * GET /api/program/list?userId=:userId&clientId=:clientId
+   */
+  async listPrograms(userId: string = 'device', clientId?: string) {
+    const params = new URLSearchParams({ userId });
+    if (clientId) {
+      params.append('clientId', clientId);
+    }
+    return this.request(`/api/program/list?${params.toString()}`);
+  }
+
+  /**
+   * Get single program by ID
+   * GET /api/program/:userId/:clientId/:programId
+   */
+  async getProgram(userId: string, clientId: string, programId: string) {
+    return this.request(`/api/program/${userId}/${clientId}/${programId}`);
+  }
+
+  /**
+   * Save/create a new program
+   * POST /api/program/save
+   */
+  async saveProgram(userId: string, program: any) {
+    return this.request('/api/program/save', {
+      method: 'POST',
+      body: JSON.stringify({ userId, program }),
+    });
+  }
+
+  /**
+   * Update existing program
+   * PUT /api/program/update
+   */
+  async updateProgram(userId: string, program: any) {
+    return this.request('/api/program/update', {
+      method: 'PUT',
+      body: JSON.stringify({ userId, program }),
+    });
+  }
+
+  /**
+   * Delete a program
+   * DELETE /api/program/delete
+   */
+  async deleteProgram(userId: string, programId: string, clientId: string) {
+    return this.request('/api/program/delete', {
+      method: 'DELETE',
+      body: JSON.stringify({ userId, programId, clientId }),
+    });
+  }
+
   // ===================================
   // STIMULI/REVIEW
   // ===================================

@@ -12,20 +12,10 @@ export function usePrograms(clientId?: string) {
         queryKey: ["programs", userId, clientId],
         queryFn: async () => {
             try {
-                // Backend doesn't have a listPrograms endpoint yet
-                // Using mock data with optional client filtering
-                console.warn(
-                    "Programs API not available, using mock data"
-                );
-                const programs = mockProgramData.programs as Program[];
-                
-                if (clientId) {
-                    return programs.filter(p => p.client_id === clientId);
-                }
-                
-                return programs;
+                const response = await api.listPrograms(userId, clientId) as { programs: Program[] };
+                return response.programs || [];
             } catch (error) {
-                console.warn("Failed to load programs, using mock data:", error);
+                console.warn("Backend offline, using mock program data:", error);
                 const programs = mockProgramData.programs as Program[];
                 
                 if (clientId) {
@@ -73,7 +63,7 @@ export function useCreateProgram() {
                 "program_id" | "created_date" | "last_modified_date"
             >
         ) => {
-            // Simulate API call - backend doesn't have saveProgram endpoint yet
+            // Create program with generated ID and timestamps
             const newProgram: Program = {
                 ...programData,
                 program_id: crypto.randomUUID(),
@@ -81,10 +71,14 @@ export function useCreateProgram() {
                 last_modified_date: new Date().toISOString(),
             } as Program;
 
-            console.warn(
-                "Program save API not available, simulating local update"
-            );
-            return { ok: true, program: newProgram };
+            try {
+                const response = await api.saveProgram(userId, newProgram);
+                return response;
+            } catch (error) {
+                console.warn("Backend offline, program not saved:", error);
+                // Return simulated response for offline mode
+                return { ok: true, program: newProgram };
+            }
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["programs", userId] });
@@ -104,10 +98,13 @@ export function useUpdateProgram() {
                 last_modified_date: new Date().toISOString(),
             };
 
-            console.warn(
-                "Program update API not available, simulating local update"
-            );
-            return { ok: true, program: updated };
+            try {
+                const response = await api.updateProgram(userId, updated);
+                return response;
+            } catch (error) {
+                console.warn("Backend offline, program not updated:", error);
+                return { ok: true, program: updated };
+            }
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["programs", userId] });
@@ -121,11 +118,14 @@ export function useDeleteProgram() {
     const userId = user?.uid || "device";
 
     return useMutation({
-        mutationFn: async (programId: string) => {
-            console.warn(
-                "Program delete API not available, simulating local delete"
-            );
-            return { ok: true, programId };
+        mutationFn: async (data: { programId: string; clientId: string }) => {
+            try {
+                const response = await api.deleteProgram(userId, data.programId, data.clientId);
+                return response;
+            } catch (error) {
+                console.warn("Backend offline, program not deleted:", error);
+                return { ok: true, programId: data.programId };
+            }
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["programs", userId] });

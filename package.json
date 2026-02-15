@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "concurrently \"npm run dev\" \"npm run backend:start\" --names \"frontend,backend\" --prefix-colors \"cyan,magenta\"",
-    "backend:start": "cd ../../../Tyler-Project/SnapStim/server && npm start",
+    "dev:full": "concurrently \"npm run dev\" \"npm run dev:server\" --names \"frontend,backend\" --prefix-colors \"cyan,magenta\"",
+    "dev:server": "cd server && npm run dev",
+    "start": "concurrently \"npm run dev\" \"npm run dev:server\" --names \"frontend,backend\" --prefix-colors \"cyan,magenta\"",
     "build": "tsc -b && vite build",
+    "build:server": "cd server && npm run build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test:backend": "node scripts/test-backend.js",

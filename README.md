@@ -17,9 +17,19 @@ All project documentation is located in the [`/docs`](./docs) folder:
 # Install dependencies
 npm install
 
-# Start development server
-npm run dev
+# Install backend dependencies
+cd server && npm install && cd ..
+
+# Start both frontend and backend
+npm run dev:full
+
+# Or start individually:
+npm run dev          # Frontend only (port 5174)
+npm run dev:server   # Backend only (port 8787)
 ```
+
+Frontend: `http://localhost:5174`  
+Backend: `http://localhost:8787`
 
 Visit [docs/README.md](./docs/README.md) for complete setup instructions.
 
@@ -28,7 +38,8 @@ Visit [docs/README.md](./docs/README.md) for complete setup instructions.
 ```
 ProjectUI/
 ├── docs/              # All documentation
-├── src/               # Source code
+├── server/            # Backend API (Express + Node.js)
+├── src/               # Frontend source code
 │   ├── components/    # UI components
 │   ├── sections/      # Feature sections
 │   ├── shell/         # App shell & navigation
@@ -39,9 +50,9 @@ ProjectUI/
 
 ## 🔗 Related Resources
 
-- **Backend Server**: `../Tyler-Project/SnapStim/server`
+- **Backend Server**: `./server` (integrated monorepo)
 - **Firebase Project**: `cuelume`
-- **Tech Stack**: React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui
+- **Tech Stack**: React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui, Express
 
 ---
 

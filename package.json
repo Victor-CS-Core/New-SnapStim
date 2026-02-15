@@ -7,9 +7,16 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "notion:test": "node scripts/notion-test.js",
+    "notion:inspect": "node scripts/notion-inspect.js",
+    "notion:schema": "node scripts/notion-db-schema.js",
+    "notion:query": "node scripts/notion-query.js",
+    "notion:sync": "node scripts/notion-changelog.js",
+    "notion:sync-changelog": "node scripts/notion-changelog.js"
   },
   "dependencies": {
+    "@notionhq/client": "^5.9.0",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
@@ -17,6 +24,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^17.3.1",
     "lucide-react": "^0.564.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

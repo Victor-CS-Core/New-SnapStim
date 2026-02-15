@@ -46,16 +46,19 @@ docs/
 When a phase is completed, update [docs/IMPLEMENTATION-GUIDE.md](../docs/IMPLEMENTATION-GUIDE.md):
 
 **What to update:**
+
 - Mark completed tasks with ✅
 - Update completion status sections
 - Add notes about implementation decisions
 - Document any deviations from original plan
 
 **Example:**
+
 ```markdown
 ## Phase 1: Backend Connection (Week 1) ✅ COMPLETED
 
 ### Completed Tasks:
+
 - ✅ Firebase SDK installed and configured
 - ✅ API client created and tested
 - ✅ Environment variables configured
@@ -70,12 +73,14 @@ When a phase is completed, update [docs/IMPLEMENTATION-GUIDE.md](../docs/IMPLEME
 When a major feature is implemented, create or update documentation:
 
 **For User-Facing Features:**
+
 - Update [docs/USER-GUIDE.md](../docs/USER-GUIDE.md)
 - Add feature description
 - Include screenshots/examples
 - Document user workflows
 
 **For Developer Features:**
+
 - Update [docs/README.md](../docs/README.md) if it affects setup
 - Document API endpoints in API reference section
 - Add code examples
@@ -92,22 +97,27 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+
 - Firebase Authentication integration
 - Client management API endpoints
 
 ### Changed
+
 - Reorganized project structure
 
 ### Fixed
+
 - Mock data ID mismatches
 
 ## [0.2.0] - 2026-02-15
 
 ### Added
+
 - Created comprehensive documentation structure
 - Installed Firebase, React, and testing skills
 
 ### Changed
+
 - Moved documentation to `/docs` folder
 - Removed obsolete demo files
 ```
@@ -116,26 +126,30 @@ All notable changes to this project will be documented in this file.
 
 When implementing API integrations, document in [docs/README.md](../docs/README.md) or create new `docs/API.md`:
 
-```markdown
+````markdown
 ## API Endpoints
 
 ### Authentication
 
 **POST /api/auth/login**
+
 - Description: Authenticate user with email/password
 - Request: `{ email: string, password: string }`
 - Response: `{ token: string, user: User }`
 - Example:
   ```typescript
-  const response = await api.login('user@example.com', 'password123');
+  const response = await api.login("user@example.com", "password123");
   ```
+````
 
 ### Clients
 
 **GET /api/client/list?userId={userId}**
+
 - Description: List all clients for a user
 - Response: `{ ok: boolean, clients: Client[], count: number }`
-```
+
+````
 
 ### 5. Create Release Notes
 
@@ -146,7 +160,7 @@ For major milestones or releases:
 ```markdown
 # Release v0.2.0 - Backend Integration
 
-**Date:** February 15, 2026  
+**Date:** February 15, 2026
 **Phase:** Phase 1-2 Complete
 
 ## Overview
@@ -165,26 +179,30 @@ This release completes the backend connection and Firebase setup.
 1. Update .env with Firebase credentials
 2. Run `npm install` to get new dependencies
 3. Start backend server before running app
-```
+````
 
 ## Documentation Standards
 
 ### Markdown Formatting
 
 **Headers:**
+
 - Use `#` for document title
 - Use `##` for major sections
 - Use `###` for subsections
 
 **Code Blocks:**
-- Always specify language: ```typescript, ```bash, ```json
+
+- Always specify language: `typescript, `bash, ```json
 - Include file paths in comments: `// src/lib/firebase.ts`
 
 **Links:**
+
 - Use relative paths: `[Implementation Guide](./IMPLEMENTATION-GUIDE.md)`
 - Link to specific sections: `[Phase 1](#phase-1-backend-connection)`
 
 **Lists:**
+
 - Use `✅` for completed items
 - Use `❌` for incomplete/broken items
 - Use `⚠️` for warnings
@@ -194,16 +212,19 @@ This release completes the backend connection and Firebase setup.
 ### Keeping Documentation Current
 
 **Before Each Phase:**
+
 1. Review current documentation
 2. Note what needs updating
 3. Plan documentation tasks
 
 **During Implementation:**
+
 1. Add inline code comments
 2. Document complex logic
 3. Note any deviations from plan
 
 **After Phase Completion:**
+
 1. Update implementation guide status
 2. Add changelog entry
 3. Update README if needed
@@ -214,6 +235,7 @@ This release completes the backend connection and Firebase setup.
 ### Check Current Documentation
 
 Read these files to understand current state:
+
 ```bash
 docs/README.md
 docs/IMPLEMENTATION-GUIDE.md
@@ -230,6 +252,7 @@ docs/USER-GUIDE.md
 ### Creating New Documentation
 
 When creating new docs:
+
 1. Check if similar documentation exists
 2. Follow existing structure and tone
 3. Use consistent formatting
@@ -239,7 +262,7 @@ When creating new docs:
 
 ### Feature Documentation Template
 
-```markdown
+````markdown
 ## [Feature Name]
 
 **Status:** ✅ Complete | 🚧 In Progress | ❌ Not Started  
@@ -247,28 +270,34 @@ When creating new docs:
 **Date Implemented:** [Date]
 
 ### Overview
+
 [Brief description of what the feature does]
 
 ### Usage
+
 [How to use the feature]
 
 ```typescript
 // Example code
 ```
+````
 
 ### Configuration
+
 [Any configuration required]
 
 ### Notes
+
 [Implementation notes, caveats, known issues]
-```
+
+````
 
 ### Phase Completion Template
 
 ```markdown
 ## Phase [X]: [Phase Name] ✅ COMPLETED
 
-**Duration:** [Start Date] - [End Date]  
+**Duration:** [Start Date] - [End Date]
 **Estimated:** [X] weeks | **Actual:** [Y] weeks
 
 ### What Was Built
@@ -286,11 +315,12 @@ When creating new docs:
 
 ### Next Steps
 → Proceed to Phase [X+1]
-```
+````
 
 ## Best Practices
 
 ### DO:
+
 ✅ Update documentation immediately after completing features  
 ✅ Use clear, concise language  
 ✅ Include code examples  
@@ -301,6 +331,7 @@ When creating new docs:
 ✅ Version documentation with code
 
 ### DON'T:
+
 ❌ Let documentation become outdated  
 ❌ Document implementation details that change frequently  
 ❌ Use vague descriptions  
@@ -348,6 +379,7 @@ Track these major milestones with detailed documentation:
 ### Weekly Documentation Review
 
 Ask yourself:
+
 1. Does README.md reflect current setup process?
 2. Is IMPLEMENTATION-GUIDE.md up to date with progress?
 3. Have recent features been documented?
@@ -357,6 +389,7 @@ Ask yourself:
 ### Pre-Release Documentation Checklist
 
 Before any release:
+
 - [ ] Update version numbers
 - [ ] Create release notes
 - [ ] Update changelog
@@ -370,6 +403,7 @@ Before any release:
 When the user asks to update documentation:
 
 1. **Read current documentation first**
+
    ```
    Read docs/README.md
    Read docs/IMPLEMENTATION-GUIDE.md
@@ -398,6 +432,7 @@ When the user asks to update documentation:
 **User:** "I finished Phase 1, update the docs"
 
 **Actions:**
+
 1. Read `docs/IMPLEMENTATION-GUIDE.md`
 2. Locate Phase 1 section
 3. Update status to ✅ COMPLETED
@@ -411,6 +446,7 @@ When the user asks to update documentation:
 **User:** "Document the new authentication system"
 
 **Actions:**
+
 1. Read `docs/README.md` and `docs/USER-GUIDE.md`
 2. Add authentication section to README (setup)
 3. Add authentication section to USER-GUIDE (usage)
@@ -423,6 +459,7 @@ When the user asks to update documentation:
 **User:** "Create a CHANGELOG file"
 
 **Actions:**
+
 1. Check if `docs/CHANGELOG.md` exists
 2. If not, create following Keep a Changelog format
 3. Review git history for recent changes

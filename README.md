@@ -9,6 +9,7 @@ All project documentation is located in the [`/docs`](./docs) folder:
 - **[README](./docs/README.md)** - Complete project overview and setup instructions
 - **[Implementation Guide](./docs/IMPLEMENTATION-GUIDE.md)** - Step-by-step implementation phases
 - **[User Guide](./docs/USER-GUIDE.md)** - User documentation and features
+- **[Changelog](./docs/CHANGELOG.md)** - Version history and release notes
 
 ## 🚀 Quick Start
 

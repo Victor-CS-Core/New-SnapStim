@@ -11,6 +11,9 @@ import {
 import UserList from "./components/UserList";
 import UserFilters from "./components/UserFilters";
 import UserDetail from "./components/UserDetail";
+import EditUserModal from "./components/EditUserModal";
+import type { EditUserFormData } from "./components/EditUserModal";
+import ConfirmDialog from "@/components/ui/confirm-dialog";
 import accountsData from "../../../product-plan/sections/accounts/data.json";
 import type {
   User,
@@ -22,6 +25,8 @@ const users = accountsData.users as User[];
 export default function AccountsView() {
   const [filters, setFilters] = useState<UserFiltersType>({});
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [editingUserId, setEditingUserId] = useState<string | null>(null);
+  const [deactivatingUserId, setDeactivatingUserId] = useState<string | null>(null);
 
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
@@ -50,6 +55,27 @@ export default function AccountsView() {
     if (!selectedUserId) return null;
     return users.find((u) => u.id === selectedUserId) || null;
   }, [selectedUserId]);
+
+  const editingUser = useMemo(() => {
+    if (!editingUserId) return null;
+    return users.find((u) => u.id === editingUserId) || null;
+  }, [editingUserId]);
+
+  const handleEditUser = (userData: EditUserFormData) => {
+    // In a real app, this would make an API call
+    console.log("Updating user:", userData);
+    // For demo, show success message
+    alert(`User "${userData.name}" updated successfully!`);
+  };
+
+  const handleDeactivateUser = () => {
+    if (!deactivatingUserId) return;
+    // In a real app, this would make an API call
+    console.log("Deactivating user:", deactivatingUserId);
+    const user = users.find(u => u.id === deactivatingUserId);
+    // For demo, show success message
+    alert(`User "${user?.name}" has been deactivated.\nTheir clients and programs should be reassigned.`);
+  };
 
   const stats = useMemo(
     () => ({
@@ -143,21 +169,10 @@ export default function AccountsView() {
             users={filteredUsers}
             onUserClick={(id) => setSelectedUserId(id)}
             onEditUser={(id) => {
-              // TODO: Implement user editing
-              // Options:
-              // 1. Show inline edit in UserDetail modal
-              // 2. Show separate edit form modal
-              // Editable fields: name, email, role, permissions, status
-              console.log("Edit user:", id);
+              setEditingUserId(id);
             }}
             onDeactivateUser={(id) => {
-              // TODO: Implement user deactivation
-              // Steps:
-              // 1. Show confirmation dialog
-              // 2. Call API to deactivate user
-              // 3. Update local state to reflect status change
-              // 4. Consider reassigning their clients/programs
-              console.log("Deactivate user:", id);
+              setDeactivatingUserId(id);
             }}
           />
         </CardContent>
@@ -169,12 +184,31 @@ export default function AccountsView() {
           user={selectedUser}
           onClose={() => setSelectedUserId(null)}
           onEdit={() => {
-            // TODO: Switch to edit mode or show edit form
-            // Could reuse the same UserDetail component in edit mode
-            console.log("Edit user:", selectedUser.id);
+            setEditingUserId(selectedUser.id);
           }}
         />
       )}
+
+      {/* Edit User Modal */}
+      {editingUser && (
+        <EditUserModal
+          open={true}
+          onClose={() => setEditingUserId(null)}
+          onSave={handleEditUser}
+          user={editingUser}
+        />
+      )}
+
+      {/* Deactivate Confirmation Dialog */}
+      <ConfirmDialog
+        open={!!deactivatingUserId}
+        onClose={() => setDeactivatingUserId(null)}
+        onConfirm={handleDeactivateUser}
+        title="Deactivate User Account"
+        description={`Are you sure you want to deactivate ${users.find(u => u.id === deactivatingUserId)?.name}? They will lose access to the system and their clients/programs should be reassigned.`}
+        confirmLabel="Deactivate"
+        confirmVariant="destructive"
+      />
     </div>
   );
 }

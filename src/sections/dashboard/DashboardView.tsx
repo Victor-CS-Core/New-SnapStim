@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { useNavigation } from "@/lib/NavigationContext";
 
 // Import data
 import clientsData from "../../../product-plan/sections/clients/data.json";
@@ -141,6 +142,8 @@ function ActivityItem({ icon, title, subtitle, time }: ActivityItemProps) {
 }
 
 export default function DashboardView() {
+  const { navigateTo } = useNavigation();
+
   // Calculate metrics
   const metrics = useMemo(() => {
     const activeClients = clients.filter((c) => c.status === "active");
@@ -205,7 +208,7 @@ export default function DashboardView() {
           title: `${client.first_name} ${client.last_name}`,
           description: client.ai_insights.explanation_text || "Needs attention",
           severity: client.ai_insights.risk_score > 70 ? "high" : "medium",
-          onClick: () => console.log("Navigate to client:", client.client_id),
+          onClick: () => navigateTo("/clients", { clientId: client.client_id, sourceView: "dashboard" }),
         });
       }
     });
@@ -218,7 +221,7 @@ export default function DashboardView() {
           title: program.program_name,
           description: `${client?.first_name || "Client"} - Declining performance: ${program.performance.accuracy_percent}% accuracy`,
           severity: program.performance.accuracy_percent < 50 ? "high" : "medium",
-          onClick: () => console.log("Navigate to program:", program.program_id),
+          onClick: () => navigateTo("/programs", { programId: program.program_id, clientId: program.client_id, sourceView: "dashboard" }),
         });
       }
     });
@@ -339,7 +342,7 @@ export default function DashboardView() {
             <Button
               className="w-full justify-start"
               variant="outline"
-              onClick={() => console.log("Navigate to /sessions")}
+              onClick={() => navigateTo("/sessions", { sourceView: "dashboard" })}
             >
               <Play className="mr-2 h-4 w-4" />
               Start New Session
@@ -347,7 +350,7 @@ export default function DashboardView() {
             <Button
               className="w-full justify-start"
               variant="outline"
-              onClick={() => console.log("Navigate to /programs - create")}
+              onClick={() => navigateTo("/programs", { action: "create", sourceView: "dashboard" })}
             >
               <Target className="mr-2 h-4 w-4" />
               Create Program
@@ -355,7 +358,7 @@ export default function DashboardView() {
             <Button
               className="w-full justify-start"
               variant="outline"
-              onClick={() => console.log("Navigate to /clients - add")}
+              onClick={() => navigateTo("/clients", { action: "add", sourceView: "dashboard" })}
             >
               <Users className="mr-2 h-4 w-4" />
               Add Client
@@ -363,7 +366,7 @@ export default function DashboardView() {
             <Button
               className="w-full justify-start"
               variant="outline"
-              onClick={() => console.log("Navigate to /reporting")}
+              onClick={() => navigateTo("/reporting", { sourceView: "dashboard" })}
             >
               <FileText className="mr-2 h-4 w-4" />
               View Reports

@@ -1,17 +1,34 @@
-import { useState } from "react";
-import { ArrowLeft, Download, Play, Save } from "lucide-react";
+import { useState, useMemo } from "react";
+import { ArrowLeft, Download, Play, Save, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useNavigation } from "@/lib/NavigationContext";
 import type { Session } from "../../../../product-plan/sections/sessions/types";
+import clientsData from "../../../../product-plan/sections/clients/data.json";
+import programsData from "../../../../product-plan/sections/programs/data.json";
 
 interface SessionRecapProps {
   session: Session;
   onExit: () => void;
+  onSave?: (session: Session) => void;
 }
 
-export default function SessionRecap({ session, onExit }: SessionRecapProps) {
+export default function SessionRecap({ session, onExit, onSave }: SessionRecapProps) {
+  const { navigateTo } = useNavigation();
   const [notes, setNotes] = useState(session.notes || "");
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Resolve client and program names
+  const client = useMemo(() => 
+    clientsData.clients.find((c: any) => c.client_id === session.client_id),
+    [session.client_id]
+  );
+  
+  const program = useMemo(() => 
+    programsData.programs.find((p: any) => p.program_id === session.program_id),
+    [session.program_id]
+  );
 
   const stats = {
     correct: session.trials.filter((t) => t.response === "correct").length,
@@ -63,13 +80,13 @@ export default function SessionRecap({ session, onExit }: SessionRecapProps) {
                 <div>
                   <p className="text-sm text-stone-500 dark:text-stone-400">Client</p>
                   <p className="font-semibold text-stone-900 dark:text-stone-100">
-                    {session.client_id}
+                    {client ? `${client.first_name} ${client.last_name}` : session.client_id}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-stone-500 dark:text-stone-400">Program</p>
                   <p className="font-semibold text-stone-900 dark:text-stone-100">
-                    {session.program_id}
+                    {program?.program_name || session.program_id}
                   </p>
                 </div>
                 <div>
@@ -218,9 +235,51 @@ export default function SessionRecap({ session, onExit }: SessionRecapProps) {
               <CardTitle className="text-base">Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button className="w-full" onClick={() => alert("Saved!")}>
+              <Button 
+                className="w-full" 
+                onClick={() => {
+                  setIsSaving(true);
+                  // Update session notes
+                  const updatedSession = { ...session, notes };
+                  // Call parent save handler if provided
+                  if (onSave) {
+                    onSave(updatedSession);
+                  }
+                  // Save to localStorage for persistence
+                  const savedSessions = JSON.parse(localStorage.getItem('sessions') || '[]');
+                  const existingIndex = savedSessions.findIndex((s: Session) => s.session_id === session.session_id);
+                  if (existingIndex >= 0) {
+                    savedSessions[existingIndex] = updatedSession;
+                  } else {
+                    savedSessions.push(updatedSession);
+                  }
+                  localStorage.setItem('sessions', JSON.stringify(savedSessions));
+                  
+                  setTimeout(() => {
+                    setIsSaving(false);
+                    onExit();
+                  }, 500);
+                }}
+                disabled={isSaving}
+              >
                 <Save className="mr-2 h-4 w-4" />
-                Save & Exit
+                {isSaving ? 'Saving...' : 'Save & Exit'}
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => {
+                  navigateTo('/reporting', {
+                    clientId: session.client_id,
+                    programId: session.program_id,
+                    sessionId: session.session_id,
+                    sourceView: 'sessions',
+                    tab: 'analytics'
+                  });
+                }}
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                View Full Report
               </Button>
               <Button variant="outline" className="w-full">
                 <Download className="mr-2 h-4 w-4" />

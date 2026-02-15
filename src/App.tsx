@@ -7,9 +7,15 @@ import { ProgramsView } from "./sections/programs";
 import { ReviewView } from "./sections/review";
 import { SessionsView } from "./sections/sessions";
 import { ReportingView } from "./sections/reporting";
+import { NavigationProvider } from "./lib/NavigationContext";
+import type { NavigationContextData } from "./lib/NavigationContext";
 
 function App() {
   const [currentPath, setCurrentPath] = useState("/");
+
+  const handleNavigate = (path: string, context?: NavigationContextData) => {
+    setCurrentPath(path);
+  };
 
   const renderView = () => {
     switch (currentPath) {
@@ -33,9 +39,11 @@ function App() {
   };
 
   return (
-    <AppShell currentPath={currentPath} onNavigate={setCurrentPath}>
-      {renderView()}
-    </AppShell>
+    <NavigationProvider initialPath="/" onNavigate={handleNavigate}>
+      <AppShell currentPath={currentPath} onNavigate={setCurrentPath}>
+        {renderView()}
+      </AppShell>
+    </NavigationProvider>
   );
 }
 

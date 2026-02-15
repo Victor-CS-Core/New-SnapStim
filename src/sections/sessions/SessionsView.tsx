@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigation } from "@/lib/NavigationContext";
 import SessionSelection from "./components/SessionSelection";
 import SessionRunner from "./components/SessionRunner";
 import SessionRecap from "./components/SessionRecap";
@@ -11,6 +12,7 @@ const historicalSessions = sessionsData.sessions as Session[];
 type ViewState = "selection" | "runner" | "recap" | "history";
 
 export default function SessionsView() {
+  const { contextData } = useNavigation();
   const [currentView, setCurrentView] = useState<ViewState>("selection");
   const [activeSession, setActiveSession] = useState<Session | null>(null);
 
@@ -40,6 +42,8 @@ export default function SessionsView() {
           <SessionSelection
             onStartSession={handleStartSession}
             onViewHistory={handleViewHistory}
+            initialClientId={contextData.clientId}
+            initialProgramId={contextData.programId}
           />
         );
       case "runner":

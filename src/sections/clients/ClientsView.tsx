@@ -1,9 +1,16 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Plus, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton, SkeletonStats, SkeletonList } from "@/components/ui/skeleton";
+import { EmptyState } from "@/components/ui/empty-state";
+import { useNavigation } from "@/lib/NavigationContext";
 import ClientList from "./components/ClientList";
 import ClientDashboard from "./components/ClientDashboard";
+import AddClientModal from "./components/AddClientModal";
+import type { ClientFormData } from "./components/AddClientModal";
+import EditClientModal from "./components/EditClientModal";
+import type { EditClientFormData } from "./components/EditClientModal";
 import clientsData from "../../../product-plan/sections/clients/data.json";
 import type {
   Client,
@@ -16,9 +23,36 @@ const allPrograms = clientsData.programs as Program[];
 const allAlerts = clientsData.alerts as Alert[];
 
 export default function ClientsView() {
+  const { navigateTo } = useNavigation();
   const [selectedClientId, setSelectedClientId] = useState<string | null>(
     clients.length > 0 ? clients[0].client_id : null,
   );
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [isLoadingClient, setIsLoadingClient] = useState(false);
+
+  // Simulate loading when switching clients
+  useEffect(() => {
+    if (selectedClientId) {
+      setIsLoadingClient(true);
+      const timer = setTimeout(() => setIsLoadingClient(false), 400);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedClientId]);
+
+  const handleAddClient = (clientData: ClientFormData) => {
+    // In a real app, this would make an API call
+    console.log("Adding new client:", clientData);
+    // For demo, show success message
+    alert(`Client ${clientData.first_name} ${clientData.last_name} added successfully!\nThis would normally save to the database.`);
+  };
+
+  const handleEditClient = (clientData: EditClientFormData) => {
+    // In a real app, this would make an API call
+    console.log("Updating client:", clientData);
+    // For demo, show success message
+    alert(`Client "${clientData.first_name} ${clientData.last_name}" updated successfully!`);
+  };
 
   const selectedClient = useMemo(() => {
     if (!selectedClientId) return null;
@@ -59,14 +93,7 @@ export default function ClientsView() {
           </p>
         </div>
         <Button
-          onClick={() => {
-            // TODO: Implement client creation
-            // Recommended: Show a modal form with fields for:
-            // - Client name, age, diagnosis
-            // - Guardian information
-            // - Initial program assignments
-            console.log("Add Client clicked - implement creation flow");
-          }}
+          onClick={() => setShowAddModal(true)}
         >
           <Plus className="mr-2 h-4 w-4" />
           Add Client
@@ -134,50 +161,86 @@ export default function ClientsView() {
 
         {/* Client Dashboard */}
         <div className="lg:col-span-3">
-          {selectedClient ? (
+          {isLoadingClient ? (
+            <Card className="p-6">
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <Skeleton className="h-20 w-20 rounded-full" />
+                  <div className="flex-1 space-y-3">
+                    <Skeleton className="h-6 w-1/3" />
+                    <Skeleton className="h-4 w-1/2" />
+                    <div className="flex gap-2">
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-6 w-20" />
+                    </div>
+                  </div>
+                </div>
+                <SkeletonStats />
+                <SkeletonList items={3} />
+              </div>
+            </Card>
+          ) : selectedClient ? (
             <ClientDashboard
               client={selectedClient}
               programs={clientPrograms}
               alerts={clientAlerts}
               onStartSession={(programId) => {
-                // TODO: Implement cross-section navigation to Sessions
-                // Requirements: Pass both client and program context
-                // Example: onNavigate?.("/sessions", { clientId: selectedClient.client_id, programId })
-                console.log("Start session:", programId, "for client:", selectedClient.client_id);
+                // Navigate to Sessions with both client and program context
+                navigateTo("/sessions", { 
+                  clientId: selectedClient.client_id, 
+                  programId,
+                  sourceView: "clients"
+                });
               }}
               onAddProgram={() => {
-                // TODO: Navigate to Programs or show program assignment modal
-                // Options:
-                // 1. Navigate to /programs with client context for filtering
-                // 2. Show modal to select/create program for this client
-                console.log("Add program for client:", selectedClient.client_id);
+                // Navigate to Programs or show program assignment modal
+                navigateTo("/programs", { 
+                  clientId: selectedClient.client_id,
+                  action: "create",
+                  sourceView: "clients"
+                });
               }}
               onViewReports={() => {
-                // TODO: Navigate to Reporting filtered by this client
-                // Example: onNavigate?.("/reporting", { clientId: selectedClient.client_id })
-                console.log("View reports for client:", selectedClient.client_id);
+                // Navigate to Reporting filtered by this client
+                navigateTo("/reporting", { 
+                  clientId: selectedClient.client_id,
+                  sourceView: "clients"
+                });
               }}
               onEditProfile={() => {
-                // TODO: Open client profile edit form
-                // Recommended: Show modal with editable client details
-                console.log("Edit profile for client:", selectedClient.client_id);
+                setShowEditModal(true);
               }}
             />
           ) : (
-            <Card className="p-12 text-center">
-              <div className="flex flex-col items-center">
-                <Users className="h-12 w-12 text-stone-400 mb-4" />
-                <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100">
-                  Select a Client
-                </h3>
-                <p className="text-stone-500 dark:text-stone-400 mt-1">
-                  Choose a client from the list to view their dashboard.
-                </p>
-              </div>
-            </Card>
+            <EmptyState
+              icon={Users}
+              title="Select a Client"
+              description="Choose a client from the list to view their profile, programs, and session history."
+              action={{
+                label: "Add New Client",
+                onClick: () => setShowAddModal(true),
+              }}
+            />
           )}
         </div>
       </div>
+
+      {/* Add Client Modal */}
+      <AddClientModal
+        open={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onAdd={handleAddClient}
+      />
+
+      {/* Edit Client Modal */}
+      {selectedClient && (
+        <EditClientModal
+          open={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          onSave={handleEditClient}
+          client={selectedClient}
+        />
+      )}
     </div>
   );
 }

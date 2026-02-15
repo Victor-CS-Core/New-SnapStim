@@ -2,9 +2,12 @@ import { useState, useMemo } from "react";
 import { Target, TrendingUp, Sparkles, BarChart3, Plus } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useNavigation } from "@/lib/NavigationContext";
 import ProgramFilters from "./components/ProgramFilters";
 import ProgramList from "./components/ProgramList";
 import ProgramDetail from "./components/ProgramDetail";
+import AddProgramModal from "./components/AddProgramModal";
+import type { ProgramFormData } from "./components/AddProgramModal";
 import programsData from "../../../product-plan/sections/programs/data.json";
 import type {
   Program,
@@ -53,12 +56,25 @@ function StatCard({ title, value, subtitle, icon, trend }: StatCardProps) {
 }
 
 export default function ProgramsView() {
+  const { navigateTo, contextData } = useNavigation();
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
   const [filters, setFilters] = useState<{
     search?: string;
     type?: ProgramType;
     status?: ProgramStatus;
   }>({});
+  const [showAddModal, setShowAddModal] = useState(false);
+
+  const handleAddProgram = (programData: ProgramFormData) => {
+    // In a real app, this would make an API call
+    console.log("Creating new program:", programData);
+    // For demo, show success message
+    if (programData.generate_ai_stimuli) {
+      alert(`Program "${programData.program_name}" created successfully!\nGenerating ${programData.stimuli_count} AI stimuli...\nYou will be redirected to Review when ready.`);
+    } else {
+      alert(`Program "${programData.program_name}" created successfully!`);
+    }
+  };
 
   const programs = programsData.programs as Program[];
 
@@ -154,14 +170,7 @@ export default function ProgramsView() {
           </p>
         </div>
         <Button
-          onClick={() => {
-            // TODO: Implement program creation
-            // Options:
-            // 1. Show a modal form for creating a new program
-            // 2. Navigate to a dedicated create page
-            // 3. Use a sheet/drawer component for the form
-            console.log("New Program clicked - implement creation flow");
-          }}
+          onClick={() => setShowAddModal(true)}
         >
           <Plus className="mr-2 h-4 w-4" />
           New Program
@@ -221,16 +230,12 @@ export default function ProgramsView() {
           program={selectedProgram}
           onClose={handleCloseDetail}
           onStartSession={() => {
-            // TODO: Implement cross-section navigation to Sessions
-            // Requirements:
-            // 1. Need access to onNavigate from App.tsx (via props or context)
-            // 2. Pass program context to SessionsView
-            // 3. Pre-fill SessionSelection with this program
-            // Recommended approach:
-            //   - Create React Context for navigation + shared state
-            //   - OR use React Router with state/params
-            // Example: onNavigate?.("/sessions", { programId: selectedProgram.program_id })
-            console.log("Start Session for program:", selectedProgram.program_id);
+            // Navigate to Sessions with program and client context
+            navigateTo("/sessions", { 
+              programId: selectedProgram.program_id,
+              clientId: selectedProgram.client_id,
+              sourceView: "programs"
+            });
             handleCloseDetail();
           }}
           onEdit={() => {
@@ -244,6 +249,14 @@ export default function ProgramsView() {
           }}
         />
       )}
+
+      {/* Add Program Modal */}
+      <AddProgramModal
+        open={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onAdd={handleAddProgram}
+        clientId={contextData.clientId}
+      />
     </div>
   );
 }

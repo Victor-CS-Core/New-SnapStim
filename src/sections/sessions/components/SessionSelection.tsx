@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Play, Clock, TrendingUp, Calendar, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,6 +20,8 @@ const sessions = sessionsData.sessions as Session[];
 interface SessionSelectionProps {
   onStartSession: (session: Session) => void;
   onViewHistory: () => void;
+  initialClientId?: string;
+  initialProgramId?: string;
 }
 
 function getInitials(firstName: string, lastName: string): string {
@@ -29,9 +31,17 @@ function getInitials(firstName: string, lastName: string): string {
 export default function SessionSelection({
   onStartSession,
   onViewHistory,
+  initialClientId,
 }: SessionSelectionProps) {
-  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(initialClientId || null);
   const [search, setSearch] = useState("");
+  
+  // Set initial client if provided from navigation context
+  useEffect(() => {
+    if (initialClientId) {
+      setSelectedClientId(initialClientId);
+    }
+  }, [initialClientId]);
   
   const recentSessions = sessions.slice(0, 5);
 

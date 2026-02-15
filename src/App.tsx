@@ -9,6 +9,7 @@ import {
 import { DevTools } from "./components/DevTools";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { NavigationProvider } from "./lib/NavigationContext";
+import { NetworkProvider } from "./lib/NetworkContext";
 import { LoginPage } from "./pages/LoginPage";
 import { AccountsView } from "./sections/accounts";
 import { ClientsView } from "./sections/clients";
@@ -70,17 +71,19 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/*"
-            element={
-              <ProtectedRoute>
-                <AppRoutes />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+        <NetworkProvider>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/*"
+              element={
+                <ProtectedRoute>
+                  <AppRoutes />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </NetworkProvider>
       </AuthProvider>
     </BrowserRouter>
   );

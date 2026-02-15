@@ -9,7 +9,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### In Progress
 
-- Phase 9: Offline Support Implementation
+- Phase 10: Analytics & Charts Implementation
+
+## [0.9.0] - 2026-02-15
+
+### Added
+
+- ✨ **Phase 9: Offline Support Complete**
+  - **IndexedDB Storage Layer (Dexie)**
+    - Created `SnapStimDatabase` with 6 tables for local data storage
+    - Tables: clients, programs, sessions, trials, stimuli, syncQueue
+    - Helper functions for database operations:
+      - `queueSync()` - Queue operations when offline
+      - `getPendingSyncItems()` - Get unsynced operations
+      - `markSynced()` / `markSyncFailed()` - Track sync status
+      - `getDbStats()` - Database statistics
+      - `clearAllData()` - Reset database
+    - Indexed fields for fast queries
+    - Auto-incrementing sync queue
+  
+  - **Network Status Detection**
+    - `NetworkProvider` context for app-wide network state
+    - Real-time online/offline detection via browser events
+    - `useNetwork()` hook for components
+    - Tracks connection status, sync progress, and errors
+    - Exposes `isOnline`, `isSyncing`, `pendingSyncCount`, `lastSyncTime`
+  
+  - **Automatic Sync Manager**
+    - Queue-based sync system for offline operations
+    - Auto-sync on connection restore (2s delay after reconnect)
+    - Periodic sync check every 2 minutes when online
+    - Manual sync trigger via `triggerSync()`
+    - Supports all CRUD operations:
+      - Clients: create, update, delete
+      - Programs: create, update, delete
+      - Sessions: create, update
+      - Stimuli: create, delete
+    - Error tracking for failed syncs
+    - Sequential processing with status updates
+  
+  - **Offline Indicator UI**
+    - Compact badge in bottom-right corner
+    - Color-coded status indicators:
+      - 🟢 Green: Online, all synced
+      - 🟠 Amber: Online with pending items
+      - 🔴 Red: Offline mode
+    - Expandable card showing:
+      - Connection status
+      - Pending sync count
+      - Last sync timestamp
+      - Active sync progress
+      - Error messages if sync fails
+    - Manual "Sync Now" button when pending items exist
+    - Helpful offline mode message
+    - Auto-hides when online with no pending items
+
+### Changed
+
+- **App.tsx** - Wrapped app with `NetworkProvider` for global network state
+- **AppShell.tsx** - Added `OfflineIndicator` component to main layout
+
+### Technical Notes
+
+- **IndexedDB Quota**: Browser-dependent (typically 50% of free disk space)
+- **Sync Strategy**: Sequential FIFO queue processing
+- **Offline First**: UI updates optimistically, syncs in background
+- **Error Handling**: Failed syncs tracked with error message, can retry
+- **Performance**: Minimal overhead - only syncs when network state changes
+- **No Conflicts**: First-write-wins strategy (conflict resolution in future phase)
 
 ## [0.8.0] - 2026-02-15
 

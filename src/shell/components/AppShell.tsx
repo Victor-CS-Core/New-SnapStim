@@ -6,6 +6,7 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { OfflineIndicator } from "@/components/OfflineIndicator";
 import MainNav from "./MainNav";
 import UserMenu from "./UserMenu";
 
@@ -72,6 +73,9 @@ export default function AppShell({
           {children}
         </div>
       </main>
+
+      {/* Offline/Sync Indicator */}
+      <OfflineIndicator />
     </div>
   );
 }

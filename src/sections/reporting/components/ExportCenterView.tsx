@@ -1,22 +1,21 @@
-import { useState } from "react";
-import { Download, Clock, Calendar } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useExportJobs, useScheduledExports } from "@/hooks/useReporting";
+import { Calendar, Clock, Download } from "lucide-react";
+import { useState } from "react";
 import ExportHistoryList from "./ExportHistoryList";
-import ScheduledExportsList from "./ScheduledExportsList";
 import NewExportForm from "./NewExportForm";
-import reportingData from "../../../../product-plan/sections/reporting/data.json";
-import type {
-  ExportJob,
-  ScheduledExport,
-} from "../../../../product-plan/sections/reporting/types";
-
-const exportJobs = reportingData.exportJobs as ExportJob[];
-const scheduledExports = reportingData.scheduledExports as ScheduledExport[];
+import ScheduledExportsList from "./ScheduledExportsList";
 
 export default function ExportCenterView() {
   const [showNewExportForm, setShowNewExportForm] = useState(false);
-  const [activeView, setActiveView] = useState<"history" | "scheduled">("history");
+  const [activeView, setActiveView] = useState<"history" | "scheduled">(
+    "history",
+  );
+
+  const { data: exportJobs, isLoading: isLoadingJobs } = useExportJobs();
+  const { data: scheduledExports, isLoading: isLoadingScheduled } =
+    useScheduledExports();
 
   const handleCreateExport = (exportRequest: any) => {
     console.log("Creating export:", exportRequest);
@@ -24,7 +23,19 @@ export default function ExportCenterView() {
     // In a real app, this would create the export job
   };
 
-  const pendingJobs = exportJobs.filter((j) => j.status === "pending" || j.status === "processing");
+  if (isLoadingJobs || isLoadingScheduled || !exportJobs || !scheduledExports) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-stone-500 dark:text-stone-400">
+          Loading export center...
+        </div>
+      </div>
+    );
+  }
+
+  const pendingJobs = exportJobs.filter(
+    (j) => j.status === "pending" || j.status === "processing",
+  );
   const completedJobs = exportJobs.filter((j) => j.status === "completed");
 
   return (

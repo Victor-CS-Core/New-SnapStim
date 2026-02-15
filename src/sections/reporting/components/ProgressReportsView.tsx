@@ -1,28 +1,31 @@
-import { useState } from "react";
-import { FileText, Download, Mail, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import ReportTemplateSelector from "./ReportTemplateSelector";
+import { useReportTemplates } from "@/hooks/useReporting";
+import { Download, FileText, Mail, Printer } from "lucide-react";
+import { useState } from "react";
+import type {
+  ExportFormat,
+  ReportGenerationRequest,
+  ReportTemplate,
+} from "../../../../product-plan/sections/reporting/types";
 import ReportConfigPanel from "./ReportConfigPanel";
 import ReportPreview from "./ReportPreview";
-import reportingData from "../../../../product-plan/sections/reporting/data.json";
-import type {
-  ReportTemplate,
-  ReportGenerationRequest,
-  ExportFormat,
-} from "../../../../product-plan/sections/reporting/types";
-
-const templates = reportingData.reportTemplates as ReportTemplate[];
+import ReportTemplateSelector from "./ReportTemplateSelector";
 
 export default function ProgressReportsView() {
-  const [selectedTemplate, setSelectedTemplate] = useState<ReportTemplate | null>(
-    templates.find((t) => t.is_default) || templates[0] || null,
-  );
-  const [reportConfig, setReportConfig] = useState<Partial<ReportGenerationRequest>>({
+  const { data: templates, isLoading } = useReportTemplates();
+
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<ReportTemplate | null>(null);
+  const [reportConfig, setReportConfig] = useState<
+    Partial<ReportGenerationRequest>
+  >({
     client_id: "client-001",
     program_ids: [],
     date_range: {
-      start: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      start: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0],
       end: new Date().toISOString().split("T")[0],
     },
     format: "pdf" as ExportFormat,
@@ -59,6 +62,23 @@ export default function ProgressReportsView() {
   const handlePrint = () => {
     window.print();
   };
+
+  // Set default template once data is loaded
+  if (templates && !selectedTemplate) {
+    setSelectedTemplate(
+      templates.find((t) => t.is_default) || templates[0] || null,
+    );
+  }
+
+  if (isLoading || !templates) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-stone-500 dark:text-stone-400">
+          Loading report templates...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

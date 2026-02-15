@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useSessions } from "@/hooks/useSessions";
 import { useNavigation } from "@/lib/NavigationContext";
-import SessionSelection from "./components/SessionSelection";
-import SessionRunner from "./components/SessionRunner";
-import SessionRecap from "./components/SessionRecap";
-import SessionHistory from "./components/SessionHistory";
-import sessionsData from "../../../product-plan/sections/sessions/data.json";
+import { useState } from "react";
 import type { Session } from "../../../product-plan/sections/sessions/types";
-
-const historicalSessions = sessionsData.sessions as Session[];
+import SessionHistory from "./components/SessionHistory";
+import SessionRecap from "./components/SessionRecap";
+import SessionRunner from "./components/SessionRunner";
+import SessionSelection from "./components/SessionSelection";
 
 type ViewState = "selection" | "runner" | "recap" | "history";
 
@@ -15,6 +13,9 @@ export default function SessionsView() {
   const { contextData } = useNavigation();
   const [currentView, setCurrentView] = useState<ViewState>("selection");
   const [activeSession, setActiveSession] = useState<Session | null>(null);
+
+  // Use React Query hook for sessions
+  const { data: historicalSessions, isLoading } = useSessions();
 
   const handleStartSession = (sessionData: Session) => {
     setActiveSession(sessionData);
@@ -32,6 +33,16 @@ export default function SessionsView() {
   };
 
   const handleViewHistory = () => {
+    if (isLoading) {
+      return (
+        <div className="flex items-center justify-center h-64">
+          <div className="text-stone-500 dark:text-stone-400">
+            Loading sessions...
+          </div>
+        </div>
+      );
+    }
+
     setCurrentView("history");
   };
 

@@ -1,17 +1,18 @@
-import { useState } from "react";
-import { BarChart3, ClipboardList, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import ReviewQueue from "./components/ReviewQueue";
-import StimulusDetailModal from "./components/StimulusDetailModal";
-import BatchReviewModal from "./components/BatchReviewModal";
-import ReviewAnalytics from "./components/ReviewAnalytics";
+import { useStimuli, useSubmitReview } from "@/hooks/useStimuli";
+import { BarChart3, ClipboardList, Layers } from "lucide-react";
+import { useMemo, useState } from "react";
 import reviewData from "../../../product-plan/sections/review/data.json";
 import type {
-  ReviewQueueItem,
+  RejectionReason,
   ReviewAction,
   ReviewAnalytics as ReviewAnalyticsType,
-  RejectionReason,
+  ReviewQueueItem,
 } from "../../../product-plan/sections/review/types";
+import BatchReviewModal from "./components/BatchReviewModal";
+import ReviewAnalytics from "./components/ReviewAnalytics";
+import ReviewQueue from "./components/ReviewQueue";
+import StimulusDetailModal from "./components/StimulusDetailModal";
 
 type ViewMode = "queue" | "analytics";
 
@@ -22,10 +23,19 @@ export default function ReviewView() {
   );
   const [batchReviewMode, setBatchReviewMode] = useState(false);
 
-  // Load data from JSON
-  const queueItems = reviewData.review_queue as ReviewQueueItem[];
+  // Use React Query hooks
+  const { data: stimuli, isLoading } = useStimuli();
+  const submitReview = useSubmitReview();
+
+  // Load static data for analytics (these would come from backend in production)
   const reviewActions = reviewData.review_actions as ReviewAction[];
   const analytics = reviewData.review_analytics as ReviewAnalyticsType;
+
+  // Stimuli are already in ReviewQueueItem format
+  const queueItems = useMemo(() => {
+    if (!stimuli) return [];
+    return stimuli;
+  }, [stimuli]);
 
   const pendingCount = queueItems.filter(
     (i) => i.review_status === "pending",
@@ -36,21 +46,38 @@ export default function ReviewView() {
     setSelectedItem(item);
   };
 
-  const handleApproveItem = (item: ReviewQueueItem) => {
-    // In a real app, this would update the backend
-    console.log("Approved:", item.stimulus_id);
-    setSelectedItem(null);
+  const handleApproveItem = async (item: ReviewQueueItem) => {
+    try {
+      await submitReview.mutateAsync({
+        stimulusId: item.stimulus_id,
+        status: "approved",
+      });
+      console.log("Approved:", item.stimulus_id);
+      setSelectedItem(null);
+    } catch (error) {
+      console.error("Failed to approve stimulus:", error);
+      alert("Failed to approve stimulus");
+    }
   };
 
-  const handleRejectItem = (
+  const handleRejectItem = async (
     item: ReviewQueueItem,
     reason?: RejectionReason,
     notes?: string,
     regenerate?: boolean,
   ) => {
-    // In a real app, this would update the backend
-    console.log("Rejected:", item.stimulus_id, { reason, notes, regenerate });
-    setSelectedItem(null);
+    try {
+      await submitReview.mutateAsync({
+        stimulusId: item.stimulus_id,
+        status: "rejected",
+        feedback: notes,
+      });
+      console.log("Rejected:", item.stimulus_id, { reason, notes, regenerate });
+      setSelectedItem(null);
+    } catch (error) {
+      console.error("Failed to reject stimulus:", error);
+      alert("Failed to reject stimulus");
+    }
   };
 
   const handleBulkApprove = (items: ReviewQueueItem[]) => {
@@ -67,6 +94,16 @@ export default function ReviewView() {
       items.map((i) => i.stimulus_id),
     );
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-stone-500 dark:text-stone-400">
+          Loading stimuli...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

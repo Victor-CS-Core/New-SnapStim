@@ -1,19 +1,19 @@
-import { useState, useMemo } from "react";
-import { Target, TrendingUp, Sparkles, BarChart3, Plus } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useCreateProgram, usePrograms } from "@/hooks/usePrograms";
 import { useNavigation } from "@/lib/NavigationContext";
-import ProgramFilters from "./components/ProgramFilters";
-import ProgramList from "./components/ProgramList";
-import ProgramDetail from "./components/ProgramDetail";
-import AddProgramModal from "./components/AddProgramModal";
-import type { ProgramFormData } from "./components/AddProgramModal";
-import programsData from "../../../product-plan/sections/programs/data.json";
+import { BarChart3, Plus, Sparkles, Target, TrendingUp } from "lucide-react";
+import { useMemo, useState } from "react";
 import type {
   Program,
-  ProgramType,
   ProgramStatus,
+  ProgramType,
 } from "../../../product-plan/sections/programs/types";
+import type { ProgramFormData } from "./components/AddProgramModal";
+import AddProgramModal from "./components/AddProgramModal";
+import ProgramDetail from "./components/ProgramDetail";
+import ProgramFilters from "./components/ProgramFilters";
+import ProgramList from "./components/ProgramList";
 
 interface StatCardProps {
   title: string;
@@ -65,23 +65,32 @@ export default function ProgramsView() {
   }>({});
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const handleAddProgram = (programData: ProgramFormData) => {
-    // In a real app, this would make an API call
-    console.log("Creating new program:", programData);
-    // For demo, show success message
-    if (programData.generate_ai_stimuli) {
-      alert(
-        `Program "${programData.program_name}" created successfully!\nGenerating ${programData.stimuli_count} AI stimuli...\nYou will be redirected to Review when ready.`,
-      );
-    } else {
-      alert(`Program "${programData.program_name}" created successfully!`);
+  // Use React Query hooks
+  const { data: programs, isLoading } = usePrograms();
+  const createProgram = useCreateProgram();
+
+  const handleAddProgram = async (programData: ProgramFormData) => {
+    try {
+      await createProgram.mutateAsync(programData as any);
+
+      if (programData.generate_ai_stimuli) {
+        alert(
+          `Program "${programData.program_name}" created successfully!\nGenerating ${programData.stimuli_count} AI stimuli...\nYou will be redirected to Review when ready.`,
+        );
+      } else {
+        alert(`Program "${programData.program_name}" created successfully!`);
+      }
+      setShowAddModal(false);
+    } catch (error) {
+      console.error("Failed to create program:", error);
+      alert("Failed to create program");
     }
   };
 
-  const programs = programsData.programs as Program[];
-
   // Filter programs based on search and filters
   const filteredPrograms = useMemo(() => {
+    if (!programs) return [];
+
     return programs.filter((program) => {
       const matchesSearch =
         !filters.search ||
@@ -104,6 +113,16 @@ export default function ProgramsView() {
 
   // Calculate stats
   const stats = useMemo(() => {
+    if (!programs)
+      return {
+        activeCount: 0,
+        masteredCount: 0,
+        avgAccuracy: 0,
+        improvingCount: 0,
+        totalAIGenerated: 0,
+        approvalRate: 0,
+      };
+
     const activePrograms = programs.filter((p) => p.status === "active");
     const masteredPrograms = programs.filter((p) => p.status === "mastered");
 
@@ -149,6 +168,8 @@ export default function ProgramsView() {
   };
 
   const handleViewProgram = (programId: string) => {
+    if (!programs) return;
+
     const program = programs.find((p) => p.program_id === programId);
     if (program) {
       setSelectedProgram(program);
@@ -158,6 +179,16 @@ export default function ProgramsView() {
   const handleCloseDetail = () => {
     setSelectedProgram(null);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-stone-500 dark:text-stone-400">
+          Loading programs...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -195,7 +226,7 @@ export default function ProgramsView() {
         <StatCard
           title="Improving"
           value={stats.improvingCount}
-          subtitle={`of ${programs.length} programs`}
+          subtitle={`of ${programs?.length || 0} programs`}
           icon={<TrendingUp className="h-5 w-5" />}
         />
         <StatCard

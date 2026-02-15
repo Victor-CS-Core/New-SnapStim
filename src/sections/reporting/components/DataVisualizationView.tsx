@@ -1,12 +1,21 @@
-import { TrendingUp, Users, Target, Activity } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useDashboardMetrics } from "@/hooks/useReporting";
+import { Activity, Target, TrendingUp, Users } from "lucide-react";
 import ChartCard from "./ChartCard";
-import reportingData from "../../../../product-plan/sections/reporting/data.json";
-import type { DashboardMetrics } from "../../../../product-plan/sections/reporting/types";
-
-const metrics = reportingData.dashboardMetrics as DashboardMetrics;
 
 export default function DataVisualizationView() {
+  const { data: metrics, isLoading } = useDashboardMetrics();
+
+  if (isLoading || !metrics) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-stone-500 dark:text-stone-400">
+          Loading analytics...
+        </div>
+      </div>
+    );
+  }
+
   // Mock chart data
   const accuracyTrendData = {
     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
@@ -161,7 +170,11 @@ export default function DataVisualizationView() {
           chartType="progress"
           data={{
             programs: [
-              { name: "Fruit Identification", progress: 100, status: "mastered" },
+              {
+                name: "Fruit Identification",
+                progress: 100,
+                status: "mastered",
+              },
               { name: "Body Parts", progress: 85, status: "close" },
               { name: "Colors", progress: 60, status: "in-progress" },
               { name: "Emotions", progress: 100, status: "mastered" },

@@ -9,6 +9,7 @@ import { SessionsView } from "./sections/sessions";
 import { ReportingView } from "./sections/reporting";
 import { NavigationProvider } from "./lib/NavigationContext";
 import type { NavigationContextData } from "./lib/NavigationContext";
+import { DevTools } from "./components/DevTools";
 
 function App() {
   const [currentPath, setCurrentPath] = useState("/");
@@ -43,6 +44,9 @@ function App() {
       <AppShell currentPath={currentPath} onNavigate={setCurrentPath}>
         {renderView()}
       </AppShell>
+      
+      {/* Dev Tools - Only in development */}
+      {import.meta.env.DEV && <DevTools />}
     </NavigationProvider>
   );
 }

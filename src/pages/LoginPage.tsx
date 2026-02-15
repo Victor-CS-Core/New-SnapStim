@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useAuth } from "@/contexts/AuthContext";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { signIn } = useAuth();
@@ -16,14 +16,14 @@ export function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       await signIn(email, password);
-      navigate('/');
+      navigate("/");
     } catch (error: any) {
-      setError(error.message || 'Login failed');
+      setError(error.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -64,7 +64,7 @@ export function LoginPage() {
           )}
 
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Signing in...' : 'Log In'}
+            {loading ? "Signing in..." : "Log In"}
           </Button>
         </form>
       </Card>

@@ -1,4 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { DevTools } from "./components/DevTools";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { NavigationProvider } from "./lib/NavigationContext";

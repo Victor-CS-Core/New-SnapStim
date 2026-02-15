@@ -62,23 +62,27 @@ For development testing:
 ### Components
 
 #### AuthContext (`src/contexts/AuthContext.tsx`)
+
 - Manages authentication state
 - Provides `signIn`, `signUp`, `signOut` methods
 - Listens to Firebase auth state changes
 - Exposes `user` and `loading` state
 
 #### LoginPage (`src/pages/LoginPage.tsx`)
+
 - Email/password input form
 - Error handling
 - Redirects to dashboard on success
 
 #### ProtectedRoute (in `src/App.tsx`)
+
 - Wraps authenticated routes
 - Shows loading state
 - Redirects to /login if unauthenticated (production only)
 - Bypasses auth check in development mode
 
 #### UserMenu (`src/shell/components/UserMenu.tsx`)
+
 - Displays logged-in user's email
 - Logout functionality
 - Theme toggle
@@ -86,12 +90,14 @@ For development testing:
 ## Development vs Production
 
 ### Development Mode (`npm run dev`)
+
 - Authentication is **bypassed** for convenience
 - You can access all routes without logging in
 - DevTools panel is visible
 - Firebase Auth still works if you want to test it
 
 ### Production Mode (`npm run build` + `npm run preview`)
+
 - Authentication is **required**
 - Unauthenticated users redirect to /login
 - Must have valid Firebase credentials
@@ -118,6 +124,7 @@ VITE_API_BASE_URL=http://localhost:8787
 ## Security Best Practices
 
 ### ✅ Do's
+
 - Enable email verification for production users
 - Set up password reset functionality
 - Use strong password requirements
@@ -127,6 +134,7 @@ VITE_API_BASE_URL=http://localhost:8787
 - Enable CORS only for trusted origins
 
 ### ❌ Don'ts
+
 - Don't commit `.env` file to git (already in .gitignore)
 - Don't expose Firebase config publicly without restrictions
 - Don't use weak test passwords in production
@@ -136,24 +144,29 @@ VITE_API_BASE_URL=http://localhost:8787
 ## Troubleshooting
 
 ### "Email already in use"
+
 - User already exists in Firebase
 - Use different email or reset password
 
 ### "Invalid email or password"
+
 - Check credentials are correct
 - Ensure Email/Password provider is enabled in Firebase Console
 
 ### "Network error"
+
 - Check internet connection
 - Verify Firebase project is active
 - Check browser console for CORS errors
 
 ### "Loading..." forever
+
 - Check Firebase config in `.env` is correct
 - Verify Firebase SDK initialized properly
 - Check browser console for errors
 
 ### Can't access routes after login
+
 - Check that ProtectedRoute is configured correctly
 - Verify user state is being set in AuthContext
 - Check browser console for navigation errors

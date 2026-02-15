@@ -1,7 +1,4 @@
-import { Moon, Sun, LogOut, User, Settings, CreditCard } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,7 +8,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuth } from "@/contexts/AuthContext";
+import { CreditCard, LogOut, Moon, Settings, Sun, User } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Role = "BCBA" | "RBT" | "Caregiver";
 
@@ -35,7 +35,7 @@ export default function UserMenu({
 }: UserMenuProps) {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
-  
+
   const [isDark, setIsDark] = useState(() => {
     const stored = localStorage.getItem("theme");
     if (stored) return stored === "dark";
@@ -59,9 +59,9 @@ export default function UserMenu({
   const handleLogout = async () => {
     try {
       await signOut();
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 

@@ -536,7 +536,63 @@ export default App;
 
 ---
 
-## Phase 5: Data Integration - Clients (Week 2-3)
+## Phase 5: Data Integration - Clients (Week 2-3) ✅ COMPLETED
+
+**Duration:** February 15, 2026  
+**Status:** ✅ Complete  
+**Commit:** `aef619d`
+
+### What Was Built
+
+**React Query Integration:**
+- ✅ Added QueryClientProvider with optimized configuration
+- ✅ Created useClients hook with full CRUD operations
+- ✅ Implemented graceful fallback to mock data when backend offline
+- ✅ Added cache invalidation on mutations
+
+**Firebase Storage:**
+- ✅ Created useImageUpload hook for profile images
+- ✅ Image validation (5MB max, image types only)
+- ✅ Upload progress tracking with real-time percentage
+- ✅ Error handling with friendly messages
+- ✅ Storage path: `client-avatars/{userId}/{timestamp}_{filename}`
+
+**UI Updates:**
+- ✅ Updated AddClientModal with optional image upload
+- ✅ Updated EditClientModal with same image upload capability
+- ✅ Support for clients without images (fallback to initials)
+- ✅ Fixed file picker reopening bug
+- ✅ Added Data Source indicator to DevTools
+
+**Bug Fixes:**
+- ✅ Fixed API exports (export instance as default, not class)
+- ✅ Fixed React hooks order violation in ClientsView
+- ✅ Fixed DevTools UI conflicts (disabled React Query DevTools)
+
+**Documentation:**
+- ✅ Created FIREBASE-STORAGE-SETUP.md with security rules
+- ✅ Documented optional image upload feature
+- ✅ Added troubleshooting guide
+
+### Technical Notes
+
+- Static import used for mock data fallback (simpler than dynamic)
+- Phase 6 boundary preserved (programs/alerts still on mock data)
+- Smart implementation using relative imports for product-plan folder
+- Zero TypeScript compilation errors
+
+### Known Technical Debt
+
+- Therapist list is hardcoded (will be dynamic in Phase 6)
+- Programs and alerts still using mock data (Phase 6)
+
+### Next Steps
+
+→ **Proceed to Phase 6:** Data Integration for Programs, Sessions, Review, Reporting
+
+---
+
+**Original Implementation Guide:**
 
 Create `src/hooks/useClients.ts`:
 

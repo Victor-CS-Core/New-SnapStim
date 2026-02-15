@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCreateProgram, usePrograms } from "@/hooks/usePrograms";
+import { useGenerateStimulus } from "@/hooks/useStimuli";
 import { useNavigation } from "@/lib/NavigationContext";
 import { BarChart3, Plus, Sparkles, Target, TrendingUp } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -64,26 +65,66 @@ export default function ProgramsView() {
     status?: ProgramStatus;
   }>({});
   const [showAddModal, setShowAddModal] = useState(false);
+  const [isGeneratingStimuli, setIsGeneratingStimuli] = useState(false);
 
   // Use React Query hooks
   const { data: programs, isLoading } = usePrograms();
   const createProgram = useCreateProgram();
+  const generateStimulus = useGenerateStimulus();
 
   const handleAddProgram = async (programData: ProgramFormData) => {
     try {
-      await createProgram.mutateAsync(programData as any);
+      // First, create the program
+      const result = await createProgram.mutateAsync(programData as any);
+      const programId = result?.program_id || `prg_${Date.now()}`;
 
-      if (programData.generate_ai_stimuli) {
-        alert(
-          `Program "${programData.program_name}" created successfully!\nGenerating ${programData.stimuli_count} AI stimuli...\nYou will be redirected to Review when ready.`,
-        );
+      setShowAddModal(false);
+
+      // If AI generation is requested, generate stimuli
+      if (programData.generate_ai_stimuli && programData.stimuli_count > 0) {
+        setIsGeneratingStimuli(true);
+
+        const basePrompt = `Generate a clear, high-quality image suitable for ${programData.program_type} therapy. Program: ${programData.program_name}. ${programData.description}`;
+
+        let successCount = 0;
+        const total = programData.stimuli_count;
+
+        for (let i = 0; i < total; i++) {
+          try {
+            await generateStimulus.mutateAsync({
+              prompt: basePrompt,
+              programId: programId,
+              options: { programType: programData.program_type },
+            });
+            successCount++;
+            console.log(`Generated stimulus ${successCount}/${total}`);
+          } catch (error) {
+            console.error(`Failed to generate stimulus ${i + 1}:`, error);
+          }
+        }
+
+        setIsGeneratingStimuli(false);
+
+        if (successCount === total) {
+          alert(
+            `Program "${programData.program_name}" created successfully!\n${successCount} stimuli generated and ready for review.`,
+          );
+        } else if (successCount > 0) {
+          alert(
+            `Program "${programData.program_name}" created successfully!\n${successCount} of ${total} stimuli generated. Some failed - you can generate more later.`,
+          );
+        } else {
+          alert(
+            `Program "${programData.program_name}" created successfully!\nHowever, stimulus generation failed. You can try generating them later from the program detail view.`,
+          );
+        }
       } else {
         alert(`Program "${programData.program_name}" created successfully!`);
       }
-      setShowAddModal(false);
     } catch (error) {
       console.error("Failed to create program:", error);
       alert("Failed to create program");
+      setIsGeneratingStimuli(false);
     }
   };
 
@@ -192,6 +233,25 @@ export default function ProgramsView() {
 
   return (
     <div className="space-y-6">
+      {/* AI Generation Loading Banner */}
+      {isGeneratingStimuli && (
+        <Card className="bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
+              <Sparkles className="h-5 w-5 text-amber-600 dark:text-amber-400 animate-pulse" />
+              <div>
+                <p className="font-medium text-amber-900 dark:text-amber-100">
+                  Generating AI Stimuli...
+                </p>
+                <p className="text-sm text-amber-700 dark:text-amber-300">
+                  Creating images for your new program. This may take a few minutes.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>

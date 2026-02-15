@@ -9,7 +9,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### In Progress
 
-- Phase 6: Data Integration for Programs, Sessions, Review, Reporting
+- Phase 8: Session Runner Implementation
+
+## [0.7.0] - 2026-02-15
+
+### Added
+
+- ✨ **Phase 7: AI Features Integration Complete**
+  - AI stimulus generation UI in Programs section
+    - "Generate More" button in ProgramDetail view
+    - GenerateStimuliModal with progress tracking
+    - Batch generation with per-stimulus progress display
+    - Custom prompt support for generation guidance
+    - Error handling with detailed failure reporting
+  - Automatic AI generation on program creation
+    - Optional stimuli generation checkbox in AddProgramModal
+    - Background generation with progress banner
+    - Graceful handling of partial failures
+    - User feedback for generation success/failure
+  - AI stimulus generation in Review section
+    - "Generate Stimuli" button in ReviewView header
+    - GenerateReviewStimuliModal with program selection
+    - Integration with active programs list
+    - Custom prompt support per generation
+  - Progress indicators for all AI tasks
+    - Real-time progress bar with count display
+    - Loading states during generation
+    - Success/error feedback after completion
+  - Error handling and user feedback
+    - Per-stimulus error tracking
+    - Detailed error messages with retryable failures
+    - User-friendly alerts for completion status
+
+### Technical Notes
+
+- All AI generation uses GetImg API via backend
+
+- Generation is sequential to provide real-time progress
+- Each stimulus takes 3-5 seconds to generate
+- Mock data fallback when backend unavailable
+- React Query cache invalidation on successful generation
+
+## [0.6.0] - 2026-02-15
+
+### Added
+
+- 🔄 **Phase 6: Data Integration for Programs, Sessions, Review, and Reporting Complete**
+  - Created `usePrograms` hook with CRUD operations (generate, create, update, delete)
+  - Created `useSessions` hook with list, export, and CRUD operations
+  - Created `useStimuli` hook for Review section (generate, submit review, CRUD)
+  - Created `useReporting` hook for dashboard metrics, templates, and exports
+  - Updated ProgramsView with React Query integration and loading states
+  - Updated SessionsView with React Query integration and null safety
+  - Updated ReviewView with async mutations and proper error handling
+  - Updated Reporting sub-views with React Query hooks
+  - All hooks include mock data fallback for offline/incomplete backend
+  - Added comprehensive null checks and loading states across all views
+  - Console warnings for missing backend API endpoints
 
 ## [0.5.0] - 2026-02-15
 

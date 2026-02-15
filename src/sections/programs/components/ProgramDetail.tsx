@@ -9,7 +9,7 @@ import {
   CheckCircle,
   BookOpen,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import ProgramTypeBadge from "./ProgramTypeBadge";
 import ProgramStatusBadge from "./ProgramStatusBadge";
 import TrendIndicator from "./TrendIndicator";
+import GenerateStimuliModal from "./GenerateStimuliModal";
 import type { Program } from "../../../../product-plan/sections/programs/types";
 
 interface ProgramDetailProps {
@@ -42,6 +43,8 @@ export default function ProgramDetail({
   onStartSession,
   onEdit,
 }: ProgramDetailProps) {
+  const [showGenerateModal, setShowGenerateModal] = useState(false);
+
   const progressPercent = Math.min(
     100,
     (program.performance.accuracy_percent / program.mastery_threshold) * 100,
@@ -196,10 +199,20 @@ export default function ProgramDetail({
 
           <Separator />
 
-          {/* AI Generation Stats */}
-          <div>
-            <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-3 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-primary" />
+          {/*div className="flex items-center justify-between mb-3">
+              <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300 flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-primary" />
+                AI Stimulus Generation
+              </h4>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowGenerateModal(true)}
+              >
+                <Sparkles className="mr-2 h-4 w-4" />
+                Generate More
+              </Button>
+            </divparkles className="h-4 w-4 text-primary" />
               AI Stimulus Generation
             </h4>
             <div className="grid grid-cols-3 gap-3 text-center">
@@ -286,6 +299,15 @@ export default function ProgramDetail({
                 Start Session
               </Button>
             )}
+
+      {/* Generate Stimuli Modal */}
+      <GenerateStimuliModal
+        open={showGenerateModal}
+        onClose={() => setShowGenerateModal(false)}
+        programId={program.program_id}
+        programName={program.program_name}
+        programType={program.program_type}
+      />
             <Button variant="outline" onClick={onEdit}>
               <Edit className="mr-2 h-4 w-4" />
               Edit Program

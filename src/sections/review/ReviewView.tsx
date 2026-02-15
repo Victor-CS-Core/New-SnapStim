@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useStimuli, useSubmitReview } from "@/hooks/useStimuli";
-import { BarChart3, ClipboardList, Layers } from "lucide-react";
+import { BarChart3, ClipboardList, Layers, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 import reviewData from "../../../product-plan/sections/review/data.json";
 import type {
@@ -13,6 +13,7 @@ import BatchReviewModal from "./components/BatchReviewModal";
 import ReviewAnalytics from "./components/ReviewAnalytics";
 import ReviewQueue from "./components/ReviewQueue";
 import StimulusDetailModal from "./components/StimulusDetailModal";
+import GenerateReviewStimuliModal from "./components/GenerateReviewStimuliModal";
 
 type ViewMode = "queue" | "analytics";
 
@@ -22,6 +23,7 @@ export default function ReviewView() {
     null,
   );
   const [batchReviewMode, setBatchReviewMode] = useState(false);
+  const [showGenerateModal, setShowGenerateModal] = useState(false);
 
   // Use React Query hooks
   const { data: stimuli, isLoading } = useStimuli();
@@ -118,6 +120,13 @@ export default function ReviewView() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={() => setShowGenerateModal(true)}
+          >
+            <Sparkles className="mr-2 h-4 w-4" />
+            Generate Stimuli
+          </Button>
           {viewMode === "queue" && pendingCount > 0 && (
             <Button variant="outline" onClick={() => setBatchReviewMode(true)}>
               <Layers className="mr-2 h-4 w-4" />
@@ -184,6 +193,12 @@ export default function ReviewView() {
           }
         />
       )}
+
+      {/* Generate Stimuli Modal */}
+      <GenerateReviewStimuliModal
+        open={showGenerateModal}
+        onClose={() => setShowGenerateModal(false)}
+      />
     </div>
   );
 }

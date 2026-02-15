@@ -1,6 +1,7 @@
 # Firebase Storage Setup Guide
 
 ## Overview
+
 This guide explains how to configure Firebase Storage for profile image uploads in SnapStim.
 
 ## Security Rules
@@ -14,19 +15,19 @@ rules_version = '2';
 
 service firebase.storage {
   match /b/{bucket}/o {
-    
+
     // Client avatar images
     match /client-avatars/{userId}/{fileName} {
       // Allow authenticated users to upload their own images
-      allow write: if request.auth != null 
+      allow write: if request.auth != null
                    && request.auth.uid == userId
                    && request.resource.size < 5 * 1024 * 1024 // 5MB max
                    && request.resource.contentType.matches('image/.*');
-      
+
       // Allow authenticated users to read all client avatars
       allow read: if request.auth != null;
     }
-    
+
     // Future: Add rules for other folders as needed
     // match /program-images/{userId}/{fileName} { ... }
     // match /session-logs/{userId}/{fileName} { ... }
@@ -60,6 +61,7 @@ service firebase.storage {
 ## Testing
 
 ### Test Upload
+
 1. Log in to the app
 2. Go to Clients page
 3. Click "Add Client"
@@ -69,17 +71,18 @@ service firebase.storage {
 7. Submit the form
 
 ### Verify Upload
+
 - Check Firebase Console → Storage → Files
 - You should see: `client-avatars/{userId}/{timestamp}_{filename}`
 
 ### Common Errors
 
-| Error | Cause | Solution |
-|-------|-------|----------|
-| `storage/unauthorized` | Storage rules not set up | Follow setup guide above |
-| `storage/quota-exceeded` | Free tier limit reached | Upgrade Firebase plan |
-| File size too large | Image > 5MB | Use smaller images |
-| Invalid file type | Not an image file | Only upload JPG/PNG/GIF |
+| Error                    | Cause                    | Solution                 |
+| ------------------------ | ------------------------ | ------------------------ |
+| `storage/unauthorized`   | Storage rules not set up | Follow setup guide above |
+| `storage/quota-exceeded` | Free tier limit reached  | Upgrade Firebase plan    |
+| File size too large      | Image > 5MB              | Use smaller images       |
+| Invalid file type        | Not an image file        | Only upload JPG/PNG/GIF  |
 
 ## Storage Structure
 
@@ -91,6 +94,7 @@ gs://your-project.appspot.com/
 ```
 
 ### Example Path
+
 ```
 client-avatars/abc123def456/1708041234567_emma_profile.jpg
 ```
@@ -98,12 +102,14 @@ client-avatars/abc123def456/1708041234567_emma_profile.jpg
 ## Features Implemented
 
 ### Profile Image Handling
+
 - ✅ **Profile images are completely optional**
 - ✅ Clients without images display **initials as fallback** (e.g., "ER" for Emma Rodriguez)
 - ✅ Avatar component automatically handles missing/failed images
 - ✅ Form submission works with or without an image
 
 ### Image Upload Hook (`useImageUpload.ts`)
+
 - ✅ File type validation (images only)
 - ✅ File size validation (5MB max)
 - ✅ Progress tracking
@@ -112,6 +118,7 @@ client-avatars/abc123def456/1708041234567_emma_profile.jpg
 - ✅ Custom metadata (uploadedBy, originalName, uploadTime)
 
 ### Add Client Modal
+
 - ✅ **Optional** - clients can be created without images
 - ✅ Fallback to initials when no image provided
 - ✅ Image preview before upload
@@ -121,6 +128,7 @@ client-avatars/abc123def456/1708041234567_emma_profile.jpg
 - ✅ Error messages display
 
 ### Edit Client Modal
+
 - ✅ Shows existing avatar
 - ✅ Upload new image to replace
 - ✅ All Add Client features

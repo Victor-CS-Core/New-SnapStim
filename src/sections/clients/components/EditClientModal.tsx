@@ -1,17 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-  DialogContent,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { UserCog, Upload, X } from "lucide-react";
-import { useImageUpload } from "@/hooks/useImageUpload";
 import { useAuth } from "@/contexts/AuthContext";
+import { useImageUpload } from "@/hooks/useImageUpload";
+import { Upload, UserCog, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import type { Client } from "../../../../product-plan/sections/clients/types";
 
 interface EditClientModalProps {
@@ -59,7 +59,9 @@ export default function EditClientModal({
     guardian_phone: "",
   });
 
-  const [imagePreview, setImagePreview] = useState<string>(client.avatar_url || "");
+  const [imagePreview, setImagePreview] = useState<string>(
+    client.avatar_url || "",
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Update form when client prop changes
@@ -142,7 +144,8 @@ export default function EditClientModal({
             {/* Profile Image Upload */}
             <div>
               <h3 className="text-sm font-semibold text-stone-900 dark:text-stone-100 mb-3">
-                Profile Image <span className="text-stone-500 font-normal">(Optional)</span>
+                Profile Image{" "}
+                <span className="text-stone-500 font-normal">(Optional)</span>
               </h3>
               <div className="flex items-center gap-4">
                 {imagePreview ? (
@@ -376,7 +379,10 @@ export default function EditClientModal({
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={isSubmitting || uploadState.uploading}>
+          <Button
+            type="submit"
+            disabled={isSubmitting || uploadState.uploading}
+          >
             {isSubmitting ? "Saving..." : "Save Changes"}
           </Button>
         </DialogFooter>

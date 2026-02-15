@@ -18,7 +18,7 @@ import { useEffect, useMemo, useState } from "react";
 import clientsData from "../../../product-plan/sections/clients/data.json";
 import type {
   Alert,
-  Program
+  Program,
 } from "../../../product-plan/sections/clients/types";
 import type { ClientFormData } from "./components/AddClientModal";
 import AddClientModal from "./components/AddClientModal";
@@ -69,22 +69,26 @@ export default function ClientsView() {
   const handleAddClient = async (clientData: ClientFormData) => {
     try {
       await createClient.mutateAsync(clientData as any);
-      alert(`Client ${clientData.first_name} ${clientData.last_name} added successfully!`);
+      alert(
+        `Client ${clientData.first_name} ${clientData.last_name} added successfully!`,
+      );
       setShowAddModal(false);
     } catch (error) {
-      console.error('Failed to create client:', error);
-      alert('Failed to create client. Using offline mode.');
+      console.error("Failed to create client:", error);
+      alert("Failed to create client. Using offline mode.");
     }
   };
 
   const handleEditClient = async (clientData: EditClientFormData) => {
     try {
       await updateClient.mutateAsync(clientData as any);
-      alert(`Client "${clientData.first_name} ${clientData.last_name}" updated successfully!`);
+      alert(
+        `Client "${clientData.first_name} ${clientData.last_name}" updated successfully!`,
+      );
       setShowEditModal(false);
     } catch (error) {
-      console.error('Failed to update client:', error);
-      alert('Failed to update client. Using offline mode.');
+      console.error("Failed to update client:", error);
+      alert("Failed to update client. Using offline mode.");
     }
   };
 

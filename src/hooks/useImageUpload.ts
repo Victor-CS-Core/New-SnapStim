@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { useState } from "react";
 
 export interface UploadProgress {
     progress: number;

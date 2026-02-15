@@ -1,17 +1,17 @@
-import { useState, useRef } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-  DialogContent,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { UserPlus, Upload, X } from "lucide-react";
-import { useImageUpload } from "@/hooks/useImageUpload";
 import { useAuth } from "@/contexts/AuthContext";
+import { useImageUpload } from "@/hooks/useImageUpload";
+import { Upload, UserPlus, X } from "lucide-react";
+import { useRef, useState } from "react";
 
 interface AddClientModalProps {
   open: boolean;
@@ -131,7 +131,8 @@ export default function AddClientModal({
             {/* Profile Image Upload */}
             <div>
               <h3 className="text-sm font-semibold text-stone-900 dark:text-stone-100 mb-3">
-                Profile Image <span className="text-stone-500 font-normal">(Optional)</span>
+                Profile Image{" "}
+                <span className="text-stone-500 font-normal">(Optional)</span>
               </h3>
               <div className="flex items-center gap-4">
                 {imagePreview ? (
@@ -324,10 +325,18 @@ export default function AddClientModal({
         </DialogContent>
 
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting || uploadState.uploading}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onClose}
+            disabled={isSubmitting || uploadState.uploading}
+          >
             Cancel
           </Button>
-          <Button type="submit" disabled={isSubmitting || uploadState.uploading}>
+          <Button
+            type="submit"
+            disabled={isSubmitting || uploadState.uploading}
+          >
             {isSubmitting ? "Adding..." : "Add Client"}
           </Button>
         </DialogFooter>

@@ -7,9 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### In Progress
+## [0.10.0] - 2026-02-15
 
-- Phase 10: Analytics & Charts Implementation
+### Added
+
+- ✨ **Phase 10: Analytics & Charts Complete**
+  - **Real-Time Analytics System**
+    - Dashboard metrics calculated from real session and program data
+    - Weekly accuracy trends per program (last 4 weeks)
+    - Daily session volume charts (last 7 days)
+    - Response type distribution (correct/incorrect/prompted/no-response)
+    - Program mastery progress indicators
+  
+  - **Chart Components (Recharts)**
+    - Line charts for accuracy trends over time
+    - Bar charts for session volume analysis
+    - Pie charts for response distribution
+    - Progress bars for mastery tracking
+    - Responsive design with dark mode support
+  
+  - **Analytics Hooks (`useReporting.ts`)**
+    - `useDashboardMetrics()` - Real-time metric calculations
+    - `useAccuracyTrends()` - Weekly accuracy aggregation
+    - `useSessionVolume()` - Daily session counts
+    - `useResponseDistribution()` - Trial response breakdown
+    - `useMasteryProgress()` - Program progress tracking
+  
+  - **Updated Components**
+    - `ChartCard.tsx` - Replaced mock divs with recharts components
+    - `DataVisualizationView.tsx` - Connected to real data sources
+    - Export functionality for PNG and CSV (placeholder)
+
+### Changed
+
+- 📦 **Dependencies**
+  - Added `recharts@^2.15.0` for data visualization
+  - All analytics now use real backend data
 
 ## [0.9.0] - 2026-02-15
 

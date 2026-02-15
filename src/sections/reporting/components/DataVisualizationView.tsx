@@ -1,12 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useDashboardMetrics } from "@/hooks/useReporting";
+import {
+  useAccuracyTrends,
+  useDashboardMetrics,
+  useMasteryProgress,
+  useResponseDistribution,
+  useSessionVolume,
+} from "@/hooks/useReporting";
 import { Activity, Target, TrendingUp, Users } from "lucide-react";
 import ChartCard from "./ChartCard";
 
 export default function DataVisualizationView() {
-  const { data: metrics, isLoading } = useDashboardMetrics();
+  const { data: metrics, isLoading: metricsLoading } = useDashboardMetrics();
+  const { data: accuracyTrends, isLoading: trendsLoading } = useAccuracyTrends();
+  const { data: sessionVolume, isLoading: volumeLoading } = useSessionVolume();
+  const { data: responseDistribution, isLoading: distributionLoading } = useResponseDistribution();
+  const { data: masteryProgress, isLoading: masteryLoading } = useMasteryProgress();
 
-  if (isLoading || !metrics) {
+  if (metricsLoading || !metrics) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-stone-500 dark:text-stone-400">
@@ -15,40 +25,6 @@ export default function DataVisualizationView() {
       </div>
     );
   }
-
-  // Mock chart data
-  const accuracyTrendData = {
-    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-    datasets: [
-      {
-        label: "Fruit Identification",
-        data: [60, 70, 85, 100],
-        color: "#10b981",
-      },
-      {
-        label: "Body Parts",
-        data: [55, 65, 75, 85],
-        color: "#6366f1",
-      },
-    ],
-  };
-
-  const sessionVolumeData = {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
-    datasets: [
-      {
-        label: "Sessions",
-        data: [3, 2, 4, 3, 3],
-        color: "#f59e0b",
-      },
-    ],
-  };
-
-  const responseTypeData = {
-    labels: ["Correct", "Incorrect", "Prompted", "No Response"],
-    data: [75, 15, 8, 2],
-    colors: ["#10b981", "#ef4444", "#f59e0b", "#6b7280"],
-  };
 
   return (
     <div className="space-y-6">
@@ -143,11 +119,45 @@ export default function DataVisualizationView() {
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <ChartCard
-          title="Accuracy Trends"
-          description="Performance over time by program"
-          chartType="line"
-          data={accuracyTrendData}
+        {!trendsLoading && accuracyTrends && (
+          <ChartCard
+            title="Accuracy Trends"
+            description="Performance over time by program"
+            chartType="line"
+            data={accuracyTrends}
+          />
+        )}
+
+        {!volumeLoading && sessionVolume && (
+          <ChartCard
+            title="Session Volume"
+            description="Sessions completed by day"
+            chartType="bar"
+            data={sessionVolume}
+          />
+        )}
+
+        {!distributionLoading && responseDistribution && (
+          <ChartCard
+            title="Response Type Distribution"
+            description="Breakdown of trial responses"
+            chartType="pie"
+            data={responseDistribution}
+          />
+        )}
+
+        {!masteryLoading && masteryProgress && (
+          <ChartCard
+            title="Mastery Progress"
+            description="Programs nearing mastery criteria"
+            chartType="progress"
+            data={masteryProgress}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
         />
 
         <ChartCard

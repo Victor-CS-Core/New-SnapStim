@@ -5,14 +5,14 @@
     "**/node_modules/**": true,
     "**/dist/**": true
   },
-  
+
   // Disable skill validation to avoid warnings
   "github.copilot.editor.enableSkillValidation": false,
   "copilot.agent.skills.validation": false,
-  
+
   // TypeScript settings
   "typescript.tsdk": "node_modules/typescript/lib",
-  
+
   // Organize imports on save
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"

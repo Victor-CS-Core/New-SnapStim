@@ -9,7 +9,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### In Progress
 
-- Phase 2: Authentication system implementation
+- Phase 3: Data Integration (replacing mock data with API calls)
+
+## [0.4.0] - 2026-02-15
+
+### Added
+
+- 🔐 **Phase 2: Authentication System Complete**
+  - Firebase Authentication integration
+  - AuthContext provider (`src/contexts/AuthContext.tsx`)
+  - Login page component (`src/pages/LoginPage.tsx`)
+  - Protected route wrapper for authenticated access
+  - Sign in, sign up, and sign out functionality
+- 🚦 Routing system:
+  - React Router v7 integration
+  - `/login` route for authentication
+  - Protected routes for all app sections
+  - Automatic redirect to login in production
+  - Development mode allows bypass for testing
+- 👤 User menu enhancements:
+  - Integrated with Firebase auth
+  - Displays logged-in user email
+  - Working logout functionality
+- 📦 Dependencies:
+  - `react-router-dom` - Client-side routing
+
+### Changed
+
+- Updated App.tsx with BrowserRouter and route definitions
+- UserMenu now uses Firebase user data
+- AppShell integrated with react-router navigation
+- Authentication required in production mode
+
+### Technical Details
+
+- Uses Firebase Authentication (email/password)
+- AuthContext manages authentication state
+- Protected routes redirect to /login when unauthenticated
+- Development mode (DEV) bypasses authentication for UI development
+- Logout clears Firebase session and redirects to login
+
+### Security Notes
+
+- ⚠️ **Important:** Firebase Authentication must be enabled in Firebase Console
+- Enable Email/Password provider in Authentication > Sign-in method
+- Auth is bypassed in development mode for faster testing
+- In production, all routes except /login require authentication
 
 ## [0.3.0] - 2026-02-15
 

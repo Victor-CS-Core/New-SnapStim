@@ -1,5 +1,7 @@
 import { Moon, Sun, LogOut, User, Settings, CreditCard } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -31,6 +33,9 @@ export default function UserMenu({
   role = "BCBA",
   collapsed = false,
 }: UserMenuProps) {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  
   const [isDark, setIsDark] = useState(() => {
     const stored = localStorage.getItem("theme");
     if (stored) return stored === "dark";
@@ -51,7 +56,20 @@ export default function UserMenu({
     setIsDark(!isDark);
   };
 
-  const initials = userName
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
+  // Use Firebase user email if available, otherwise use prop
+  const displayName = user?.displayName || userName;
+  const userEmail = user?.email || "user@example.com";
+
+  const initials = displayName
     .split(" ")
     .map((n) => n[0])
     .join("")
@@ -66,7 +84,7 @@ export default function UserMenu({
             className={`w-full h-auto py-3 px-2 ${collapsed ? "justify-center lg:justify-start group-hover/sidebar:justify-start" : "justify-start"} gap-3`}
           >
             <Avatar className="h-8 w-8 shrink-0">
-              <AvatarImage src="" alt={userName} />
+              <AvatarImage src="" alt={displayName} />
               <AvatarFallback className="bg-primary/20 text-primary">
                 {initials}
               </AvatarFallback>
@@ -74,7 +92,7 @@ export default function UserMenu({
             <div
               className={`flex flex-col items-start text-left ${collapsed ? "hidden lg:flex group-hover/sidebar:flex" : ""}`}
             >
-              <span className="text-sm font-semibold">{userName}</span>
+              <span className="text-sm font-semibold">{displayName}</span>
               <span
                 className={`text-[10px] px-1.5 py-0.5 rounded-full ${roleBadgeColors[role]}`}
               >
@@ -86,9 +104,9 @@ export default function UserMenu({
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">{userName}</p>
+              <p className="text-sm font-medium leading-none">{displayName}</p>
               <p className="text-xs leading-none text-muted-foreground">
-                user@example.com
+                {userEmail}
               </p>
             </div>
           </DropdownMenuLabel>
@@ -143,15 +161,7 @@ export default function UserMenu({
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
-            onClick={() => {
-              // TODO: Implement logout flow
-              // Steps:
-              // 1. Clear authentication tokens
-              // 2. Clear local storage/session data
-              // 3. Redirect to login page
-              // 4. Optional: Call API logout endpoint
-              console.log("Logout clicked");
-            }}
+            onClick={handleLogout}
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>

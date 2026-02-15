@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { BackendStatusBanner } from "@/components/BackendStatus";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-  DialogContent,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sparkles, AlertCircle } from "lucide-react";
-import { useGenerateStimulus } from "@/hooks/useStimuli";
 import { usePrograms } from "@/hooks/usePrograms";
+import { useGenerateStimulus } from "@/hooks/useStimuli";
+import { AlertCircle, Sparkles } from "lucide-react";
+import { useState } from "react";
 
 interface GenerateReviewStimuliModalProps {
   open: boolean;
@@ -31,7 +32,9 @@ export default function GenerateReviewStimuliModal({
   const generateStimulus = useGenerateStimulus();
   const { data: programs } = usePrograms();
 
-  const selectedProgram = programs?.find((p) => p.program_id === selectedProgramId);
+  const selectedProgram = programs?.find(
+    (p) => p.program_id === selectedProgramId,
+  );
 
   const handleGenerate = async () => {
     if (!selectedProgram) {
@@ -42,11 +45,6 @@ export default function GenerateReviewStimuliModal({
     setGeneratedCount(0);
     setErrors([]);
 
-    const basePrompt = `Generate a clear, high-quality image suitable for ${selectedProgram.program_type} therapy. Program: ${selectedProgram.program_name}. ${selectedProgram.description}`;
-    const fullPrompt = customPrompt
-      ? `${basePrompt} Additional guidance: ${customPrompt}`
-      : basePrompt;
-
     const errorList: string[] = [];
     let successCount = 0;
 
@@ -54,15 +52,28 @@ export default function GenerateReviewStimuliModal({
     for (let i = 0; i < count; i++) {
       try {
         await generateStimulus.mutateAsync({
-          prompt: fullPrompt,
+          programType: selectedProgram.program_type,
           programId: selectedProgram.program_id,
-          options: { programType: selectedProgram.program_type },
+          programName: selectedProgram.program_name,
+          description: selectedProgram.description,
+          customPrompt,
         });
         successCount++;
         setGeneratedCount(successCount);
       } catch (error) {
         console.error(`Failed to generate stimulus ${i + 1}:`, error);
-        errorList.push(`Stimulus ${i + 1}: ${error instanceof Error ? error.message : "Unknown error"}`);
+
+        // Extract detailed error message
+        let errorMessage = "Unknown error";
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        } else if (typeof error === "string") {
+          errorMessage = error;
+        } else if (error && typeof error === "object" && "message" in error) {
+          errorMessage = String(error.message);
+        }
+
+        errorList.push(`Stimulus ${i + 1}: ${errorMessage}`);
       }
     }
 
@@ -77,7 +88,9 @@ export default function GenerateReviewStimuliModal({
         `Generated ${successCount} out of ${count} stimuli. ${errorList.length} failed - see details below.`,
       );
     } else {
-      alert("Failed to generate any stimuli. Please check your connection and try again.");
+      alert(
+        "Failed to generate any stimuli. Please check your connection and try again.",
+      );
     }
   };
 
@@ -92,7 +105,8 @@ export default function GenerateReviewStimuliModal({
           <div>
             <DialogTitle>Generate Stimuli for Review</DialogTitle>
             <DialogDescription>
-              Create new AI-generated stimuli that will appear in the review queue
+              Create new AI-generated stimuli that will appear in the review
+              queue
             </DialogDescription>
           </div>
         </div>
@@ -100,6 +114,9 @@ export default function GenerateReviewStimuliModal({
 
       <DialogContent>
         <div className="space-y-4">
+          {/* Backend Status Warning */}
+          <BackendStatusBanner feature="AI stimulus generation" />
+
           {/* Program Selection */}
           <div>
             <label className="text-sm font-medium text-stone-900 dark:text-stone-100 mb-2 block">

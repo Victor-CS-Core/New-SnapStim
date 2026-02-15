@@ -1,24 +1,23 @@
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import {
-  X,
-  Play,
-  Edit,
-  Calendar,
-  Target,
-  Sparkles,
-  Clock,
-  CheckCircle,
   BookOpen,
+  Calendar,
+  CheckCircle,
+  Clock,
+  Edit,
+  Play,
+  Target,
+  X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import ProgramTypeBadge from "./ProgramTypeBadge";
-import ProgramStatusBadge from "./ProgramStatusBadge";
-import TrendIndicator from "./TrendIndicator";
-import GenerateStimuliModal from "./GenerateStimuliModal";
 import type { Program } from "../../../../product-plan/sections/programs/types";
+import GenerateStimuliModal from "./GenerateStimuliModal";
+import ProgramStatusBadge from "./ProgramStatusBadge";
+import ProgramTypeBadge from "./ProgramTypeBadge";
+import TrendIndicator from "./TrendIndicator";
 
 interface ProgramDetailProps {
   program: Program;
@@ -67,21 +66,23 @@ export default function ProgramDetail({
   }, [onClose]);
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 overflow-y-auto"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="program-detail-title"
     >
-      <Card 
+      <Card
         className="w-full max-w-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <CardHeader className="flex flex-row items-start justify-between pb-2">
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <CardTitle id="program-detail-title" className="text-xl">{program.program_name}</CardTitle>
+              <CardTitle id="program-detail-title" className="text-xl">
+                {program.program_name}
+              </CardTitle>
               <ProgramStatusBadge status={program.status} />
             </div>
             <div className="flex items-center gap-2 mt-2">
@@ -92,7 +93,12 @@ export default function ProgramDetail({
               </Badge>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close program details panel">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            aria-label="Close program details panel"
+          >
             <X className="h-4 w-4" />
           </Button>
         </CardHeader>
@@ -126,7 +132,9 @@ export default function ProgramDetail({
             <div className="p-3 rounded-lg bg-stone-50 dark:bg-stone-800">
               <div className="flex items-center gap-2 mb-1">
                 <BookOpen className="h-4 w-4 text-primary" />
-                <span className="text-xs text-stone-500 dark:text-stone-400 uppercase">Trials</span>
+                <span className="text-xs text-stone-500 dark:text-stone-400 uppercase">
+                  Trials
+                </span>
               </div>
               <div className="text-2xl font-bold text-stone-900 dark:text-stone-100">
                 {program.performance.total_trials}
@@ -148,7 +156,9 @@ export default function ProgramDetail({
             <div className="p-3 rounded-lg bg-stone-50 dark:bg-stone-800">
               <div className="flex items-center gap-2 mb-1">
                 <Clock className="h-4 w-4 text-primary" />
-                <span className="text-xs text-stone-500 dark:text-stone-400 uppercase">Trend</span>
+                <span className="text-xs text-stone-500 dark:text-stone-400 uppercase">
+                  Trend
+                </span>
               </div>
               <TrendIndicator trend={program.performance.trend} />
             </div>
@@ -300,14 +310,14 @@ export default function ProgramDetail({
               </Button>
             )}
 
-      {/* Generate Stimuli Modal */}
-      <GenerateStimuliModal
-        open={showGenerateModal}
-        onClose={() => setShowGenerateModal(false)}
-        programId={program.program_id}
-        programName={program.program_name}
-        programType={program.program_type}
-      />
+            {/* Generate Stimuli Modal */}
+            <GenerateStimuliModal
+              open={showGenerateModal}
+              onClose={() => setShowGenerateModal(false)}
+              programId={program.program_id}
+              programName={program.program_name}
+              programType={program.program_type}
+            />
             <Button variant="outline" onClick={onEdit}>
               <Edit className="mr-2 h-4 w-4" />
               Edit Program

@@ -10,10 +10,10 @@ import type {
   ReviewQueueItem,
 } from "../../../product-plan/sections/review/types";
 import BatchReviewModal from "./components/BatchReviewModal";
+import GenerateReviewStimuliModal from "./components/GenerateReviewStimuliModal";
 import ReviewAnalytics from "./components/ReviewAnalytics";
 import ReviewQueue from "./components/ReviewQueue";
 import StimulusDetailModal from "./components/StimulusDetailModal";
-import GenerateReviewStimuliModal from "./components/GenerateReviewStimuliModal";
 
 type ViewMode = "queue" | "analytics";
 
@@ -120,10 +120,7 @@ export default function ReviewView() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            onClick={() => setShowGenerateModal(true)}
-          >
+          <Button variant="outline" onClick={() => setShowGenerateModal(true)}>
             <Sparkles className="mr-2 h-4 w-4" />
             Generate Stimuli
           </Button>

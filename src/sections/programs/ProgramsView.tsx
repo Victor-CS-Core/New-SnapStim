@@ -84,22 +84,25 @@ export default function ProgramsView() {
       if (programData.generate_ai_stimuli && programData.stimuli_count > 0) {
         setIsGeneratingStimuli(true);
 
-        const basePrompt = `Generate a clear, high-quality image suitable for ${programData.program_type} therapy. Program: ${programData.program_name}. ${programData.description}`;
-
         let successCount = 0;
         const total = programData.stimuli_count;
 
         for (let i = 0; i < total; i++) {
           try {
             await generateStimulus.mutateAsync({
-              prompt: basePrompt,
+              programType: programData.program_type,
               programId: programId,
-              options: { programType: programData.program_type },
+              programName: programData.program_name,
+              description: programData.description,
             });
             successCount++;
             console.log(`Generated stimulus ${successCount}/${total}`);
           } catch (error) {
             console.error(`Failed to generate stimulus ${i + 1}:`, error);
+            // Extract detailed error message
+            const errorMessage =
+              error instanceof Error ? error.message : "Unknown error";
+            console.error(`Error details: ${errorMessage}`);
           }
         }
 
@@ -244,7 +247,8 @@ export default function ProgramsView() {
                   Generating AI Stimuli...
                 </p>
                 <p className="text-sm text-amber-700 dark:text-amber-300">
-                  Creating images for your new program. This may take a few minutes.
+                  Creating images for your new program. This may take a few
+                  minutes.
                 </p>
               </div>
             </div>

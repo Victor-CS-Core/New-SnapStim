@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { BackendStatusBanner } from "@/components/BackendStatus";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-  DialogContent,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sparkles, AlertCircle } from "lucide-react";
 import { useGenerateStimulus } from "@/hooks/useStimuli";
+import { AlertCircle, Sparkles } from "lucide-react";
+import { useState } from "react";
 
 interface GenerateStimuliModalProps {
   open: boolean;
@@ -38,11 +39,6 @@ export default function GenerateStimuliModal({
     setGeneratedCount(0);
     setErrors([]);
 
-    const basePrompt = `Generate a clear, high-quality image suitable for ${programType} therapy. Program: ${programName}.`;
-    const fullPrompt = customPrompt
-      ? `${basePrompt} Additional guidance: ${customPrompt}`
-      : basePrompt;
-
     const errorList: string[] = [];
     let successCount = 0;
 
@@ -50,15 +46,27 @@ export default function GenerateStimuliModal({
     for (let i = 0; i < count; i++) {
       try {
         await generateStimulus.mutateAsync({
-          prompt: fullPrompt,
+          programType,
           programId,
-          options: { programType },
+          programName,
+          customPrompt,
         });
         successCount++;
         setGeneratedCount(successCount);
       } catch (error) {
         console.error(`Failed to generate stimulus ${i + 1}:`, error);
-        errorList.push(`Stimulus ${i + 1}: ${error instanceof Error ? error.message : "Unknown error"}`);
+
+        // Extract detailed error message
+        let errorMessage = "Unknown error";
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        } else if (typeof error === "string") {
+          errorMessage = error;
+        } else if (error && typeof error === "object" && "message" in error) {
+          errorMessage = String(error.message);
+        }
+
+        errorList.push(`Stimulus ${i + 1}: ${errorMessage}`);
       }
     }
 
@@ -73,7 +81,9 @@ export default function GenerateStimuliModal({
         `Generated ${successCount} out of ${count} stimuli. ${errorList.length} failed - see details below.`,
       );
     } else {
-      alert("Failed to generate any stimuli. Please check your connection and try again.");
+      alert(
+        "Failed to generate any stimuli. Please check your connection and try again.",
+      );
     }
   };
 
@@ -96,6 +106,9 @@ export default function GenerateStimuliModal({
 
       <DialogContent>
         <div className="space-y-4">
+          {/* Backend Status Warning */}
+          <BackendStatusBanner feature="AI stimulus generation" />
+
           {/* Count Input */}
           <div>
             <label className="text-sm font-medium text-stone-900 dark:text-stone-100 mb-2 block">

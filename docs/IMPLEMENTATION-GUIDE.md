@@ -777,6 +777,7 @@ Each follows the same structure:
 - ✅ User feedback for success/failure states
 
 **AI Generation in Review Section:**
+
 - ✅ "Generate Stimuli" button in ReviewView header
 - ✅ GenerateReviewStimuliModal with program selection
 - ✅ Integration with active programs

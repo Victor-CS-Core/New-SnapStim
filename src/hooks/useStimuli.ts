@@ -52,14 +52,25 @@ export function useGenerateStimulus() {
 
     return useMutation({
         mutationFn: async (data: {
-            prompt: string;
+            programType: string;
             programId?: string;
-            options?: any;
+            programName?: string;
+            description?: string;
+            customPrompt?: string;
+            fields?: Record<string, any>;
         }) => {
-            return await api.generateStimulus(data.prompt, {
+            // Build fields object for backend
+            const fields: Record<string, any> = {
                 userId,
                 programId: data.programId,
-                ...data.options,
+                title: data.programName,
+                description: data.description,
+                ...data.fields,
+            };
+
+            return await api.generateStimulus({
+                programType: data.programType,
+                fields,
             });
         },
         onSuccess: () => {

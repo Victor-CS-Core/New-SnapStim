@@ -26,20 +26,32 @@ class ApiClient {
   async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 
-    const response = await fetch(url, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers,
-      },
-    });
+    try {
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          ...options?.headers,
+        },
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-      throw new Error(errorData.error || `HTTP ${response.status}`);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      // Enhance error message with more context
+      if (error instanceof Error) {
+        // If it's a fetch/network error, provide better feedback
+        if (error.message.includes('fetch')) {
+          throw new Error(`Backend unreachable at ${this.baseUrl}. Is the server running?`);
+        }
+        throw error;
+      }
+      throw new Error('Unknown error occurred during API request');
     }
-
-    return await response.json();
   }
 
   // ===================================
@@ -136,12 +148,28 @@ class ApiClient {
 
   /**
    * Generate stimulus image using GetImg API
-   * POST /api/stimulus/generate
+   * POST /api/stimuli
    */
-  async generateStimulus(prompt: string, options?: any) {
-    return this.request('/api/stimulus/generate', {
+  async generateStimulus(data: {
+    programType: string;
+    fields?: Record<string, any>;
+  }) {
+    // Map frontend program types to backend types
+    const programTypeMap: Record<string, string> = {
+      'expressive_labeling': 'tacting',
+      'receptive_identification': 'lr',
+      'listener_responding': 'lr',
+      'intraverbal': 'intraverbal',
+    };
+
+    const backendProgramType = programTypeMap[data.programType] || 'tacting';
+
+    return this.request('/api/stimuli', {
       method: 'POST',
-      body: JSON.stringify({ prompt, ...options }),
+      body: JSON.stringify({
+        programType: backendProgramType,
+        fields: data.fields || {},
+      }),
     });
   }
 

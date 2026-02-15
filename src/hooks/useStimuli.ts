@@ -12,23 +12,10 @@ export function useStimuli(programId?: string, status?: string) {
         queryKey: ["stimuli", userId, programId, status],
         queryFn: async () => {
             try {
-                // Backend doesn't have a listStimuli endpoint yet
-                console.warn(
-                    "Stimuli list API not available, using mock data"
-                );
-                let stimuli = mockReviewData.review_queue as ReviewQueueItem[];
-
-                // Apply filters if provided
-                if (programId) {
-                    stimuli = stimuli.filter(s => s.program_id === programId);
-                }
-                if (status) {
-                    stimuli = stimuli.filter(s => s.review_status === status);
-                }
-
-                return stimuli;
+                const response = await api.listStimuli(userId, programId, status) as { stimuli: ReviewQueueItem[] };
+                return response.stimuli || [];
             } catch (error) {
-                console.warn("Failed to load stimuli, using mock data:", error);
+                console.warn("Backend offline, using mock stimuli data:", error);
                 let stimuli = mockReviewData.review_queue as ReviewQueueItem[];
 
                 // Apply filters if provided

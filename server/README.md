@@ -62,15 +62,18 @@ npm run dev:full
 ## API Endpoints
 
 ### Health Check
+
 - `GET /api/health` - Server health status
 
 ### Clients
+
 - `GET /api/client/list?userId=:userId` - List all clients
 - `GET /api/client/:userId/:clientId` - Get single client
 - `POST /api/client/save` - Save/create client
 - `DELETE /api/client/delete` - Delete client
 
 ### Programs
+
 - `GET /api/program/list?userId=:userId&clientId=:clientId` - List programs
 - `GET /api/program/:userId/:clientId/:programId` - Get single program
 - `POST /api/program/save` - Create program
@@ -78,6 +81,7 @@ npm run dev:full
 - `DELETE /api/program/delete` - Delete program (soft delete)
 
 ### Sessions
+
 - `GET /api/sessions?userId=:userId` - List sessions
 - `POST /api/session/export` - Export session data
 - `GET /api/session/:userId/:clientId/:programId/:sessionId/meta` - Get session metadata
@@ -85,12 +89,14 @@ npm run dev:full
 - `GET /api/session/:userId/:clientId/:programId/:sessionId/stimuli` - Get session stimuli
 
 ### AI Features
+
 - `POST /api/stimuli` - Generate stimulus image (GetImg)
 - `GET /api/stimuli/history` - View generation history
 - `POST /api/teaching-instructions` - Generate teaching instructions (Replicate)
 - `POST /api/images/batch` - Batch image generation
 
 ### Program History
+
 - `POST /api/program-history/session` - Save session result
 - `GET /api/program-history/:userId/:clientId/:programId` - Get program history
 

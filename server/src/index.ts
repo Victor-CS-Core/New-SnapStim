@@ -5,10 +5,11 @@ import { deleteClient, getClient, listClients, saveClient } from "./routes/clien
 import * as images from './routes/images';
 import { previewImages } from "./routes/preview";
 import previewGeneralizationRoute from './routes/preview-generalization';
-import { deleteProgram, getProgram, listPrograms, saveProgram, updateProgram } from "./routes/programRoutes";
 import registerProgramHistoryRoutes from "./routes/programHistory";
+import { deleteProgram, getProgram, listPrograms, saveProgram, updateProgram } from "./routes/programRoutes";
 import { exportSession, fetchSessionImages, fetchSessionMeta, fetchSessionStimuli, listSavedSessions } from "./routes/session";
 import * as stimuli from './routes/stimuli';
+import { deleteStimulus, getStimulus, listStimuli, saveStimulus, submitReview } from "./routes/stimuliRoutes";
 import * as teachingInstructions from './routes/teachingInstructions';
 import registerSaveSessionRoute from "./saveSession";
 
@@ -31,6 +32,11 @@ app.get('/api/health', (_req, res) => res.json({ ok: true }));
 app.post('/api/images/batch', images.batchGenerate);
 app.post('/api/stimuli', stimuli.generateStimuli);
 app.get('/api/stimuli/history', stimuli.getStimuliHistory);
+app.get('/api/stimuli/list', listStimuli);
+app.get('/api/stimuli/:userId/:programId/:stimulusId', getStimulus);
+app.post('/api/stimuli/save', saveStimulus);
+app.delete('/api/stimuli/delete', deleteStimulus);
+app.post('/api/review/submit', submitReview);
 app.post('/api/teaching-instructions', teachingInstructions.generateTeachingInstructions);
 app.use('/api/generalization', previewGeneralizationRoute);
 app.post("/api/session/export", exportSession);

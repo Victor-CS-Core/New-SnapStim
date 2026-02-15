@@ -734,21 +734,92 @@ export function ClientsView() {
 
 ---
 
-## Phase 6: Repeat for Other Sections (Week 3-4)
+## Phase 6: Data Integration - Additional Sections (Week 3-4) ✅ COMPLETED
 
-**Apply same pattern to:**
+**Duration:** February 15, 2026  
+**Status:** ✅ Complete  
+**Commit:** 4282ffd (backend integration), [next commit] (full completion)
 
-1. **Programs** (`src/hooks/usePrograms.ts`)
-2. **Sessions** (`src/hooks/useSessions.ts`)
-3. **Review/Stimuli** (`src/hooks/useStimuli.ts`)
-4. **Reporting** (uses sessions data)
+### What Was Built
 
-Each follows the same structure:
+**1. Programs Integration** ✅
+- Backend CRUD endpoints (`server/src/routes/programRoutes.ts`)
+  - GET `/api/program/list` - List programs with filtering
+  - GET `/api/program/:userId/:clientId/:programId` - Get single program
+  - POST `/api/program/save` - Create program
+  - PUT `/api/program/update` - Update program
+  - DELETE `/api/program/delete` - Soft delete program
+- Frontend hooks updated to call real API
+- Fallback to mock data when backend offline
+- Storage: `programs/{userId}/{clientId}/{programId}.json`
 
-- Create `use[Entity].ts` hook with React Query
-- Call backend API methods
-- Replace mock imports in View components
-- Add loading/error states
+**2. Sessions Integration** ✅
+- Backend endpoints already existed from mobile app
+  - POST `/api/session/save` - Create/update session
+  - GET `/api/sessions` - List sessions  
+  - POST `/api/session/export` - Export session data
+- Updated `useCreateSession()` and `useUpdateSession()` hooks
+- Frontend now calls real backend API
+- Storage: `sessions/{userId}/{clientId}/{sessionId}/`
+
+**3. Stimuli/Review Integration** ✅
+- New backend CRUD endpoints (`server/src/routes/stimuliRoutes.ts`)
+  - GET `/api/stimuli/list` - List stimuli with filtering
+  - GET `/api/stimuli/:userId/:programId/:stimulusId` - Get single stimulus
+  - POST `/api/stimuli/save` - Save generated stimulus
+  - DELETE `/api/stimuli/delete` - Soft delete stimulus
+  - POST `/api/review/submit` - Submit review decision
+- Updated `useStimuli()` hook to call real API
+- Generation endpoint already existed (`POST /api/stimuli`)
+- Storage: `stimuli/{userId}/{programId}/{stimulusId}.json`
+
+**4. Reporting** ⚠️ *Deferred*
+- Hooks still use mock data (non-critical for MVP)
+- `useDashboardMetrics`, `useReportTemplates`, `useExportJobs`, `useScheduledExports`
+- Backend endpoints can be added in future phase
+
+### Key Decisions
+
+1. **Monorepo Structure**: Moved backend into `ProjectUI/server/` directory
+2. **Soft Deletes**: Mark records with `{ deleted: true }` instead of physical deletion
+3. **Offline Support**: All hooks fallback to mock data when backend unavailable
+4. **Firebase Storage**: Consistent path structure across all entities
+5. **Reporting Deferred**: Not critical for core therapy workflow, can implement later
+
+### Technical Implementation
+
+**API Client Methods Added:**
+- Programs: `listPrograms`, `getProgram`, `saveProgram`, `updateProgram`, `deleteProgram`
+- Sessions: `saveSession` (create/update use same endpoint)
+- Stimuli: `listStimuli`, `getStimulus`, `saveStimulus`, `deleteStimulus`, `submitReview`
+
+**Firebase Storage Paths:**
+```
+programs/{userId}/{clientId}/{programId}.json
+sessions/{userId}/{clientId}/{sessionId}/
+stimuli/{userId}/{programId}/{stimulusId}.json
+```
+
+### Files Created/Modified
+
+**Backend:**
+- `server/src/routes/programRoutes.ts` (246 lines) - Program CRUD
+- `server/src/routes/stimuliRoutes.ts` (245 lines) - Stimuli CRUD & Review
+- `server/src/index.ts` - Registered new routes
+
+**Frontend:**
+- `src/lib/api.ts` - Added 9 new API methods
+- `src/hooks/usePrograms.ts` - Connected to real API
+- `src/hooks/useSessions.ts` - Connected to real API  
+- `src/hooks/useStimuli.ts` - Connected to real API
+
+**Documentation:**
+- `server/README.md` - API endpoint documentation
+- `README.md` - Updated with monorepo structure
+
+### Next Steps
+
+→ **Proceed to Phase 8:** Session Runner Implementation
 
 ---
 
@@ -756,7 +827,7 @@ Each follows the same structure:
 
 **Duration:** February 15, 2026  
 **Status:** ✅ Complete  
-**Commit:** (to be added after commit)
+**Commit:** d04e823, 0ad0ee1
 
 ### What Was Built
 

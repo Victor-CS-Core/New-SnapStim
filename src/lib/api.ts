@@ -117,6 +117,25 @@ class ApiClient {
   }
 
   /**
+   * Save/create session
+   * POST /api/session/save
+   */
+  async saveSession(sessionData: {
+    userId: string;
+    sessionId: string;
+    clientId: string;
+    programId: string;
+    stimuli: any;
+    images?: any;
+    meta?: any;
+  }) {
+    return this.request('/api/session/save', {
+      method: 'POST',
+      body: JSON.stringify(sessionData),
+    });
+  }
+
+  /**
    * Export session data
    * POST /api/session/export
    */
@@ -223,6 +242,51 @@ class ApiClient {
         programType: backendProgramType,
         fields: data.fields || {},
       }),
+    });
+  }
+
+  /**
+   * List stimuli for a user (optionally filtered by programId and status)
+   * GET /api/stimuli/list?userId=:userId&programId=:programId&status=:status
+   */
+  async listStimuli(userId: string = 'device', programId?: string, status?: string) {
+    const params = new URLSearchParams({ userId });
+    if (programId) {
+      params.append('programId', programId);
+    }
+    if (status) {
+      params.append('status', status);
+    }
+    return this.request(`/api/stimuli/list?${params.toString()}`);
+  }
+
+  /**
+   * Get single stimulus by ID
+   * GET /api/stimuli/:userId/:programId/:stimulusId
+   */
+  async getStimulus(userId: string, programId: string, stimulusId: string) {
+    return this.request(`/api/stimuli/${userId}/${programId}/${stimulusId}`);
+  }
+
+  /**
+   * Save generated stimulus to storage
+   * POST /api/stimuli/save
+   */
+  async saveStimulus(userId: string, programId: string, stimulus: any) {
+    return this.request('/api/stimuli/save', {
+      method: 'POST',
+      body: JSON.stringify({ userId, programId, stimulus }),
+    });
+  }
+
+  /**
+   * Delete a stimulus (soft delete)
+   * DELETE /api/stimuli/delete
+   */
+  async deleteStimulus(userId: string, stimulusId: string, programId: string) {
+    return this.request('/api/stimuli/delete', {
+      method: 'DELETE',
+      body: JSON.stringify({ userId, stimulusId, programId }),
     });
   }
 

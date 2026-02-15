@@ -54,18 +54,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- 🔄 **Phase 6: Data Integration for Programs, Sessions, Review, and Reporting Complete**
-  - Created `usePrograms` hook with CRUD operations (generate, create, update, delete)
-  - Created `useSessions` hook with list, export, and CRUD operations
-  - Created `useStimuli` hook for Review section (generate, submit review, CRUD)
-  - Created `useReporting` hook for dashboard metrics, templates, and exports
-  - Updated ProgramsView with React Query integration and loading states
-  - Updated SessionsView with React Query integration and null safety
-  - Updated ReviewView with async mutations and proper error handling
-  - Updated Reporting sub-views with React Query hooks
-  - All hooks include mock data fallback for offline/incomplete backend
-  - Added comprehensive null checks and loading states across all views
-  - Console warnings for missing backend API endpoints
+- ✨ **Phase 6: Data Integration Complete - Backend Monorepo + Full CRUD**
+  
+  - **Backend Monorepo Integration**
+    - Moved backend server into `ProjectUI/server/` directory
+    - Added `concurrently` for running both frontend and backend
+    - Updated package.json scripts: `dev:full`, `dev:server`
+    - Backend runs on port 8787, frontend on 5174
+    - Created `.gitignore` to protect Firebase credentials
+  
+  - **Programs Backend** (5 endpoints)
+    - `GET /api/program/list` - List programs with user/client filtering
+    - `GET /api/program/:userId/:clientId/:programId` - Get single program
+    - `POST /api/program/save` - Create new program
+    - `PUT /api/program/update` - Update existing program
+    - `DELETE /api/program/delete` - Soft delete program
+    - Storage: `programs/{userId}/{clientId}/{programId}.json`
+    - Backend file: `server/src/routes/programRoutes.ts` (246 lines)
+  
+  - **Sessions Backend Integration** (3 endpoints)
+    - `POST /api/session/save` - Create/update session
+    - `GET /api/sessions` - List sessions with filtering
+    - `POST /api/session/export` - Export session data
+    - Storage: `sessions/{userId}/{clientId}/{sessionId}/`
+    - Endpoints existed from mobile app, connected hooks to use them
+  
+  - **Stimuli/Review Backend** (5 endpoints)
+    - `GET /api/stimuli/list` - List stimuli with program/status filtering
+    - `GET /api/stimuli/:userId/:programId/:stimulusId` - Get single stimulus
+    - `POST /api/stimuli/save` - Save generated stimulus
+    - `DELETE /api/stimuli/delete` - Soft delete stimulus
+    - `POST /api/review/submit` - Submit review approval/rejection
+    - Storage: `stimuli/{userId}/{programId}/{stimulusId}.json`
+    - Backend file: `server/src/routes/stimuliRoutes.ts` (245 lines)
+
+### Changed
+
+- **Frontend Hook Integration**
+  - `usePrograms.ts` - Full CRUD operations calling real API
+  - `useSessions.ts` - Connected `useCreateSession` and `useUpdateSession` to backend
+  - `useStimuli.ts` - Connected to real API for listing and management
+  - All hooks generate UUIDs and timestamps locally before sending to backend
+  - Graceful degradation to mock data when backend unavailable
+
+- **API Client Enhancement** (`src/lib/api.ts`)
+  - Added 9 new methods for Programs, Sessions, and Stimuli CRUD
+  - Type-safe request/response handling with TypeScript
+  - Consistent error handling across all endpoints
+
+### Technical Notes
+
+- **Firebase Storage**: All entities stored in structured JSON files
+- **Soft Deletes**: Records marked with `{ deleted: true }` instead of physical deletion
+- **Zod Validation**: Request validation on all backend endpoints  
+- **Offline Support**: All hooks fallback to mock data when backend unavailable
+- **Reporting Deferred**: Non-critical Reporting section still using mock data
+- **Security**: `firebase-service-account.json` properly protected in `.gitignore`
 
 ## [0.5.0] - 2026-02-15
 

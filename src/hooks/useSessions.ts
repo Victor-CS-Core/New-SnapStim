@@ -54,17 +54,36 @@ export function useCreateSession() {
         mutationFn: async (
             sessionData: Omit<Session, "session_id" | "start_time">
         ) => {
-            // Backend doesn't have a saveSession endpoint yet
-            const newSession: Session = {
-                ...sessionData,
-                session_id: crypto.randomUUID(),
-                start_time: new Date().toISOString(),
-            } as Session;
+            const sessionId = crypto.randomUUID();
+            const startTime = new Date().toISOString();
 
-            console.warn(
-                "Session save API not available, simulating local update"
-            );
-            return { ok: true, session: newSession };
+            try {
+                // Call real backend API
+                const response = await api.saveSession({
+                    userId,
+                    sessionId,
+                    clientId: sessionData.client_id,
+                    programId: sessionData.program_id,
+                    stimuli: (sessionData as any).stimuli || {},
+                    images: (sessionData as any).images,
+                    meta: {
+                        ...sessionData,
+                        session_id: sessionId,
+                        start_time: startTime,
+                    },
+                });
+
+                return response;
+            } catch (error) {
+                console.warn("Backend offline, session not saved:", error);
+                // Return simulated response for offline mode
+                const newSession: Session = {
+                    ...sessionData,
+                    session_id: sessionId,
+                    start_time: startTime,
+                } as Session;
+                return { ok: true, session: newSession };
+            }
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["sessions", userId] });
@@ -79,10 +98,23 @@ export function useUpdateSession() {
 
     return useMutation({
         mutationFn: async (session: Session) => {
-            console.warn(
-                "Session update API not available, simulating local update"
-            );
-            return { ok: true, session };
+            try {
+                // Call real backend API (same endpoint as create)
+                const response = await api.saveSession({
+                    userId,
+                    sessionId: session.session_id,
+                    clientId: session.client_id,
+                    programId: session.program_id,
+                    stimuli: (session as any).stimuli || {},
+                    images: (session as any).images,
+                    meta: session,
+                });
+
+                return response;
+            } catch (error) {
+                console.warn("Backend offline, session not updated:", error);
+                return { ok: true, session };
+            }
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["sessions", userId] });

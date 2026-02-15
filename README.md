@@ -7,6 +7,7 @@ Web-based ABA therapy session management platform for BCBAs, RBTs, and caregiver
 SnapStim helps behavior analysts create and manage ABA therapy programs with AI-powered stimulus generation, real-time session tracking, and progress reporting.
 
 **Key Features:**
+
 - Client & Program Management
 - AI Stimulus Generation (GetImg + Replicate)
 - Session Running & Data Collection
@@ -35,17 +36,20 @@ Web App (React) ──→ Backend API (Express) ──→ Firebase Storage
 ## Quick Start
 
 ### Prerequisites
+
 - Node.js 18+
 - Access to `../Tyler-Project/SnapStim` (mobile app repository)
 
 ### Setup
 
 1. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Start backend server (separate terminal):**
+
    ```bash
    cd ../Tyler-Project/SnapStim/server
    npm run dev
@@ -53,6 +57,7 @@ Web App (React) ──→ Backend API (Express) ──→ Firebase Storage
    ```
 
 3. **Start web app:**
+
    ```bash
    npm run dev
    # Open http://localhost:5173
@@ -85,6 +90,7 @@ src/
 ## Development
 
 ### Available Commands
+
 ```bash
 npm run dev      # Start dev server
 npm run build    # Build for production
@@ -94,11 +100,13 @@ npm run lint     # Run linter
 ### Current State vs Future
 
 **Now:** Mock data from `product-plan/sections/*/data.json`
+
 ```typescript
 import clientsData from "../../../product-plan/sections/clients/data.json";
 ```
 
 **Soon:** Real API calls (see IMPLEMENTATION-GUIDE.md)
+
 ```typescript
 const { data: clients } = useClients();
 ```
@@ -116,6 +124,7 @@ POST /api/teaching-instructions     # Generate AI instructions
 ```
 
 **Data Storage:** Firebase Storage as JSON files (not Firestore collections)
+
 ```
 clients/{userId}/{clientId}.json
 programs/{userId}/{clientId}/{programId}.json
@@ -125,22 +134,30 @@ sessions/{userId}/{clientId}/{sessionId}/meta.json
 ## Key Concepts
 
 ### Navigation
+
 Cross-section navigation with context:
+
 ```typescript
 const { navigateTo } = useNavigation();
-navigateTo('/sessions', { clientId: 'abc', programId: 'xyz' });
+navigateTo("/sessions", { clientId: "abc", programId: "xyz" });
 ```
 
 ### Roles
+
 - **BCBA:** Full access, review AI content
 - **RBT:** Run sessions, view assigned clients
 - **Caregiver:** Read-only access
 
 ### AI Integration
+
 Backend already has AI working:
+
 ```typescript
-api.generateStimuli({ programType: 'tacting', count: 20 })
-api.generateTeachingInstructions({ programType: 'tacting', targetSkill: '...' })
+api.generateStimuli({ programType: "tacting", count: 20 });
+api.generateTeachingInstructions({
+  programType: "tacting",
+  targetSkill: "...",
+});
 ```
 
 ## Security
@@ -164,6 +181,7 @@ api.generateTeachingInstructions({ programType: 'tacting', targetSkill: '...' })
 ---
 
 **Getting Started?**
+
 1. Complete setup above
 2. Read `IMPLEMENTATION-GUIDE.md` Phase 1
 3. Make a small change and test hot reload

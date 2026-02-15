@@ -40,6 +40,7 @@ npminstall firebase @tanstack/react-query @tanstack/react-query-devtools
 ✅ `.env.example` - Template (already created)
 
 **Next Files to Create:**
+
 - `src/lib/firebase.ts`
 - `src/lib/api.ts`
 - `src/contexts/AuthContext.tsx`
@@ -47,12 +48,14 @@ npminstall firebase @tanstack/react-query @tanstack/react-query-devtools
 ### Step 2: Test Backend Connection
 
 **Start mobile backend:**
+
 ```bash
 cd C:\Users\vitic\OneDrive\Documentos\Development\Tyler-Project\SnapStim\server
 npm run dev
 ```
 
 You should see:
+
 ```
 [env] GETIMG_API_KEY length: 97
 [api] listening on :8787
@@ -62,6 +65,7 @@ You should see:
 Open `http://localhost:8787/api/health`
 
 Expected response:
+
 ```json
 { "ok": true }
 ```
@@ -75,10 +79,10 @@ Expected response:
 Create `src/lib/firebase.ts`:
 
 ```typescript
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -107,7 +111,8 @@ export default app;
 Create `src/lib/api.ts`:
 
 ```typescript
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8787';
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8787";
 
 class ApiClient {
   private baseUrl: string;
@@ -118,17 +123,19 @@ class ApiClient {
 
   async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
-    
+
     const response = await fetch(url, {
       ...options,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...options?.headers,
       },
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+      const errorData = await response
+        .json()
+        .catch(() => ({ error: "Unknown error" }));
       throw new Error(errorData.error || `HTTP ${response.status}`);
     }
 
@@ -137,11 +144,11 @@ class ApiClient {
 
   // Health check
   async health() {
-    return this.request<{ ok: boolean }>('/api/health');
+    return this.request<{ ok: boolean }>("/api/health");
   }
 
   // Clients
-  async listClients(userId: string = 'device') {
+  async listClients(userId: string = "device") {
     return this.request<{
       ok: boolean;
       clients: any[];
@@ -150,27 +157,27 @@ class ApiClient {
   }
 
   async saveClient(userId: string, client: any) {
-    return this.request('/api/client/save', {
-      method: 'POST',
+    return this.request("/api/client/save", {
+      method: "POST",
       body: JSON.stringify({ userId, client }),
     });
   }
 
   async deleteClient(userId: string, clientId: string) {
-    return this.request('/api/client/delete', {
-      method: 'DELETE',
+    return this.request("/api/client/delete", {
+      method: "DELETE",
       body: JSON.stringify({ userId, clientId }),
     });
   }
 
   // Sessions
-  async listSessions(userId: string = 'device') {
+  async listSessions(userId: string = "device") {
     return this.request(`/api/sessions?userId=${userId}`);
   }
 
   async exportSession(sessionData: any) {
-    return this.request('/api/session/export', {
-      method: 'POST',
+    return this.request("/api/session/export", {
+      method: "POST",
       body: JSON.stringify(sessionData),
     });
   }
@@ -182,14 +189,14 @@ class ApiClient {
     count: number;
     additionalGuidance?: string;
   }) {
-    return this.request('/api/stimuli', {
-      method: 'POST',
+    return this.request("/api/stimuli", {
+      method: "POST",
       body: JSON.stringify(request),
     });
   }
 
   async getStimuliHistory() {
-    return this.request('/api/stimuli/history');
+    return this.request("/api/stimuli/history");
   }
 
   // AI - Teaching Instructions
@@ -198,16 +205,16 @@ class ApiClient {
     programName: string;
     targetSkill: string;
   }) {
-    return this.request('/api/teaching-instructions', {
-      method: 'POST',
+    return this.request("/api/teaching-instructions", {
+      method: "POST",
       body: JSON.stringify(request),
     });
   }
 
   // AI - Image Batch Generation
   async generateImages(prompts: string[]) {
-    return this.request('/api/images/batch', {
-      method: 'POST',
+    return this.request("/api/images/batch", {
+      method: "POST",
       body: JSON.stringify({ prompts }),
     });
   }
@@ -222,26 +229,27 @@ export default api;
 Create temporary file `src/lib/apiTest.ts`:
 
 ```typescript
-import api from './api';
+import api from "./api";
 
 export async function testApi() {
   try {
     const health = await api.health();
-    console.log('✅ Health:', health);
+    console.log("✅ Health:", health);
 
-    const clients = await api.listClients('device');
+    const clients = await api.listClients("device");
     console.log(`✅ Found ${clients.count} clients`);
 
-    console.log('✅ All tests passed!');
+    console.log("✅ All tests passed!");
   } catch (error) {
-    console.error('❌ API test failed:', error);
+    console.error("❌ API test failed:", error);
   }
 }
 ```
 
 Run in browser console:
+
 ```javascript
-import { testApi } from './lib/apiTest';
+import { testApi } from "./lib/apiTest";
 testApi();
 ```
 
@@ -255,7 +263,7 @@ Create `src/contexts/AuthContext.tsx`:
 
 ```typescript
 import { createContext, useContext, useEffect, useState } from 'react';
-import { 
+import {
   User,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -403,7 +411,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
 
   if (loading) return <div>Loading...</div>;
-  
+
   // In development, allow without auth
   if (!user && import.meta.env.PROD) {
     return <Navigate to="/login" replace />;
@@ -444,16 +452,16 @@ export default App;
 Create `src/hooks/useClients.ts`:
 
 ```typescript
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAuth } from '@/contexts/AuthContext';
-import api from '@/lib/api';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/contexts/AuthContext";
+import api from "@/lib/api";
 
 export function useClients() {
   const { user } = useAuth();
-  const userId = user?.uid || 'device';
+  const userId = user?.uid || "device";
 
   return useQuery({
-    queryKey: ['clients', userId],
+    queryKey: ["clients", userId],
     queryFn: async () => {
       const response = await api.listClients(userId);
       return response.clients;
@@ -464,7 +472,7 @@ export function useClients() {
 export function useCreateClient() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  const userId = user?.uid || 'device';
+  const userId = user?.uid || "device";
 
   return useMutation({
     mutationFn: async (clientData: any) => {
@@ -475,11 +483,11 @@ export function useCreateClient() {
         updatedAt: new Date().toISOString(),
         isActive: true,
       };
-      
+
       return await api.saveClient(userId, newClient);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['clients', userId] });
+      queryClient.invalidateQueries({ queryKey: ["clients", userId] });
     },
   });
 }
@@ -487,7 +495,7 @@ export function useCreateClient() {
 export function useUpdateClient() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  const userId = user?.uid || 'device';
+  const userId = user?.uid || "device";
 
   return useMutation({
     mutationFn: async (client: any) => {
@@ -498,7 +506,7 @@ export function useUpdateClient() {
       return await api.saveClient(userId, updated);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['clients', userId] });
+      queryClient.invalidateQueries({ queryKey: ["clients", userId] });
     },
   });
 }
@@ -506,14 +514,14 @@ export function useUpdateClient() {
 export function useDeleteClient() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  const userId = user?.uid || 'device';
+  const userId = user?.uid || "device";
 
   return useMutation({
     mutationFn: async (clientId: string) => {
       return await api.deleteClient(userId, clientId);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['clients', userId] });
+      queryClient.invalidateQueries({ queryKey: ["clients", userId] });
     },
   });
 }
@@ -522,16 +530,24 @@ export function useDeleteClient() {
 Update `src/sections/clients/ClientsView.tsx`:
 
 **REMOVE:**
+
 ```typescript
 import clientsData from "../../../product-plan/sections/clients/data.json";
 ```
 
 **ADD:**
+
 ```typescript
-import { useClients, useCreateClient, useUpdateClient, useDeleteClient } from '@/hooks/useClients';
+import {
+  useClients,
+  useCreateClient,
+  useUpdateClient,
+  useDeleteClient,
+} from "@/hooks/useClients";
 ```
 
 **REPLACE mock data with:**
+
 ```typescript
 export function ClientsView() {
   const { data: clients, isLoading } = useClients();
@@ -562,7 +578,7 @@ export function ClientsView() {
     </div>
   );
 }
-```  
+```
 
 ✅ **Phase 2 Complete** when clients load from Firebase instead of mock JSON
 
@@ -578,6 +594,7 @@ export function ClientsView() {
 4. **Reporting** (uses sessions data)
 
 Each follows the same structure:
+
 - Create `use[Entity].ts` hook with React Query
 - Call backend API methods
 - Replace mock imports in View components
@@ -613,7 +630,7 @@ const handleGenerateStimuli = async () => {
     const result = await generateStimuli.mutateAsync(selectedProgram);
     alert(`Generated ${result.stimuli.length} stimuli!`);
   } catch (error) {
-    alert('Failed to generate stimuli');
+    alert("Failed to generate stimuli");
   }
 };
 ```
@@ -662,27 +679,32 @@ Create advanced charts using session data from backend.
 ## ✅ Completion Checklist
 
 **Phase 1:** Backend Connection
+
 - [ ] Firebase SDK installed
 - [ ] API client working
 - [ ] Authentication functional
 
 **Phase 2:** Data Integration
+
 - [ ] Clients load from Firebase
 - [ ] Programs load from Firebase
 - [ ] Sessions load from Firebase
 - [ ] No mock data remaining
 
 **Phase 3:** AI Integration
+
 - [ ] Can generate stimuli via backend
 - [ ] Can generate teaching instructions
 - [ ] Images save to Firebase Storage
 
 **Phase 4:** Session Runner
+
 - [ ] Can run sessions like mobile app
 - [ ] Trials save to backend
 - [ ] Session history accessible
 
 **Phase 5:** Advanced Features
+
 - [ ] Offline support working
 - [ ] Charts display real data
 - [ ] Export functionality
@@ -692,6 +714,7 @@ Create advanced charts using session data from backend.
 ## 🆘 If You Get Stuck
 
 **Ask me to:**
+
 1. "Implement Phase 1" - I'll create all files for backend connection
 2. "Implement Phase 2" - I'll update ClientsView with real data
 3. "Show me the API endpoints" - I'll list all available backend routes
@@ -699,25 +722,25 @@ Create advanced charts using session data from backend.
 
 **Common Issues:**
 
-| Error | Solution |
-|-------|----------|
-| CORS error | Add `http://localhost:5173` to backend ALLOWED_ORIGINS |
-| Firebase not initialized | Check `.env` has all 7 Firebase variables |
-| Backend not responding | Start backend: `cd Tyler-Project/SnapStim/server && npm run dev` |
-| 401 Unauthorized | Check auth token in API request headers |
+| Error                    | Solution                                                         |
+| ------------------------ | ---------------------------------------------------------------- |
+| CORS error               | Add `http://localhost:5173` to backend ALLOWED_ORIGINS           |
+| Firebase not initialized | Check `.env` has all 7 Firebase variables                        |
+| Backend not responding   | Start backend: `cd Tyler-Project/SnapStim/server && npm run dev` |
+| 401 Unauthorized         | Check auth token in API request headers                          |
 
 ---
 
 ## 📚 Key Files Reference
 
-| File | Purpose |
-|------|---------|
-| `.env` | Environment variables (API keys, Firebase config) |
-| `src/lib/firebase.ts` | Firebase initialization |
-| `src/lib/api.ts` | Backend API client |
-| `src/contexts/AuthContext.tsx` | Authentication state |
-| `src/hooks/useClients.ts` | Client data management |
-| `Tyler-Project/SnapStim/server/src/index.ts` | Backend server (mobile app) |
+| File                                         | Purpose                                           |
+| -------------------------------------------- | ------------------------------------------------- |
+| `.env`                                       | Environment variables (API keys, Firebase config) |
+| `src/lib/firebase.ts`                        | Firebase initialization                           |
+| `src/lib/api.ts`                             | Backend API client                                |
+| `src/contexts/AuthContext.tsx`               | Authentication state                              |
+| `src/hooks/useClients.ts`                    | Client data management                            |
+| `Tyler-Project/SnapStim/server/src/index.ts` | Backend server (mobile app)                       |
 
 ---
 

@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import type { Program } from "../../product-plan/sections/programs/types";
 import reportingData from "../../product-plan/sections/reporting/data.json";
 import type {
     DashboardMetrics,
@@ -6,10 +7,9 @@ import type {
     ReportTemplate,
     ScheduledExport,
 } from "../../product-plan/sections/reporting/types";
-import { useSessions } from "./useSessions";
-import { usePrograms } from "./usePrograms";
 import type { Session } from "../../product-plan/sections/sessions/types";
-import type { Program } from "../../product-plan/sections/programs/types";
+import { usePrograms } from "./usePrograms";
+import { useSessions } from "./useSessions";
 
 /**
  * Hook to fetch dashboard metrics

@@ -1,34 +1,34 @@
 /**
  * Offline Indicator Component
- * 
+ *
  * Shows network status, pending sync items, and manual sync button
  */
 
-import { useNetwork } from "@/lib/NetworkContext";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  WifiOff, 
-  Wifi, 
-  RefreshCw, 
-  CheckCircle2, 
+import { useNetwork } from "@/lib/NetworkContext";
+import {
   AlertCircle,
+  CheckCircle2,
+  Cloud,
   CloudOff,
-  Cloud
+  RefreshCw,
+  Wifi,
+  WifiOff,
 } from "lucide-react";
 import { useState } from "react";
 
 export function OfflineIndicator() {
-  const { 
-    isOnline, 
-    isSyncing, 
-    pendingSyncCount, 
-    lastSyncTime, 
+  const {
+    isOnline,
+    isSyncing,
+    pendingSyncCount,
+    lastSyncTime,
     syncError,
-    triggerSync 
+    triggerSync,
   } = useNetwork();
-  
+
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Don't show anything if online and no pending items
@@ -52,9 +52,11 @@ export function OfflineIndicator() {
           onClick={() => setIsExpanded(true)}
           className="flex items-center gap-2 px-4 py-2 rounded-full shadow-lg bg-white dark:bg-stone-800 border-2 transition-all hover:scale-105"
           style={{
-            borderColor: isOnline 
-              ? (pendingSyncCount > 0 ? '#f59e0b' : '#10b981')
-              : '#ef4444'
+            borderColor: isOnline
+              ? pendingSyncCount > 0
+                ? "#f59e0b"
+                : "#10b981"
+              : "#ef4444",
           }}
         >
           {isOnline ? (
@@ -66,24 +68,29 @@ export function OfflineIndicator() {
           ) : (
             <WifiOff className="h-4 w-4 text-red-600" />
           )}
-          
+
           {pendingSyncCount > 0 && (
             <Badge variant="secondary" className="bg-amber-100 text-amber-800">
               {pendingSyncCount}
             </Badge>
           )}
-          
+
           {isSyncing && (
             <RefreshCw className="h-3 w-3 text-blue-600 animate-spin" />
           )}
         </button>
       ) : (
         // Expanded card
-        <Card className="w-80 shadow-2xl border-2" style={{
-          borderColor: isOnline 
-            ? (pendingSyncCount > 0 ? '#f59e0b' : '#10b981')
-            : '#ef4444'
-        }}>
+        <Card
+          className="w-80 shadow-2xl border-2"
+          style={{
+            borderColor: isOnline
+              ? pendingSyncCount > 0
+                ? "#f59e0b"
+                : "#10b981"
+              : "#ef4444",
+          }}
+        >
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -142,11 +149,7 @@ export function OfflineIndicator() {
 
             {/* Manual Sync Button */}
             {isOnline && pendingSyncCount > 0 && !isSyncing && (
-              <Button
-                size="sm"
-                className="w-full mt-3"
-                onClick={triggerSync}
-              >
+              <Button size="sm" className="w-full mt-3" onClick={triggerSync}>
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Sync Now
               </Button>

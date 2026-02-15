@@ -1,13 +1,24 @@
 /**
  * Network Status Context
- * 
+ *
  * Provides online/offline status detection and sync management
  */
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { getPendingSyncItems, markSynced, markSyncFailed, type SyncQueueItem } from './db';
-import api from './api';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from "@/contexts/AuthContext";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import api from "./api";
+import {
+  getPendingSyncItems,
+  markSynced,
+  markSyncFailed,
+  type SyncQueueItem,
+} from "./db";
 
 interface NetworkStatus {
   isOnline: boolean;
@@ -26,7 +37,7 @@ const NetworkContext = createContext<NetworkContextType | null>(null);
 
 export function NetworkProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
-  const userId = user?.uid || 'device';
+  const userId = user?.uid || "device";
 
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -40,7 +51,7 @@ export function NetworkProvider({ children }: { children: React.ReactNode }) {
       const items = await getPendingSyncItems(userId);
       setPendingSyncCount(items.length);
     } catch (error) {
-      console.error('Failed to get pending sync count:', error);
+      console.error("Failed to get pending sync count:", error);
     }
   }, [userId]);
 
@@ -48,35 +59,43 @@ export function NetworkProvider({ children }: { children: React.ReactNode }) {
   const syncItem = async (item: SyncQueueItem): Promise<boolean> => {
     try {
       switch (item.entity) {
-        case 'client':
-          if (item.operation === 'create' || item.operation === 'update') {
+        case "client":
+          if (item.operation === "create" || item.operation === "update") {
             await api.saveClient(item.userId, item.data);
-          } else if (item.operation === 'delete') {
+          } else if (item.operation === "delete") {
             await api.deleteClient(item.userId, item.entityId);
           }
           break;
 
-        case 'program':
-          if (item.operation === 'create') {
+        case "program":
+          if (item.operation === "create") {
             await api.saveProgram(item.userId, item.data);
-          } else if (item.operation === 'update') {
+          } else if (item.operation === "update") {
             await api.updateProgram(item.userId, item.data);
-          } else if (item.operation === 'delete') {
-            await api.deleteProgram(item.userId, item.entityId, item.data.clientId);
+          } else if (item.operation === "delete") {
+            await api.deleteProgram(
+              item.userId,
+              item.entityId,
+              item.data.clientId,
+            );
           }
           break;
 
-        case 'session':
-          if (item.operation === 'create' || item.operation === 'update') {
+        case "session":
+          if (item.operation === "create" || item.operation === "update") {
             await api.saveSession(item.data);
           }
           break;
 
-        case 'stimulus':
-          if (item.operation === 'create') {
+        case "stimulus":
+          if (item.operation === "create") {
             await api.saveStimulus(item.userId, item.data.programId, item.data);
-          } else if (item.operation === 'delete') {
-            await api.deleteStimulus(item.userId, item.data.programId, item.entityId);
+          } else if (item.operation === "delete") {
+            await api.deleteStimulus(
+              item.userId,
+              item.data.programId,
+              item.entityId,
+            );
           }
           break;
       }
@@ -97,7 +116,7 @@ export function NetworkProvider({ children }: { children: React.ReactNode }) {
 
     try {
       const items = await getPendingSyncItems(userId);
-      
+
       if (items.length === 0) {
         setIsSyncing(false);
         return;
@@ -114,14 +133,17 @@ export function NetworkProvider({ children }: { children: React.ReactNode }) {
           await markSynced(item.id!);
           successCount++;
         } catch (error) {
-          const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+          const errorMsg =
+            error instanceof Error ? error.message : "Unknown error";
           await markSyncFailed(item.id!, errorMsg);
           failCount++;
         }
       }
 
-      console.log(`[Sync] Complete: ${successCount} success, ${failCount} failed`);
-      
+      console.log(
+        `[Sync] Complete: ${successCount} success, ${failCount} failed`,
+      );
+
       setLastSyncTime(Date.now());
       await refreshPendingCount();
 
@@ -129,8 +151,8 @@ export function NetworkProvider({ children }: { children: React.ReactNode }) {
         setSyncError(`${failCount} item(s) failed to sync`);
       }
     } catch (error) {
-      console.error('[Sync] Error:', error);
-      setSyncError('Sync failed. Will retry automatically.');
+      console.error("[Sync] Error:", error);
+      setSyncError("Sync failed. Will retry automatically.");
     } finally {
       setIsSyncing(false);
     }
@@ -139,7 +161,7 @@ export function NetworkProvider({ children }: { children: React.ReactNode }) {
   // Handle online/offline events
   useEffect(() => {
     const handleOnline = () => {
-      console.log('[Network] Connection restored');
+      console.log("[Network] Connection restored");
       setIsOnline(true);
       setSyncError(null);
       // Trigger sync after a short delay
@@ -147,16 +169,16 @@ export function NetworkProvider({ children }: { children: React.ReactNode }) {
     };
 
     const handleOffline = () => {
-      console.log('[Network] Connection lost');
+      console.log("[Network] Connection lost");
       setIsOnline(false);
     };
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, [triggerSync]);
 
@@ -169,14 +191,17 @@ export function NetworkProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!isOnline) return;
 
-    const interval = setInterval(() => {
-      refreshPendingCount().then(() => {
-        if (pendingSyncCount > 0 && !isSyncing) {
-          console.log('[Sync] Auto-sync check triggered');
-          triggerSync();
-        }
-      });
-    }, 2 * 60 * 1000); // 2 minutes
+    const interval = setInterval(
+      () => {
+        refreshPendingCount().then(() => {
+          if (pendingSyncCount > 0 && !isSyncing) {
+            console.log("[Sync] Auto-sync check triggered");
+            triggerSync();
+          }
+        });
+      },
+      2 * 60 * 1000,
+    ); // 2 minutes
 
     return () => clearInterval(interval);
   }, [isOnline, pendingSyncCount, isSyncing, triggerSync, refreshPendingCount]);
@@ -188,20 +213,18 @@ export function NetworkProvider({ children }: { children: React.ReactNode }) {
     lastSyncTime,
     syncError,
     triggerSync,
-    refreshPendingCount
+    refreshPendingCount,
   };
 
   return (
-    <NetworkContext.Provider value={value}>
-      {children}
-    </NetworkContext.Provider>
+    <NetworkContext.Provider value={value}>{children}</NetworkContext.Provider>
   );
 }
 
 export function useNetwork() {
   const context = useContext(NetworkContext);
   if (!context) {
-    throw new Error('useNetwork must be used within NetworkProvider');
+    throw new Error("useNetwork must be used within NetworkProvider");
   }
   return context;
 }

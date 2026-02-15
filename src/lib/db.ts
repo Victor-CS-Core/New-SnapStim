@@ -8,8 +8,8 @@
 import Dexie, { type Table } from 'dexie';
 import type { Client } from '../../product-plan/sections/clients/types';
 import type { Program } from '../../product-plan/sections/programs/types';
-import type { Session, Trial } from '../../product-plan/sections/sessions/types';
 import type { ReviewQueueItem } from '../../product-plan/sections/review/types';
+import type { Session, Trial } from '../../product-plan/sections/sessions/types';
 
 // Define sync queue item for pending operations
 export interface SyncQueueItem {

@@ -1,12 +1,12 @@
-import { Menu } from "lucide-react";
+import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
-  SheetTrigger,
   SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
-import { OfflineIndicator } from "@/components/OfflineIndicator";
+import { Menu } from "lucide-react";
 import MainNav from "./MainNav";
 import UserMenu from "./UserMenu";
 

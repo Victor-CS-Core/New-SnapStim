@@ -1,20 +1,20 @@
-import { Download, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Download, Image as ImageIcon } from "lucide-react";
 import {
-  LineChart,
-  Line,
-  BarChart,
   Bar,
-  PieChart,
-  Pie,
+  BarChart,
+  CartesianGrid,
   Cell,
+  Legend,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
 } from "recharts";
 
 interface ChartCardProps {
@@ -53,7 +53,10 @@ export default function ChartCard({
         return (
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={lineChartData}>
-              <CartesianGrid strokeDasharray="3 3" className="stroke-stone-200 dark:stroke-stone-700" />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                className="stroke-stone-200 dark:stroke-stone-700"
+              />
               <XAxis
                 dataKey="name"
                 className="text-xs"
@@ -96,16 +99,16 @@ export default function ChartCard({
         return (
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={barChartData}>
-              <CartesianGrid strokeDasharray="3 3" className="stroke-stone-200 dark:stroke-stone-700" />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                className="stroke-stone-200 dark:stroke-stone-700"
+              />
               <XAxis
                 dataKey="name"
                 className="text-xs"
                 tick={{ fill: "currentColor" }}
               />
-              <YAxis
-                className="text-xs"
-                tick={{ fill: "currentColor" }}
-              />
+              <YAxis className="text-xs" tick={{ fill: "currentColor" }} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "hsl(var(--card))",
@@ -113,7 +116,11 @@ export default function ChartCard({
                   borderRadius: "0.5rem",
                 }}
               />
-              <Bar dataKey="value" fill={data.datasets[0].color} radius={[4, 4, 0, 0]} />
+              <Bar
+                dataKey="value"
+                fill={data.datasets[0].color}
+                radius={[4, 4, 0, 0]}
+              />
             </BarChart>
           </ResponsiveContainer>
         );
@@ -151,63 +158,6 @@ export default function ChartCard({
                 />
               </PieChart>
             </ResponsiveContainer>
-            <div className="space-y-2">
-              {data.labels.map((label: string, i: number) => (
-                <div key={i} className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="h-3 w-3 rounded-full"
-                      style={{ backgroundColor: data.colors[i] }}
-                    ></div>
-                    <span className="text-sm text-stone-700 dark:text-stone-300">
-                      {label}
-                    </span>
-                  </div>
-                  <span className="text-sm font-medium text-stone-900 dark:text-stone-100">
-                    {data.data[i]}%
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-
-      case "progress":
-        return (
-          <div className="space-y-3">
-            {data.programs.map((program: any, i: number) => {
-              const statusColors = {
-                mastered: "bg-emerald-600",
-                close: "bg-amber-500",
-                "in-progress": "bg-blue-500",
-              };
-              return (
-                <div key={i} className="space-y-1">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-stone-700 dark:text-stone-300">
-                      {program.name}
-                    </span>
-                    <span className="text-stone-900 dark:text-stone-100 font-medium">
-                      {program.progress}%
-                    </span>
-                  </div>
-                  <div className="h-2 bg-stone-200 dark:bg-stone-700 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full ${statusColors[program.status as keyof typeof statusColors]} rounded-full`}
-                      style={{ width: `${program.progress}%` }}
-                    ></div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-            </div>
             <div className="space-y-2">
               {data.labels.map((label: string, i: number) => (
                 <div key={i} className="flex items-center justify-between">

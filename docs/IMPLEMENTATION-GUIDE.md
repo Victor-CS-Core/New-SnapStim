@@ -1029,6 +1029,7 @@ Session Start → Load Program → Load Approved Stimuli → Shuffle Queue
 ### What Was Built
 
 **1. IndexedDB Storage Layer** ✅
+
 - Implemented Dexie wrapper for IndexedDB
 - Created `SnapStimDatabase` with 6 tables:
   - `clients` - Client profiles
@@ -1041,6 +1042,7 @@ Session Start → Load Program → Load Approved Stimuli → Shuffle Queue
 - Database statistics and management utilities
 
 **2. Network Status Detection** ✅
+
 - Created `NetworkProvider` context
 - Real-time online/offline detection
 - Listens to browser `online`/`offline` events
@@ -1048,6 +1050,7 @@ Session Start → Load Program → Load Approved Stimuli → Shuffle Queue
 - Provides `useNetwork()` hook for components
 
 **3. Automatic Sync Manager** ✅
+
 - Queues operations when offline
 - Auto-sync on connection restore (2s delay)
 - Periodic sync check (every 2 minutes)
@@ -1060,6 +1063,7 @@ Session Start → Load Program → Load Approved Stimuli → Shuffle Queue
   - Stimuli (create, delete)
 
 **4. Offline Indicator UI** ✅
+
 - Compact badge in bottom-right corner
 - Shows online/offline status
 - Displays pending sync count
@@ -1072,6 +1076,7 @@ Session Start → Load Program → Load Approved Stimuli → Shuffle Queue
 - Last sync timestamp display
 
 **5. App Integration** ✅
+
 - Added `NetworkProvider` to App.tsx
 - Integrated `OfflineIndicator` in AppShell
 - Available throughout entire application
@@ -1079,6 +1084,7 @@ Session Start → Load Program → Load Approved Stimuli → Shuffle Queue
 ### Technical Implementation
 
 **File Structure:**
+
 ```
 src/lib/
 ├── db.ts                     # Dexie database schema (185 lines)
@@ -1089,6 +1095,7 @@ src/components/
 ```
 
 **Core Features:**
+
 - **IndexedDB**: Local data persistence with Dexie wrapper
 - **Sync Queue**: FIFO queue for pending operations
 - **Auto-Retry**: Failed syncs marked with error, can retry
@@ -1097,16 +1104,18 @@ src/components/
 - **Visual Feedback**: Always-visible status indicator
 
 **Database Schema:**
+
 ```typescript
-clients:    client_id, user_id, name, status, created_date
-programs:   program_id, user_id, client_id, program_name, status
-sessions:   session_id, user_id, client_id, program_id, start_time
-trials:     trial_id, session_id, trial_number, response, timestamp
-stimuli:    stimulus_id, user_id, program_id, review_status
-syncQueue:  ++id, userId, entity, synced, timestamp
+clients: (client_id, user_id, name, status, created_date);
+programs: (program_id, user_id, client_id, program_name, status);
+sessions: (session_id, user_id, client_id, program_id, start_time);
+trials: (trial_id, session_id, trial_number, response, timestamp);
+stimuli: (stimulus_id, user_id, program_id, review_status);
+syncQueue: (++id, userId, entity, synced, timestamp);
 ```
 
 **Sync Flow:**
+
 ```
 User Action → Queue to IndexedDB → Update UI Optimistically
 → [When Online] → Sync to Backend → Mark as Synced → Clear Queue
@@ -1116,6 +1125,7 @@ User Action → Queue to IndexedDB → Update UI Optimistically
 ### Files Created
 
 **Core Infrastructure:**
+
 - `src/lib/db.ts` - Dexie database with schema and helpers
 - `src/lib/NetworkContext.tsx` - Network status and sync manager
 - `src/components/OfflineIndicator.tsx` - UI status component
@@ -1123,26 +1133,29 @@ User Action → Queue to IndexedDB → Update UI Optimistically
 ### Files Modified
 
 **App Integration:**
+
 - `src/App.tsx` - Added NetworkProvider wrapper
 - `src/shell/components/AppShell.tsx` - Added OfflineIndicator
 
 ### Usage Examples
 
 **Queuing an Offline Operation:**
+
 ```typescript
-import { queueSync } from '@/lib/db';
+import { queueSync } from "@/lib/db";
 
 // Queue a session save when offline
-await queueSync('create', 'session', sessionId, sessionData, userId);
+await queueSync("create", "session", sessionId, sessionData, userId);
 ```
 
 **Using Network Status:**
+
 ```typescript
 import { useNetwork } from '@/lib/NetworkContext';
 
 function MyComponent() {
   const { isOnline, pendingSyncCount, triggerSync } = useNetwork();
-  
+
   return (
     <div>
       {!isOnline && <p>Working offline</p>}
@@ -1185,12 +1198,14 @@ function MyComponent() {
 ### What Was Built
 
 **Real-Time Analytics System:**
+
 - ✅ Installed recharts library for data visualization
 - ✅ Created analytics calculation hooks (5 new hooks)
 - ✅ Replaced mock charts with real recharts components
 - ✅ Integrated with backend session and program data
 
 **New Hooks in `src/hooks/useReporting.ts`:**
+
 1. `useDashboardMetrics()` - Calculate metrics from real session data
 2. `useAccuracyTrends()` - Weekly accuracy trends per program
 3. `useSessionVolume()` - Daily session counts (last 7 days)
@@ -1198,27 +1213,32 @@ function MyComponent() {
 5. `useMasteryProgress()` - Program mastery progress bars
 
 **Updated Components:**
+
 - `ChartCard.tsx` - Now uses recharts: LineChart, BarChart, PieChart
 - `DataVisualizationView.tsx` - Connects to real data hooks
 
 **Chart Types Implemented:**
+
 - 📈 Line Chart - Accuracy trends over 4 weeks
 - 📊 Bar Chart - Session volume by day of week
 - 🍰 Pie Chart - Response type distribution
 - 📉 Progress Bars - Mastery status for active programs
 
 **Data Calculations:**
+
 - Sessions filtered by date ranges
 - Accuracy calculated from trial responses
 - Programs grouped and aggregated
 - Real-time updates via React Query
 
 ### Files Modified
+
 - `src/hooks/useReporting.ts` (215 lines total, +145 new)
 - `src/sections/reporting/components/ChartCard.tsx` (210 lines total, +80 new)
 - `src/sections/reporting/components/DataVisualizationView.tsx` (154 lines total, -34 mock data)
 
 ### Dependencies Added
+
 ```json
 {
   "recharts": "^2.15.0"

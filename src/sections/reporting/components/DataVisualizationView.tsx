@@ -11,10 +11,13 @@ import ChartCard from "./ChartCard";
 
 export default function DataVisualizationView() {
   const { data: metrics, isLoading: metricsLoading } = useDashboardMetrics();
-  const { data: accuracyTrends, isLoading: trendsLoading } = useAccuracyTrends();
+  const { data: accuracyTrends, isLoading: trendsLoading } =
+    useAccuracyTrends();
   const { data: sessionVolume, isLoading: volumeLoading } = useSessionVolume();
-  const { data: responseDistribution, isLoading: distributionLoading } = useResponseDistribution();
-  const { data: masteryProgress, isLoading: masteryLoading } = useMasteryProgress();
+  const { data: responseDistribution, isLoading: distributionLoading } =
+    useResponseDistribution();
+  const { data: masteryProgress, isLoading: masteryLoading } =
+    useMasteryProgress();
 
   if (metricsLoading || !metrics) {
     return (
@@ -154,43 +157,6 @@ export default function DataVisualizationView() {
             data={masteryProgress}
           />
         )}
-      </div>
-    </div>
-  );
-}
-        />
-
-        <ChartCard
-          title="Session Volume"
-          description="Sessions completed by day"
-          chartType="bar"
-          data={sessionVolumeData}
-        />
-
-        <ChartCard
-          title="Response Type Distribution"
-          description="Breakdown of trial responses"
-          chartType="pie"
-          data={responseTypeData}
-        />
-
-        <ChartCard
-          title="Mastery Progress"
-          description="Programs nearing mastery criteria"
-          chartType="progress"
-          data={{
-            programs: [
-              {
-                name: "Fruit Identification",
-                progress: 100,
-                status: "mastered",
-              },
-              { name: "Body Parts", progress: 85, status: "close" },
-              { name: "Colors", progress: 60, status: "in-progress" },
-              { name: "Emotions", progress: 100, status: "mastered" },
-            ],
-          }}
-        />
       </div>
     </div>
   );

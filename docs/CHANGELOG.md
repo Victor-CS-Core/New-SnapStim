@@ -7,9 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### In Progress
+
+- Phase 2: Authentication system implementation
+
+## [0.3.0] - 2026-02-15
+
 ### Added
 
-- Documentation management skill (`snapstim-docs`) for maintaining project documentation
+- 🔌 **Phase 1: Backend Connection Complete**
+  - Firebase SDK integration (`src/lib/firebase.ts`)
+  - API client for backend communication (`src/lib/api.ts`)
+  - Backend test script (`scripts/test-backend.js`)
+  - Backend documentation guide (`docs/BACKEND-GUIDE.md`)
+- 📦 Dependencies:
+  - `firebase` - Full Firebase SDK (Auth, Firestore, Storage)
+  - `@tanstack/react-query` - API state management
+  - `@tanstack/react-query-devtools` - Developer tools
+- 🧪 Test commands:
+  - `npm run test:backend` - Verify backend connection
+- 📡 API Client features:
+  - Health check endpoint
+  - Client management (CRUD)
+  - Session management & export
+  - AI content generation (images & text)
+  - Stimulus generation & review
+
+### Changed
+
+- Updated package.json with new scripts and dependencies
+- Backend connection now verified and operational
+
+### Technical Details
+
+- Connected to Firebase project: `cuelume`
+- Backend API base URL: `http://localhost:8787`
+- All 8 backend endpoints implemented in API client
+- Read-only setup - no data writes yet
+- Foundation ready for Phase 2 (Authentication)
 
 ## [0.2.0] - 2026-02-15
 

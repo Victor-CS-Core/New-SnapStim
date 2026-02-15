@@ -1,24 +1,28 @@
 /**
  * Dev Tools Panel
- * 
+ *
  * A floating panel for testing Phase 1 implementation:
  * - Backend API connection
  * - Firebase initialization
  * - API endpoint testing
- * 
+ *
  * Remove or disable in production builds.
  */
 
-import { useState, useEffect } from 'react';
-import { api } from '../lib/api';
-import { auth, db, storage } from '../lib/firebase';
-import { Button } from './ui/button';
-import { Card } from './ui/card';
+import { useEffect, useState } from "react";
+import { api } from "../lib/api";
+import { auth, db, storage } from "../lib/firebase";
+import { Button } from "./ui/button";
+import { Card } from "./ui/card";
 
 export function DevTools() {
   const [isOpen, setIsOpen] = useState(false);
-  const [backendStatus, setBackendStatus] = useState<'checking' | 'connected' | 'error'>('checking');
-  const [firebaseStatus, setFirebaseStatus] = useState<'checking' | 'ready' | 'error'>('checking');
+  const [backendStatus, setBackendStatus] = useState<
+    "checking" | "connected" | "error"
+  >("checking");
+  const [firebaseStatus, setFirebaseStatus] = useState<
+    "checking" | "ready" | "error"
+  >("checking");
   const [testResult, setTestResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
@@ -31,9 +35,9 @@ export function DevTools() {
   const checkBackend = async () => {
     try {
       const result = await api.health();
-      setBackendStatus(result.ok ? 'connected' : 'error');
+      setBackendStatus(result.ok ? "connected" : "error");
     } catch (error) {
-      setBackendStatus('error');
+      setBackendStatus("error");
     }
   };
 
@@ -41,27 +45,27 @@ export function DevTools() {
     try {
       // Check if Firebase services are initialized
       if (auth && db && storage) {
-        setFirebaseStatus('ready');
+        setFirebaseStatus("ready");
       } else {
-        setFirebaseStatus('error');
+        setFirebaseStatus("error");
       }
     } catch (error) {
-      setFirebaseStatus('error');
+      setFirebaseStatus("error");
     }
   };
 
   const runTest = async (testName: string, testFn: () => Promise<any>) => {
     setLoading(true);
-    setTestResult({ testName, status: 'running...' });
-    
+    setTestResult({ testName, status: "running..." });
+
     try {
       const result = await testFn();
-      setTestResult({ testName, status: 'success', data: result });
+      setTestResult({ testName, status: "success", data: result });
     } catch (error: any) {
-      setTestResult({ 
-        testName, 
-        status: 'error', 
-        error: error.message || 'Unknown error' 
+      setTestResult({
+        testName,
+        status: "error",
+        error: error.message || "Unknown error",
       });
     } finally {
       setLoading(false);
@@ -70,27 +74,27 @@ export function DevTools() {
 
   const tests = [
     {
-      name: 'Health Check',
+      name: "Health Check",
       fn: () => api.health(),
     },
     {
-      name: 'List Clients',
-      fn: () => api.listClients('device'),
+      name: "List Clients",
+      fn: () => api.listClients("device"),
     },
     {
-      name: 'List Sessions',
-      fn: () => api.listSessions('device'),
+      name: "List Sessions",
+      fn: () => api.listSessions("device"),
     },
     {
-      name: 'Firebase Auth',
-      fn: async () => ({ 
+      name: "Firebase Auth",
+      fn: async () => ({
         currentUser: auth.currentUser,
         authReady: !!auth,
       }),
     },
     {
-      name: 'Firebase DB',
-      fn: async () => ({ 
+      name: "Firebase DB",
+      fn: async () => ({
         type: db.type,
         app: db.app.name,
       }),
@@ -163,18 +167,16 @@ export function DevTools() {
                 {testResult.testName}:
               </p>
               <div className="bg-gray-800 p-3 rounded text-xs overflow-auto max-h-48 border border-gray-700">
-                {testResult.status === 'running...' && (
+                {testResult.status === "running..." && (
                   <p className="text-blue-400">Running test...</p>
                 )}
-                {testResult.status === 'success' && (
+                {testResult.status === "success" && (
                   <pre className="text-green-400">
                     {JSON.stringify(testResult.data, null, 2)}
                   </pre>
                 )}
-                {testResult.status === 'error' && (
-                  <p className="text-red-400">
-                    ❌ {testResult.error}
-                  </p>
+                {testResult.status === "error" && (
+                  <p className="text-red-400">❌ {testResult.error}</p>
                 )}
               </div>
             </div>
@@ -193,10 +195,10 @@ export function DevTools() {
 }
 
 function StatusBadge({ status }: { status: string }) {
-  if (status === 'checking') {
+  if (status === "checking") {
     return <span className="text-yellow-400">⏳ Checking...</span>;
   }
-  if (status === 'connected' || status === 'ready') {
+  if (status === "connected" || status === "ready") {
     return <span className="text-green-400 font-medium">✅ Connected</span>;
   }
   return <span className="text-red-400 font-medium">❌ Error</span>;

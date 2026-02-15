@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { AppShell } from "./shell/components";
-import { DashboardView } from "./sections/dashboard";
+import { DevTools } from "./components/DevTools";
+import type { NavigationContextData } from "./lib/NavigationContext";
+import { NavigationProvider } from "./lib/NavigationContext";
 import { AccountsView } from "./sections/accounts";
 import { ClientsView } from "./sections/clients";
+import { DashboardView } from "./sections/dashboard";
 import { ProgramsView } from "./sections/programs";
+import { ReportingView } from "./sections/reporting";
 import { ReviewView } from "./sections/review";
 import { SessionsView } from "./sections/sessions";
-import { ReportingView } from "./sections/reporting";
-import { NavigationProvider } from "./lib/NavigationContext";
-import type { NavigationContextData } from "./lib/NavigationContext";
-import { DevTools } from "./components/DevTools";
+import { AppShell } from "./shell/components";
 
 function App() {
   const [currentPath, setCurrentPath] = useState("/");
@@ -44,7 +44,7 @@ function App() {
       <AppShell currentPath={currentPath} onNavigate={setCurrentPath}>
         {renderView()}
       </AppShell>
-      
+
       {/* Dev Tools - Only in development */}
       {import.meta.env.DEV && <DevTools />}
     </NavigationProvider>

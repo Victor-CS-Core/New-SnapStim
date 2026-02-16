@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- ✨ **Add User Functionality**
+  - Add User button now opens modal for creating new users
+  - `useSaveUser()` hook integrated for backend user creation
+  - New users automatically assigned default fields (createdAt, assignedClients, etc.)
+  - EditUserModal now intelligently handles both add and edit modes
+  - Dynamic modal titles and button labels based on mode
+
+### Fixed
+- 🔧 **Firebase Admin SDK Configuration**
+  - Converted `firebase.js` from client SDK to Firebase Admin SDK
+  - Fixed CommonJS module compatibility (removed ES6 imports)
+  - Added singleton pattern to prevent duplicate app initialization
+  - Proper error handling for development without credentials
+
 ## [0.10.0] - 2026-02-15
 
 ### Added

@@ -71,15 +71,19 @@ export default function EditUserModal({
 
   if (!open) return null;
 
+  const isAddMode = !user.id || user.id === "";
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogHeader>
         <DialogTitle>
           <UserCog className="inline-block mr-2 h-5 w-5" />
-          Edit User Account
+          {isAddMode ? "Add New User" : "Edit User Account"}
         </DialogTitle>
         <DialogDescription>
-          Update user information and permissions
+          {isAddMode 
+            ? "Create a new user account and assign permissions" 
+            : "Update user information and permissions"}
         </DialogDescription>
       </DialogHeader>
 
@@ -192,7 +196,11 @@ export default function EditUserModal({
             Cancel
           </Button>
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Saving..." : "Save Changes"}
+            {isSubmitting 
+              ? "Saving..." 
+              : isAddMode 
+                ? "Add User" 
+                : "Save Changes"}
           </Button>
         </DialogFooter>
       </form>

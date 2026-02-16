@@ -1,23 +1,35 @@
-// firebase.js
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+// firebase.js - Server-side Firebase Admin SDK
+const admin = require("firebase-admin");
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAbEdEUAB1ZGMeAGnOYxP2prXNRQA3RdsI",
-  authDomain: "cuelume.firebaseapp.com",
-  projectId: "cuelume",
-  storageBucket: "cuelume.firebasestorage.app",
-  messagingSenderId: "919937396389",
-  appId: "1:919937396389:web:39e16a6aa8bddbaafd674c",
-  measurementId: "G-6W73C35Q4C"
-};
+// Initialize Firebase Admin with service account
+// For local development, you can use GOOGLE_APPLICATION_CREDENTIALS env var
+// or initialize with a service account key file
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Check if app already exists to avoid re-initialization
+if (!admin.apps.length) {
+  try {
+    admin.initializeApp({
+      credential: admin.credential.applicationDefault(),
+      projectId: "cuelume",
+      storageBucket: "cuelume.firebasestorage.app",
+    });
+    console.log("[Firebase Admin] Initialized successfully");
+  } catch (error) {
+    console.error("[Firebase Admin] Initialization error:", error.message);
+    // For development without credentials, initialize without auth
+    admin.initializeApp({
+      projectId: "cuelume",
+      storageBucket: "cuelume.firebasestorage.app",
+    });
+    console.log("[Firebase Admin] Initialized in development mode (no auth)");
+  }
+} else {
+  console.log("[Firebase Admin] Using existing app instance");
+}
 
 // Export services
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+const auth = admin.auth();
+const db = admin.firestore();
+const storage = admin.storage();
+
+module.exports = { admin, auth, db, storage };

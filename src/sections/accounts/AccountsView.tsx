@@ -14,7 +14,7 @@ import UserDetail from "./components/UserDetail";
 import EditUserModal from "./components/EditUserModal";
 import type { EditUserFormData } from "./components/EditUserModal";
 import ConfirmDialog from "@/components/ui/confirm-dialog";
-import { useUsers, useUpdateUser, useDeleteUser } from "@/hooks/useAccounts";
+import { useUsers, useUpdateUser, useDeleteUser, useSaveUser } from "@/hooks/useAccounts";
 import type {
   User,
   UserFilters as UserFiltersType,
@@ -27,11 +27,13 @@ export default function AccountsView() {
   const [deactivatingUserId, setDeactivatingUserId] = useState<string | null>(
     null,
   );
+  const [isAddingUser, setIsAddingUser] = useState(false);
 
   // Load users from backend via React Query hook
   const { data: users = [], isLoading } = useUsers();
   const updateUser = useUpdateUser();
   const deleteUser = useDeleteUser();
+  const saveUser = useSaveUser();
 
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
@@ -65,6 +67,23 @@ export default function AccountsView() {
     if (!editingUserId) return null;
     return users.find((u) => u.id === editingUserId) || null;
   }, [users, editingUserId]);
+
+  const handleAddUser = async (userData: EditUserFormData) => {
+    try {
+      await saveUser.mutateAsync({
+        ...userData,
+        createdAt: new Date().toISOString(),
+        lastActiveAt: null,
+        assignedClients: [],
+        assignedPrograms: [],
+      });
+      setIsAddingUser(false);
+      console.log("User created successfully:", userData);
+    } catch (error) {
+      console.error("Failed to create user:", error);
+      alert("Failed to create user. Please try again.");
+    }
+  };
 
   const handleEditUser = async (userData: EditUserFormData) => {
     if (!editingUserId) return;
@@ -137,16 +156,7 @@ export default function AccountsView() {
             Manage users and their permissions
           </p>
         </div>
-        <Button
-          onClick={() => {
-            // TODO: Implement user creation
-            // Recommended: Show a modal form with fields for:
-            // - Name, email, role (BCBA/RBT/Caregiver)
-            // - Permissions and access levels
-            // - Send invitation email
-            console.log("Add User clicked - implement creation flow");
-          }}
-        >
+        <Button onClick={() => setIsAddingUser(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Add User
         </Button>
@@ -221,6 +231,27 @@ export default function AccountsView() {
           onClose={() => setSelectedUserId(null)}
           onEdit={() => {
             setEditingUserId(selectedUser.id);
+          }}
+        />
+      )}
+
+      {/* Add User Modal */}
+      {isAddingUser && (
+        <EditUserModal
+          open={true}
+          onClose={() => setIsAddingUser(false)}
+          onSave={handleAddUser}
+          user={{
+            id: "",
+            name: "",
+            email: "",
+            role: "RBT",
+            status: "Pending",
+            phone: "",
+            createdAt: new Date().toISOString(),
+            lastActiveAt: null,
+            assignedClients: [],
+            assignedPrograms: [],
           }}
         />
       )}
